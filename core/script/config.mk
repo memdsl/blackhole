@@ -1,7 +1,7 @@
 COLOR_RED := $(shell echo "\033[1;31m")
 COLOR_END := $(shell echo "\033[0m")
 
-ifeq ($(wildcard .config),)
+ifeq ($(wildcard $(METEOR_ENV_HOME)/core/.config),)
     $(warning $(COLOR_RED)Warning: .config does not exists!$(COLOR_END))
     $(warning $(COLOR_RED)To build the project, first run 'make menuconfig'.$(COLOR_END))
 endif
@@ -33,7 +33,7 @@ menuconfig: $(KCONFIG_MCONF) $(KCONFIG_CONF) $(FIXDEP)
 	$(Q)$(KCONFIG_CONF) $(SILENT) --syncconfig $(KCONFIG)
 
 help:
-	@echo "menuconfig    - Update current config utilising a menu based program"
+	@echo "menuconfig - Update current config utilising a menu based program"
 
 clean-config: clean
 	-@rm -rf $(KCONFIG_GEN)

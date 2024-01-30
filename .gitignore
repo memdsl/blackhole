@@ -1,8 +1,8 @@
 # Kconfig
-core/include/config
+core/include/config/
+core/include/generated/
 .config
 .config.old
 
 # Rust
 target
-
