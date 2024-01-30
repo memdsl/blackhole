@@ -1,1 +1,8 @@
+# Kconfig
+core/include/config
+.config
+.config.old
+
+# Rust
 target
+
