@@ -83,9 +83,16 @@ static void runCPUSimStep() {
 #endif
 }
 
-static void runCPUSimModuleCycle() {
+static void runCPUSimModuleCycle(bool flag) {
     top->clock = 0;
     runCPUSimStep();
+
+#ifdef CONFIG_ITRACE_COND_PROCESS
+    if (flag) {
+        printfDebugITrace("process");
+    }
+#endif
+
     top->clock = 1;
     runCPUSimStep();
 }
@@ -123,8 +130,12 @@ void runCPUSimModule(bool *inst_end_flag) {
         sim_snpc = sim_pc + 4;
         sim_inst = top->io_pTrace_pBase_bInst;
 
-        top->io_pTrace_pMem_bRdDataA = readInsData(top->io_pTrace_pMem_bRdAddrA, 4);
-        top->io_pTrace_pMem_bRdDataB = readMemData(top->io_pTrace_pMem_bRdAddrB, 4);
+        top->io_pTrace_pMem_bRdDataA = readInsData(
+            top->io_pTrace_pMem_bRdAddrA,
+            4);
+        top->io_pTrace_pMem_bRdDataB = readMemData(
+            top->io_pTrace_pMem_bRdAddrB,
+            4);
 
         if (top->io_pTrace_pMem_bWrEn) {
             uint8_t len = 4;
@@ -146,11 +157,7 @@ void runCPUSimModule(bool *inst_end_flag) {
                          len);
         }
 
-#ifdef CONFIG_ITRACE_COND_PROCESS
-        printfDebugITrace("process");
-#endif
-
-        runCPUSimModuleCycle();
+        runCPUSimModuleCycle(true);
 
         sim_dnpc = top->io_pTrace_pBase_bPC;
         sim_cycle_num++;
@@ -193,7 +200,7 @@ void runCPUSimModule(bool *inst_end_flag) {
 void resetCPUSimModule(int num) {
     top->reset = 1;
     while (num-- > 0) {
-        runCPUSimModuleCycle();
+        runCPUSimModuleCycle(false);
     }
     top->reset = 0;
 }
