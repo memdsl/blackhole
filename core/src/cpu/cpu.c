@@ -143,7 +143,7 @@ void execCPU(uint64_t num) {
 #ifndef CONFIG_ITRACE_COND_PROCESS
             printf("\n");
 #endif
-            printfDebugITrace();
+            printfDebugITrace((char *)"result");
 #endif
 #ifdef CONFIG_MTRACE_COND_RESULT
             printf("\n");

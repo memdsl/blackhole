@@ -4,7 +4,7 @@
 #include <common.h>
 
 void recordDebugITrace(char *logbuf);
-void printfDebugITrace();
+void printfDebugITrace(char *type);
 
 void printfDebugMTrace(char *type,
                        char *dir,
