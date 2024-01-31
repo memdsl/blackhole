@@ -103,11 +103,11 @@ void initCPUSim() {
 #endif
 
 #ifdef CONFIG_ITRACE_COND_PROCESS
-    // top->io_iItrace = true;
+    top->io_iItrace = true;
 #endif
 
 #ifdef CONFIG_ETRACE_COND_PROCESS
-    // top->io_iEtrace = true;
+    top->io_iEtrace = true;
 #endif
 }
 
@@ -127,11 +127,45 @@ uint64_t sim_cycle_num = 1;
 
 void runCPUSimModule(bool *inst_end_flag) {
     if (!sim_ebreak) {
-        // sim_pc   = top->io_pIFU_oPC;
-        sim_pc   = top->io_oPC;
+        sim_pc   = top->io_pTrace_pBase_bPC;
         sim_snpc = sim_pc + 4;
-        // sim_inst = top->io_pIFU_oInst;
-        sim_inst = top->io_oInst;
+        sim_inst = top->io_pTrace_pBase_bInst;
+
+        printf("bRdEn: %d\n", top->io_pTrace_pMem_bRdEn);
+        printf("bRdAddrA: " FMT_WORD "\n", top->io_pTrace_pMem_bRdAddrA);
+        printf("bRdAddrB: " FMT_WORD "\n", top->io_pTrace_pMem_bRdAddrB);
+        printf("bWrEn: %d\n", top->io_pTrace_pMem_bWrEn);
+        printf("bWrAddr: %d\n", top->io_pTrace_pMem_bWrAddr);
+        printf("bWrData: %d\n", top->io_pTrace_pMem_bWrData);
+        printf("bWrData: %d\n", top->io_pTrace_pMem_bWrData);
+        printf("bWrMask0: %d\n", top->io_pTrace_pMem_bWrMask_0);
+        printf("bWrMask1: %d\n", top->io_pTrace_pMem_bWrMask_1);
+        printf("bWrMask2: %d\n", top->io_pTrace_pMem_bWrMask_2);
+        printf("bWrMask3: %d\n", top->io_pTrace_pMem_bWrMask_3);
+
+        top->io_pTrace_pMem_bRdDataA = readInsData(top->io_pTrace_pMem_bRdAddrA, 4);
+        top->io_pTrace_pMem_bRdDataB = readMemData(top->io_pTrace_pMem_bRdAddrB, 4);
+        printf("bRdDataA: " FMT_WORD "\n", top->io_pTrace_pMem_bRdDataA);
+        printf("bRdDataB: " FMT_WORD "\n", top->io_pTrace_pMem_bRdDataB);
+
+        if (top->io_pTrace_pMem_bWrEn) {
+            uint8_t len = 4;
+            bool wr_mask_0 = top->io_pTrace_pMem_bWrMask_0;
+            bool wr_mask_1 = top->io_pTrace_pMem_bWrMask_1;
+            bool wr_mask_2 = top->io_pTrace_pMem_bWrMask_2;
+            bool wr_mask_3 = top->io_pTrace_pMem_bWrMask_3;
+            if (!wr_mask_3 && !wr_mask_2 && !wr_mask_1 && wr_mask_0) {
+                len = 1;
+            }
+            else if (!wr_mask_3 && !wr_mask_2 && wr_mask_1 && wr_mask_0) {
+                len = 2;
+            }
+            else {
+                len = 4;
+            }
+            writeMemData(top->io_pTrace_pMem_bWrAddr,
+                         top->io_pTrace_pMem_bWrData, len);
+        }
 
 #ifdef CONFIG_ITRACE_COND_PROCESS
     LOG_BRIEF("[itrace] cycle num: %ld", sim_cycle_num);
@@ -457,26 +491,22 @@ void runCPUSimModule(bool *inst_end_flag) {
 
         runCPUSimModuleCycle();
 
-        // sim_dnpc = top->io_pIFU_oPC;
-        sim_dnpc = top->io_oPC;
+        sim_dnpc = top->io_pTrace_pBase_bPC;
         sim_cycle_num++;
 
-#if   CFLAGS_CPU_TYPE_SINGLE
+        if (top->io_pEnd_bFlag) {
+            sim_ebreak = true;
+        }
+
+#if CFLAGS_CPU_TYPE_SINGLE
         *inst_end_flag = true;
 #elif CFLAGS_CPU_TYPE_MULTIP
-        if (top->io_pITrace_pCTR_oStateCurr == 2) {
-            *inst_end_flag = true;
-        }
-        else {
-            *inst_end_flag = false;
-        }
 #elif CFLAGS_CPU_TYPE_PIPELINE
-
 #endif
 
 #ifdef CONFIG_FTRACE
-        bool inst_func_call = top->io_oInstCall;
-        bool inst_func_ret  = top->io_oInstRet;
+        bool inst_func_call = top->io_pTrace_pBase_bInstCall;
+        bool inst_func_ret  = top->io_pTrace_pBase_bInstRet;
 #ifdef CONFIG_FTRACE_COND_PROCESS
         printfDebugFTrace((char *)"process",
                           inst_func_call,
@@ -495,8 +525,7 @@ void runCPUSimModule(bool *inst_end_flag) {
 
     if (sim_ebreak) {
         sim_cycle_num--;
-        // setNPCState(NPC_END, sim_pc, top->io_oEndData);
-        setNPCState(NPC_END, sim_pc, top->io_oEnd);
+        setNPCState(NPC_END, sim_pc, top->io_pEnd_bData);
     }
 }
 
