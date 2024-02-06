@@ -3,13 +3,10 @@
 
 #include <common.h>
 
+#define __EXPORT __attribute__((visibility("default")))
 enum { DIFFTEST_TO_DUT, DIFFTEST_TO_REF };
 
-#if defined(CONFIG_ISA_x86)
-    #define DIFFTEST_REG_SIZE (sizeof(uint32_t) * 9)
-#elif defined(CONFIG_ISA_mips32)
-    #define DIFFTEST_REG_SIZE (sizeof(uint32_t) * 38)
-#elif defined(CONFIG_ISA_riscv32)
+#if defined(CONFIG_ISA_riscv32)
     #define DIFFTEST_REG_SIZE (sizeof(uint32_t) * 33)
 #elif defined(CONFIG_ISA_riscv64)
     #define DIFFTEST_REG_SIZE (sizeof(uint64_t) * 33)

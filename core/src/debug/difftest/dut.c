@@ -1,8 +1,8 @@
 #include <dlfcn.h>
 
+#include <debug/difftest.h>
 #include <isa/difftest.h>
 #include <isa/isa.h>
-#include <debug/difftest.h>
 #include <memory/memory.h>
 #include <state.h>
 
@@ -22,7 +22,6 @@ typedef void (*handleDifftestInitT)(int);
 handleDifftestInitT handleDifftestInit = NULL;
 
 #ifdef CONFIG_DIFFTEST
-
 static bool difftest_skip_ref = false;
 static int difftest_skip_dut_num = 0;
 

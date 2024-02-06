@@ -174,9 +174,9 @@ mainmenu "Meteor Configuration Menu"
         endchoice
         config DIFFTEST_REF_PATH
             string
-            default "tools/qemu-diff" if DIFFTEST_REF_QEMU
-            default "tools/kvm-diff" if DIFFTEST_REF_KVM
-            default "tools/spike-diff" if DIFFTEST_REF_SPIKE
+            default "tool/qemu-diff" if DIFFTEST_REF_QEMU
+            default "tool/kvm-diff" if DIFFTEST_REF_KVM
+            default "tool/spike-diff" if DIFFTEST_REF_SPIKE
             default "none"
         config DIFFTEST_REF_NAME
             string
