@@ -15,35 +15,37 @@ typedef unsigned long long uint64_tt;
 
 bool sim_ebreak = false;
 
-extern "C" void judgeIsEbreak(uint8_t inst_end_flag) {
-    sim_ebreak = inst_end_flag;
-}
-
-extern "C" uint32_tt readInsData(uint64_tt addr, uint8_t len) {
+extern "C" uint32_tt readInsData(uint32_tt addr, uint8_t len) {
     uint32_tt data = 0;
+    // addr = addr & 0xfffffffc;
+
     if (addr != 0x00000000) {
         data = (uint32_tt)readPhyMemData(addr, len);
 #ifdef CONFIG_MTRACE_COND_PROCESS
         printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
 #endif
     }
+
+    top->io_pTrace_pMem_bRdDataA = data;
     return data;
 }
 
-extern "C" uint64_tt readMemData(uint64_tt addr, uint8_t len) {
-    uint64_tt data = 0;
+extern "C" uint32_tt readMemData(uint32_tt addr, uint8_t len) {
+    uint32_tt data = 0;
+    // addr = addr & 0xfffffffc;
+
     if (addr == 0xa0000048) {
-        data = (uint64_tt)getTimerValue();
+        data = (uint32_tt)getTimerValue();
     }
     else if (addr == 0xa0000060) {
-        data = (uint64_tt)dequeueDiviceKey();
+        data = (uint32_tt)dequeueDiviceKey();
     }
     else if (addr == 0xa0000100) {
-        data = (uint64_tt)(getDeviceVGAScreenWidth() << 16 |
+        data = (uint32_tt)(getDeviceVGAScreenWidth() << 16 |
                            getDeviceVGAScreenHeight());
     }
     else if (judgeAddrIsInPhyMem(addr)) {
-        data = (uint64_tt)readPhyMemData(addr, len);
+        data = (uint32_tt)readPhyMemData(addr, len);
     }
     else {
         data = 0;
@@ -51,10 +53,14 @@ extern "C" uint64_tt readMemData(uint64_tt addr, uint8_t len) {
 #ifdef CONFIG_MTRACE_COND_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
 #endif
+
+    top->io_pTrace_pMem_bRdDataB = data;
     return data;
 }
 
-extern "C" void writeMemData(uint64_tt addr, uint64_tt data, uint8_t len) {
+extern "C" void writeMemData(uint32_tt addr, uint32_tt data, uint8_t len) {
+    // addr = addr & 0xfffffffc;
+
     if (addr == 0xa00003f8) {
         putc((uint8_t)data, stderr);
     }
@@ -70,16 +76,16 @@ static bool inst_func_call = false;
 static bool inst_func_ret  = false;
 
 VerilatedContext *contextp = NULL;
+VTop *top = NULL;
 #ifdef CONFIG_DEBUG_WAVE
-VerilatedVcdC    *tfp = NULL;
+VerilatedVcdC *tfp = NULL;
 #endif
-VTop             *top = NULL;
 
 static void runCPUSimStep() {
     top->eval();
 #ifdef CONFIG_DEBUG_WAVE
-    contextp->timeInc(1);
     tfp->dump(contextp->time());
+    contextp->timeInc(1);
 #endif
 }
 
@@ -89,7 +95,7 @@ static void runCPUSimModuleCycle(bool flag) {
 
 #ifdef CONFIG_ITRACE_COND_PROCESS
     if (flag) {
-        printfDebugITrace("process");
+        printfDebugITrace((char *)"process");
     }
 #endif
 
@@ -99,23 +105,26 @@ static void runCPUSimModuleCycle(bool flag) {
 
 void initCPUSim() {
     contextp = new VerilatedContext;
+    contextp->debug(0);
+    contextp->traceEverOn(true);
+
+    top = new VTop{contextp};
+
 #ifdef CONFIG_DEBUG_WAVE
     tfp = new VerilatedVcdC;
-#endif
-    top = new VTop;
-    contextp->traceEverOn(true);
-#ifdef CONFIG_DEBUG_WAVE
-    top->trace(tfp, 0);
-    tfp->open("build/cpu/wave.vcd");
+    top->trace(tfp, 5);
+    tfp->open("cpu/build/wave.vcd");
 #endif
 }
 
 void exitCPUSim() {
     runCPUSimStep();
+    top->final();
+    delete top;
 #ifdef CONFIG_DEBUG_WAVE
     tfp->close();
+    delete tfp;
 #endif
-    delete top;
 }
 
 uint64_t sim_pc   = 0;
@@ -129,33 +138,6 @@ void runCPUSimModule(bool *inst_end_flag) {
         sim_pc   = top->io_pTrace_pBase_bPC;
         sim_snpc = sim_pc + 4;
         sim_inst = top->io_pTrace_pBase_bInst;
-
-        top->io_pTrace_pMem_bRdDataA = readInsData(
-            top->io_pTrace_pMem_bRdAddrA,
-            4);
-        top->io_pTrace_pMem_bRdDataB = readMemData(
-            top->io_pTrace_pMem_bRdAddrB,
-            4);
-
-        if (top->io_pTrace_pMem_bWrEn) {
-            uint8_t len = 4;
-            bool wr_mask_0 = top->io_pTrace_pMem_bWrMask_0;
-            bool wr_mask_1 = top->io_pTrace_pMem_bWrMask_1;
-            bool wr_mask_2 = top->io_pTrace_pMem_bWrMask_2;
-            bool wr_mask_3 = top->io_pTrace_pMem_bWrMask_3;
-            if (!wr_mask_3 && !wr_mask_2 && !wr_mask_1 && wr_mask_0) {
-                len = 1;
-            }
-            else if (!wr_mask_3 && !wr_mask_2 && wr_mask_1 && wr_mask_0) {
-                len = 2;
-            }
-            else {
-                len = 4;
-            }
-            writeMemData(top->io_pTrace_pMem_bWrAddr,
-                         top->io_pTrace_pMem_bWrData,
-                         len);
-        }
 
         runCPUSimModuleCycle(true);
 

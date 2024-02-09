@@ -4,7 +4,7 @@
 #include <verilated.h>
 #include <verilated_vcd_c.h>
 #include <VTop.h>
-// #include <VTop__Dpi.h>
+#include <VTop__Dpi.h>
 
 extern VTop *top;
 
