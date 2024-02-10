@@ -88,11 +88,11 @@ static void printfMonitorWelcome() {
                     MUXDEF(CONFIG_ITRACE, ANSI_FMT("ON",  ANSI_FG_GREEN),
                                           ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     process: %s",
-                    MUXDEF(CONFIG_ITRACE_COND_PROCESS,
+                    MUXDEF(CONFIG_ITRACE_PROCESS,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     result:  %s",
-                    MUXDEF(CONFIG_ITRACE_COND_RESULT,
+                    MUXDEF(CONFIG_ITRACE_RESULT,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
 
@@ -100,11 +100,11 @@ static void printfMonitorWelcome() {
                     MUXDEF(CONFIG_MTRACE, ANSI_FMT("ON",  ANSI_FG_GREEN),
                                           ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     process: %s",
-                    MUXDEF(CONFIG_MTRACE_COND_PROCESS,
+                    MUXDEF(CONFIG_MTRACE_PROCESS,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     result:  %s",
-                    MUXDEF(CONFIG_MTRACE_COND_RESULT,
+                    MUXDEF(CONFIG_MTRACE_RESULT,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
 
@@ -112,11 +112,11 @@ static void printfMonitorWelcome() {
                     MUXDEF(CONFIG_FTRACE, ANSI_FMT("ON",  ANSI_FG_GREEN),
                                           ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     process: %s",
-                    MUXDEF(CONFIG_FTRACE_COND_PROCESS,
+                    MUXDEF(CONFIG_FTRACE_PROCESS,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     result:  %s",
-                    MUXDEF(CONFIG_FTRACE_COND_RESULT,
+                    MUXDEF(CONFIG_FTRACE_RESULT,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
 
@@ -124,11 +124,11 @@ static void printfMonitorWelcome() {
                     MUXDEF(CONFIG_DTRACE, ANSI_FMT("ON",  ANSI_FG_GREEN),
                                           ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     process: %s",
-                    MUXDEF(CONFIG_DTRACE_COND_PROCESS,
+                    MUXDEF(CONFIG_DTRACE_PROCESS,
                           ANSI_FMT("ON",  ANSI_FG_GREEN),
                           ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     result:  %s",
-                    MUXDEF(CONFIG_DTRACE_COND_RESULT,
+                    MUXDEF(CONFIG_DTRACE_RESULT,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
 
@@ -136,11 +136,11 @@ static void printfMonitorWelcome() {
                     MUXDEF(CONFIG_ETRACE, ANSI_FMT("ON",  ANSI_FG_GREEN),
                                           ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     process: %s",
-                    MUXDEF(CONFIG_ETRACE_COND_PROCESS,
+                    MUXDEF(CONFIG_ETRACE_PROCESS,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
     LOG_BRIEF_COLOR("[monitor] [welcome] [trace]     result:  %s",
-                    MUXDEF(CONFIG_ETRACE_COND_RESULT,
+                    MUXDEF(CONFIG_ETRACE_RESULT,
                            ANSI_FMT("ON",  ANSI_FG_GREEN),
                            ANSI_FMT("OFF", ANSI_FG_RED)));
 

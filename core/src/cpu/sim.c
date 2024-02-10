@@ -21,7 +21,7 @@ extern "C" uint32_tt readInsData(uint32_tt addr, uint8_t len) {
 
     if (addr != 0x00000000) {
         data = (uint32_tt)readPhyMemData(addr, len);
-#ifdef CONFIG_MTRACE_COND_PROCESS
+#ifdef CONFIG_MTRACE_PROCESS
         printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
 #endif
     }
@@ -50,7 +50,7 @@ extern "C" uint32_tt readMemData(uint32_tt addr, uint8_t len) {
     else {
         data = 0;
     }
-#ifdef CONFIG_MTRACE_COND_PROCESS
+#ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
 #endif
 
@@ -67,7 +67,7 @@ extern "C" void writeMemData(uint32_tt addr, uint32_tt data, uint8_t len) {
     else {
         writePhyMemData(addr, len, data);
     }
-#ifdef CONFIG_MTRACE_COND_PROCESS
+#ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"wr mem", addr, data, 0);
 #endif
 }
@@ -93,7 +93,7 @@ static void runCPUSimModuleCycle(bool flag) {
     top->clock = 0;
     runCPUSimStep();
 
-#ifdef CONFIG_ITRACE_COND_PROCESS
+#ifdef CONFIG_ITRACE_PROCESS
     if (flag) {
         printfDebugITrace((char *)"process");
     }
@@ -157,7 +157,7 @@ void runCPUSimModule(bool *inst_end_flag) {
 #ifdef CONFIG_FTRACE
         bool inst_func_call = top->io_pTrace_pBase_bInstCall;
         bool inst_func_ret  = top->io_pTrace_pBase_bInstRet;
-#ifdef CONFIG_FTRACE_COND_PROCESS
+#ifdef CONFIG_FTRACE_PROCESS
         printfDebugFTrace((char *)"process",
                           inst_func_call,
                           inst_func_ret,

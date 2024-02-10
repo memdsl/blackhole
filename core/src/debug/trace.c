@@ -274,7 +274,7 @@ void printfDebugMTrace(char *type,
         word_t addr_base = (addr != 0) ? addr : CONFIG_MBASE;
         for (word_t i = 0; i < len; i++) {
             addr = addr_base + i * 4;
-            data = readPhyMemData(addr, 8);
+            data = readPhyMemData(addr, 4);
             LOG_BRIEF("[mtrace] addr: " FMT_WORD " data: " FMT_WORD, addr,
                                                                      data);
         }

@@ -29,11 +29,11 @@ uint64_t cpu_inst_num = 0;
 CPUStruct cpu = {};
 
 static void execCPUTraceAndDifftest() {
-#ifdef CONFIG_ITRACE_COND_PROCESS
+#ifdef CONFIG_ITRACE_PROCESS
     writeLog("%s\n", cpu_logbuf);
 #endif
 
-#ifdef CONFIG_ITRACE_COND_RESULT
+#ifdef CONFIG_ITRACE_RESULT
     recordDebugITrace(cpu_logbuf);
 #endif
 
@@ -59,7 +59,7 @@ static void execCPUTimesSingle() {
         cpu_inst_num++;
     }
 
-#ifdef CONFIG_ITRACE_COND_RESULT
+#ifdef CONFIG_ITRACE_RESULT
         char *cpu_logbuf_p = cpu_logbuf;
         cpu_logbuf_p += snprintf(cpu_logbuf_p,
                                  sizeof(cpu_logbuf),
@@ -139,20 +139,21 @@ void execCPU(uint64_t num) {
     switch (cpu_state.state) {
         case CPU_RUNNING: { cpu_state.state = CPU_STOP; break; }
         case CPU_END: case CPU_ABORT: {
-#ifdef CONFIG_ITRACE_COND_RESULT
-#ifndef CONFIG_ITRACE_COND_PROCESS
-            printf("\n");
+#ifdef CONFIG_ITRACE_RESULT
+#ifndef CONFIG_ITRACE_PROCESS
+            LOG_BRIEF();
 #endif
             printfDebugITrace((char *)"result");
 #endif
-#ifdef CONFIG_MTRACE_COND_RESULT
-            printf("\n");
+#ifdef CONFIG_MTRACE_RESULT
+            LOG_BRIEF();
             printfDebugMTrace((char *)"result", NULL, 0, 0, 16);
 #endif
-#ifdef CONFIG_FTRACE_COND_RESULT
-            printf("\n");
+#ifdef CONFIG_FTRACE_RESULT
+            LOG_BRIEF();
             printfDebugFTrace((char *)"result", NULL, NULL, 0, 0);
 #endif
+            LOG_BRIEF();
             LOG_BRIEF_COLOR("[result] state: %s",
                 (cpu_state.state == CPU_ABORT ?
                     ANSI_FMT("ABORT", ANSI_FG_RED) :

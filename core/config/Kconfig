@@ -88,11 +88,11 @@ mainmenu "Meteor Configuration Menu"
             depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
             bool "Enable instruction tracer"
             default y
-        config ITRACE_COND_PROCESS
+        config ITRACE_PROCESS
             depends on ITRACE
             bool "Trace instructions when the condition is process"
             default y
-        config ITRACE_COND_RESULT
+        config ITRACE_RESULT
             depends on ITRACE
             bool "Trace instructions when the condition is result"
             default n
@@ -100,11 +100,11 @@ mainmenu "Meteor Configuration Menu"
             depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
             bool "Enable memory tracer"
             default n
-        config MTRACE_COND_PROCESS
+        config MTRACE_PROCESS
             depends on MTRACE
             bool "Trace memory when the condition is process"
             default n
-        config MTRACE_COND_RESULT
+        config MTRACE_RESULT
             depends on MTRACE
             bool "Trace memory when the condition is result"
             default n
@@ -116,11 +116,11 @@ mainmenu "Meteor Configuration Menu"
             depends on FTRACE
             bool "Enable print ftrace ELF"
             default n
-        config FTRACE_COND_PROCESS
+        config FTRACE_PROCESS
             depends on FTRACE
             bool "Trace functions when the condition is process"
             default n
-        config FTRACE_COND_RESULT
+        config FTRACE_RESULT
             depends on FTRACE
             bool "Trace functions when the condition is result"
             default n
@@ -128,11 +128,11 @@ mainmenu "Meteor Configuration Menu"
             depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
             bool "Enable device tracer"
             default n
-        config DTRACE_COND_PROCESS
+        config DTRACE_PROCESS
             depends on DTRACE
             bool "Trace devices when the condition is process"
             default n
-        config DTRACE_COND_RESULT
+        config DTRACE_RESULT
             depends on DTRACE
             bool "Trace devices when the condition is result"
             default n
@@ -140,11 +140,11 @@ mainmenu "Meteor Configuration Menu"
             depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
             bool "Enable exception tracer"
             default n
-        config ETRACE_COND_PROCESS
+        config ETRACE_PROCESS
             depends on ETRACE
             bool "Trace exception when the condition is process"
             default n
-        config ETRACE_COND_RESULT
+        config ETRACE_RESULT
             depends on ETRACE
             bool "Trace exception when the condition is result"
             default n
