@@ -93,7 +93,7 @@ static int cmd_x(char *args) {
                 uint32_t addr = handleSDBExpr(args_expr, NULL, &success);
                 for (uint32_t i = 0; i < n; i++) {
                     LOG_BRIEF(
-                        "[sdb] [cmd] addr: 0x%016" PRIx32" = 0x%016" PRIx64"",
+                        "[sdb] [cmd] addr: 0x%016" PRIx32" = 0x%016" PRIx32"",
                         addr,
                         readPhyMemData(addr, 4));
                     addr = addr + 4;
@@ -120,7 +120,7 @@ static int cmd_p(char *args) {
     if (args_expr != NULL) {
         bool success = false;
         word_t ret = handleSDBExpr(args_expr, NULL, &success);
-        LOG_BRIEF("[sdb] [cmd] $%d = %lu", sdb_cmp_p_index, ret);
+        LOG_BRIEF("[sdb] [cmd] $%d = %u", sdb_cmp_p_index, ret);
         sdb_cmp_p_index++;
     }
     else {

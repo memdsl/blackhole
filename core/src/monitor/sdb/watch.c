@@ -199,8 +199,8 @@ int traceSDBWatch() {
                 LOG_BRIEF();
             }
             LOG_BRIEF("[sdb] [watch] hardware watchpoint %d: %s", no, expr_str);
-            LOG_BRIEF("[sdb] [watch] value Old = %lu", val_old);
-            LOG_BRIEF("[sdb] [watch] value New = %lu", val_new);
+            LOG_BRIEF("[sdb] [watch] value Old = %u", val_old);
+            LOG_BRIEF("[sdb] [watch] value New = %u", val_new);
             wp_temp->val = val_new;
         }
         wp_temp = wp_temp->next;

@@ -39,7 +39,7 @@ void printfDebugITrace(char *type) {
         LOG_BRIEF("[itrace] [base]       pc:           " FMT_WORD,
                   top->io_pTrace_pBase_bPC);
         LOG_BRIEF("[itrace] [base]       inst:         " FMT_WORD,
-                  (uint64_t)top->io_pTrace_pBase_bInst);
+                  top->io_pTrace_pBase_bInst);
 
         LOG_BRIEF("[itrace] [gpr] [wr]   wr en:        %d",
                   top->io_pTrace_pGPRWr_bWrEn);
@@ -134,40 +134,41 @@ void printfDebugITrace(char *type) {
 
         char *alu_type = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bALUType) {
-            case  0: alu_type = (char *)"X    "; break;
-            case  1: alu_type = (char *)"SLL  "; break;
-            case  2: alu_type = (char *)"SRL  "; break;
-            case  3: alu_type = (char *)"SRA  "; break;
-            case  4: alu_type = (char *)"ADD  "; break;
-            case  5: alu_type = (char *)"SUB  "; break;
-            case  6: alu_type = (char *)"XOR  "; break;
-            case  7: alu_type = (char *)"OR   "; break;
-            case  8: alu_type = (char *)"AND  "; break;
-            case  9: alu_type = (char *)"SLT  "; break;
-            case 10: alu_type = (char *)"SLTU "; break;
-            case 11: alu_type = (char *)"BEQ  "; break;
-            case 12: alu_type = (char *)"BNE  "; break;
-            case 13: alu_type = (char *)"BLT  "; break;
-            case 14: alu_type = (char *)"BGE  "; break;
-            case 15: alu_type = (char *)"BLTU "; break;
-            case 16: alu_type = (char *)"BGEU "; break;
-            case 17: alu_type = (char *)"JALR "; break;
-            case 18: alu_type = (char *)"MUL  "; break;
-            case 19: alu_type = (char *)"MULSU"; break;
-            case 20: alu_type = (char *)"MULU "; break;
-            case 21: alu_type = (char *)"DIV  "; break;
-            case 22: alu_type = (char *)"DIVU "; break;
-            case 23: alu_type = (char *)"REM  "; break;
-            case 24: alu_type = (char *)"REMU "; break;
-            case 25: alu_type = (char *)"SLLW "; break;
-            case 26: alu_type = (char *)"SRLW "; break;
-            case 27: alu_type = (char *)"SRLIW"; break;
-            case 28: alu_type = (char *)"SRAW "; break;
-            case 29: alu_type = (char *)"SRAIW"; break;
-            case 30: alu_type = (char *)"DIVW "; break;
-            case 31: alu_type = (char *)"DIVUW"; break;
-            case 32: alu_type = (char *)"REMW "; break;
-            default: alu_type = (char *)"X";     break;
+            case  0: alu_type = (char *)"X     "; break;
+            case  1: alu_type = (char *)"SLL   "; break;
+            case  2: alu_type = (char *)"SRL   "; break;
+            case  3: alu_type = (char *)"SRA   "; break;
+            case  4: alu_type = (char *)"ADD   "; break;
+            case  5: alu_type = (char *)"SUB   "; break;
+            case  6: alu_type = (char *)"XOR   "; break;
+            case  7: alu_type = (char *)"OR    "; break;
+            case  8: alu_type = (char *)"AND   "; break;
+            case  9: alu_type = (char *)"SLT   "; break;
+            case 10: alu_type = (char *)"SLTU  "; break;
+            case 11: alu_type = (char *)"BEQ   "; break;
+            case 12: alu_type = (char *)"BNE   "; break;
+            case 13: alu_type = (char *)"BLT   "; break;
+            case 14: alu_type = (char *)"BGE   "; break;
+            case 15: alu_type = (char *)"BLTU  "; break;
+            case 16: alu_type = (char *)"BGEU  "; break;
+            case 17: alu_type = (char *)"JALR  "; break;
+            case 18: alu_type = (char *)"MUL   "; break;
+            case 19: alu_type = (char *)"MULH  "; break;
+            case 20: alu_type = (char *)"MULHSU"; break;
+            case 21: alu_type = (char *)"MULHU "; break;
+            case 22: alu_type = (char *)"DIV   "; break;
+            case 23: alu_type = (char *)"DIVU  "; break;
+            case 24: alu_type = (char *)"REM   "; break;
+            case 25: alu_type = (char *)"REMU  "; break;
+            case 26: alu_type = (char *)"SLLW  "; break;
+            case 27: alu_type = (char *)"SRLW  "; break;
+            case 28: alu_type = (char *)"SRLIW "; break;
+            case 29: alu_type = (char *)"SRAW  "; break;
+            case 30: alu_type = (char *)"SRAIW "; break;
+            case 31: alu_type = (char *)"DIVW  "; break;
+            case 32: alu_type = (char *)"DIVUW "; break;
+            case 33: alu_type = (char *)"REMW  "; break;
+            default: alu_type = (char *)"X     "; break;
         }
         LOG_BRIEF("[itrace] [idu] [ctr]  alu type:     %s", alu_type);
 
@@ -238,6 +239,9 @@ void printfDebugITrace(char *type) {
         LOG_BRIEF("[itrace] [idu] [data] jmp/wr data:  " FMT_WORD,
                   top->io_pTrace_pIDUData_bJmpOrWrData);
 
+        LOG_BRIEF("[itrace] [exu] [out]  alu out:      " FMT_WORD,
+                  top->io_pTrace_pEXUOut_bALUOut);
+
         LOG_BRIEF();
     }
     else if (strcmp(type, "result") == 0) {
@@ -284,30 +288,27 @@ static char  *inst_func_name_arr[ARR_LEN];
 static char **inst_func_name_head = inst_func_name_arr;
 static char  *func_name_arr[ARR_LEN];
 
-static int judgeDebugFTraceIsELF64(FILE *fp) {
+static int judgeDebugFTraceIsELF32(FILE *fp) {
     char buf[16];
     int  nread = fread(buf, 1, 16, fp);
     fseek(fp, 0, SEEK_SET);
-    // If the read data is less than 16 bits, it is not an ELF64 format file
+
     if (nread < 16) {
         return 0;
     }
-    // If the first 4 characters are different, it is not an ELF64 format file
     if (strncmp(buf, ELFMAG, SELFMAG)) {
         return 0;
     }
-    // If the cached data does not match the standard, it is not an ELF64
-    // format file
-    if (buf[EI_CLASS] != ELFCLASS64) {
+    if (buf[EI_CLASS] != ELFCLASS32) {
         return 0;
     }
 
     return 1;
 }
 
-static char *getDebugFTraceFunc(Elf64_Addr addr) {
-    Elf64_Addr offset = addr - CONFIG_MBASE;
-    ASSERT(offset < ARR_LEN, "[trace] out of bounds: %ld", offset);
+static char *getDebugFTraceFunc(Elf32_Addr addr) {
+    Elf32_Addr offset = addr - CONFIG_MBASE;
+    ASSERT(offset < ARR_LEN, "[ftrace] out of bounds: %d", offset);
     if (func_name_arr[offset] != NULL) {
         return func_name_arr[offset];
     }
@@ -319,59 +320,52 @@ static char *getDebugFTraceFunc(Elf64_Addr addr) {
 static void initDebugFTrace(char *elf_file) {
     if (elf_file != NULL) {
         FILE *fp = fopen(elf_file, "r");
-        ASSERT(fp, "[trace] can not open '%s'", elf_file);
-        ASSERT(judgeDebugFTraceIsELF64(fp), "[trace] file type mismatch");
+        ASSERT(fp, "[ftrace] can not open '%s'", elf_file);
+        ASSERT(judgeDebugFTraceIsELF32(fp), "[ftrace] file type mismatch");
 
-        // Read ELF file header
-        Elf64_Ehdr elf_header;
+        Elf32_Ehdr elf_header;
         fread(&elf_header, 1, sizeof(elf_header), fp);
 
-        // Read ELF section header
-        Elf64_Shdr elf_section_arr[elf_header.e_shnum];
+        Elf32_Shdr elf_section_arr[elf_header.e_shnum];
         fseek(fp, elf_header.e_shoff, SEEK_SET);
         fread(elf_section_arr,
-              sizeof(Elf64_Shdr),
+              sizeof(Elf32_Shdr),
               (elf_header.e_shnum * elf_header.e_shentsize),
               fp);
 
-        // Read the ELF section symbol table and section character table
-        Elf64_Shdr elf_section_symbol;
-        Elf64_Shdr elf_section_string;
+        Elf32_Shdr elf_section_symbol;
+        Elf32_Shdr elf_section_string;
         for (int i = 0; i < elf_header.e_shnum; i++) {
             if (elf_section_arr[i].sh_type == SHT_SYMTAB) {
                 memcpy(&elf_section_symbol,
                        &elf_section_arr[i],
-                       sizeof(Elf64_Shdr));
+                       sizeof(Elf32_Shdr));
                 if (elf_section_arr[elf_section_symbol.sh_link].sh_type ==
                     SHT_STRTAB) {
                     memcpy(&elf_section_string,
                            &elf_section_arr[elf_section_symbol.sh_link],
-                           sizeof(Elf64_Shdr));
+                           sizeof(Elf32_Shdr));
                 }
             }
         }
 
-        // Read ELF character table
         char elf_string_name_arr[elf_section_string.sh_size];
         fseek(fp, elf_section_string.sh_offset, SEEK_SET);
         fread(&elf_string_name_arr, 1, sizeof(elf_string_name_arr), fp);
 
-        // Read ELF symbol table
-        Elf64_Xword elf_symbol_cnt = elf_section_symbol.sh_size /
+        Elf32_Xword elf_symbol_cnt = elf_section_symbol.sh_size /
                                      elf_section_symbol.sh_entsize;
-        Elf64_Sym elf_symbol_arr[elf_symbol_cnt];
+        Elf32_Sym elf_symbol_arr[elf_symbol_cnt];
         fseek(fp, elf_section_symbol.sh_offset, SEEK_SET);
         fread(&elf_symbol_arr, 1, elf_section_symbol.sh_size, fp);
         for (int i = 0; i < elf_symbol_cnt; i++) {
             uint8_t st_info = elf_symbol_arr[i].st_info;
-            // Read the corresponding content in the character table based on
-            // the offset of the symbol table name
             if (ELF64_ST_TYPE(st_info) == STT_FUNC) {
-                Elf64_Addr st_value = elf_symbol_arr[i].st_value;
+                Elf32_Addr st_value = elf_symbol_arr[i].st_value;
                 Elf32_Word st_name = elf_symbol_arr[i].st_name;
                 char *func_name = elf_string_name_arr + st_name;
-                Elf64_Addr offset = st_value - elf_header.e_entry;
-                ASSERT(offset < ARR_LEN, "[trace] out of bounds: %ld", offset);
+                Elf32_Addr offset = st_value - elf_header.e_entry;
+                ASSERT(offset < ARR_LEN, "[trace] out of bounds: %d", offset);
                 if (func_name_arr[offset] == NULL) {
                     func_name_arr[offset] = (char *)malloc(sizeof(char) * 256);
                 }
