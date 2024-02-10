@@ -33,7 +33,7 @@ void initDeviceKey() {
 }
 
 void sendDeviceKey(uint8_t scancode, bool is_keydown) {
-    if (npc_state.state == NPC_RUNNING && keymap[scancode] != KEY_NONE) {
+    if (cpu_state.state == CPU_RUNNING && keymap[scancode] != KEY_NONE) {
         uint32_t am_scancode = keymap[scancode] |
                               (is_keydown ? KEYDOWN_MASK : 0);
         enqueueDeviceKey(am_scancode);

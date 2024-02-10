@@ -6,9 +6,9 @@
 typedef struct {
     word_t gpr[32];
     word_t pc;
-} CPUState;
+} CPUStruct;
 
-extern CPUState cpu;
+extern CPUStruct cpu;
 
 void initISA();
 

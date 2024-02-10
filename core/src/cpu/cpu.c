@@ -26,7 +26,7 @@ extern uint64_t sim_cycle_num;
 
 char cpu_logbuf[256];
 uint64_t cpu_inst_num = 0;
-CPUState cpu = {};
+CPUStruct cpu = {};
 
 static void execCPUTraceAndDifftest() {
 #ifdef CONFIG_ITRACE_COND_PROCESS
@@ -39,7 +39,7 @@ static void execCPUTraceAndDifftest() {
 
 #ifdef CONFIG_SDB_WATCH
     if (traceSDBWatch() > 0) {
-        npc_state.state = NPC_STOP;
+        cpu_state.state = CPU_STOP;
     }
 #endif
 
@@ -90,7 +90,7 @@ static void execCPUTimesMultip(uint64_t num) {
     for (; num > 0; num--) {
         execCPUTimesSingle();
         execCPUTraceAndDifftest();
-        if (npc_state.state != NPC_RUNNING) {
+        if (cpu_state.state != CPU_RUNNING) {
             break;
         }
         IFDEF(CONFIG_DEVICE, updateDeviceState());
@@ -121,12 +121,12 @@ static void printfCPUStatistic() {
 
 void execCPU(uint64_t num) {
     cpu_print_step = (num < MAX_INST_TO_PRINT);
-    switch (npc_state.state) {
-        case NPC_END: case NPC_ABORT:
+    switch (cpu_state.state) {
+        case CPU_END: case CPU_ABORT:
             printf("Program execution has ended. To restart the program, " \
                    "exit NPC and run again.\n");
             return;
-        default: npc_state.state = NPC_RUNNING;
+        default: cpu_state.state = CPU_RUNNING;
     }
 
     uint64_t timer_start = getTimerValue();
@@ -136,9 +136,9 @@ void execCPU(uint64_t num) {
     uint64_t timer_end = getTimerValue();
     cpu_timer += timer_end - timer_start;
 
-    switch (npc_state.state) {
-        case NPC_RUNNING: { npc_state.state = NPC_STOP; break; }
-        case NPC_END: case NPC_ABORT: {
+    switch (cpu_state.state) {
+        case CPU_RUNNING: { cpu_state.state = CPU_STOP; break; }
+        case CPU_END: case CPU_ABORT: {
 #ifdef CONFIG_ITRACE_COND_RESULT
 #ifndef CONFIG_ITRACE_COND_PROCESS
             printf("\n");
@@ -154,15 +154,15 @@ void execCPU(uint64_t num) {
             printfDebugFTrace((char *)"result", NULL, NULL, 0, 0);
 #endif
             LOG_BRIEF_COLOR("[result] state: %s",
-                (npc_state.state == NPC_ABORT ?
+                (cpu_state.state == CPU_ABORT ?
                     ANSI_FMT("ABORT", ANSI_FG_RED) :
-                    (npc_state.halt_ret == 0 ?
+                    (cpu_state.halt_ret == 0 ?
                         ANSI_FMT("SUCCESS", ANSI_FG_GREEN) :
                         ANSI_FMT("FAILED", ANSI_FG_RED))));
-            LOG_BRIEF_COLOR("[result] pc:    " FMT_WORD, npc_state.halt_pc);
+            LOG_BRIEF_COLOR("[result] pc:    " FMT_WORD, cpu_state.halt_pc);
             LOG_BRIEF_COLOR();
         }
-        case NPC_QUIT: { printfCPUStatistic(); }
+        case CPU_QUIT: { printfCPUStatistic(); }
     }
 }
 

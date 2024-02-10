@@ -175,7 +175,7 @@ void runCPUSimModule(bool *inst_end_flag) {
 
     if (sim_ebreak) {
         sim_cycle_num--;
-        setNPCState(NPC_END, sim_pc, top->io_pEnd_bData);
+        setCPUState(CPU_END, sim_pc, top->io_pEnd_bData);
     }
 }
 

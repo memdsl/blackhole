@@ -2,7 +2,7 @@
 #include <isa/isa.h>
 #include <isa/gpr.h>
 
-bool checkISADifftestGPR(CPUState *cpu_ref, vaddr_t pc) {
+bool checkISADifftestGPR(CPUStruct *cpu_ref, vaddr_t pc) {
     for (int i = 0; i < 32; i++) {
         if (cpu_ref->gpr[i] != getISAGPR(i)) {
             printf("[difftest] error at pc: " FMT_WORD "\n", pc);
@@ -12,7 +12,7 @@ bool checkISADifftestGPR(CPUState *cpu_ref, vaddr_t pc) {
     return true;
 }
 
-void printfISADifftest(CPUState *cpu_ref, vaddr_t pc) {
+void printfISADifftest(CPUStruct *cpu_ref, vaddr_t pc) {
     char *space_num = (char *)"";
     char *space_gpr = (char *)"";
     char *error_str = (char *)"";

@@ -3,17 +3,17 @@
 
 #include <common.h>
 
-enum { NPC_RUNNING, NPC_STOP, NPC_END, NPC_ABORT, NPC_QUIT };
+enum { CPU_RUNNING, CPU_STOP, CPU_END, CPU_ABORT, CPU_QUIT };
 
 typedef struct {
     int state;
     vaddr_t halt_pc;
     uint32_t halt_ret;
-} NPCState;
+} CPUState;
 
-extern NPCState npc_state;
+extern CPUState cpu_state;
 
-int judgeNPCStateIsBad();
-void setNPCState(int state, vaddr_t pc, int ret);
+int judgeCPUStateIsBad();
+void setCPUState(int state, vaddr_t pc, int ret);
 
 #endif

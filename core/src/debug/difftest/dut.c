@@ -25,10 +25,10 @@ handleDifftestInitT handleDifftestInit = NULL;
 static bool difftest_skip_ref = false;
 static int difftest_skip_dut_num = 0;
 
-static void checkDebugDifftestRegs(CPUState *cpu_ref, vaddr_t pc) {
+static void checkDebugDifftestRegs(CPUStruct *cpu_ref, vaddr_t pc) {
     if (!checkISADifftestGPR(cpu_ref, pc)) {
-        npc_state.state = NPC_ABORT;
-        npc_state.halt_pc = pc;
+        cpu_state.state = CPU_ABORT;
+        cpu_state.halt_pc = pc;
         printfISADifftest(cpu_ref, pc);
     }
 }
@@ -85,7 +85,7 @@ void skipDebugDifftestDut(int ref_num, int dut_num) {
 }
 
 void stepDebugDifftest(vaddr_t pc, vaddr_t npc) {
-    CPUState cpu_ref;
+    CPUStruct cpu_ref;
 
     if (difftest_skip_dut_num > 0) {
         handleDifftestRegcpy(&cpu_ref, DIFFTEST_TO_DUT);

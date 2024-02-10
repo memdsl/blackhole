@@ -1,15 +1,15 @@
 #include <state.h>
 
-NPCState npc_state = { .state = NPC_STOP };
+CPUState cpu_state = { .state = CPU_STOP };
 
-int judgeNPCStateIsBad() {
-    int good = (npc_state.state == NPC_END && npc_state.halt_ret == 0) ||
-               (npc_state.state == NPC_QUIT);
+int judgeCPUStateIsBad() {
+    int good = (cpu_state.state == CPU_END && cpu_state.halt_ret == 0) ||
+               (cpu_state.state == CPU_QUIT);
     return !good;
 }
 
-void setNPCState(int state, vaddr_t pc, int ret) {
-    npc_state.state    = state;
-    npc_state.halt_pc  = pc;
-    npc_state.halt_ret = ret;
+void setCPUState(int state, vaddr_t pc, int ret) {
+    cpu_state.state    = state;
+    cpu_state.halt_pc  = pc;
+    cpu_state.halt_ret = ret;
 }

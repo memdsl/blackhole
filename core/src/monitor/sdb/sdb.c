@@ -39,7 +39,7 @@ static int cmd_c(char *args) {
 }
 
 static int cmd_q(char *args) {
-    setNPCState(NPC_QUIT, 0, 0);
+    setCPUState(CPU_QUIT, 0, 0);
     return -1;
 }
 
