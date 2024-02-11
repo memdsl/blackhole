@@ -35,40 +35,40 @@ void recordDebugITrace(char *logbuf) {
 
 void printfDebugITrace(char *type) {
     if (strcmp(type, "process") == 0) {
-        LOG_BRIEF("[itrace] cycle num:                 %ld", sim_cycle_num);
-        LOG_BRIEF("[itrace] [base]       pc:           " FMT_WORD,
-                  top->io_pTrace_pBase_bPC);
-        LOG_BRIEF("[itrace] [base]       inst:         " FMT_WORD,
-                  top->io_pTrace_pBase_bInst);
+        LOG_PURE("[itrace] cycle num:                 %ld", sim_cycle_num);
+        LOG_PURE("[itrace] [base]       pc:           " FMT_WORD,
+                 top->io_pTrace_pBase_bPC);
+        LOG_PURE("[itrace] [base]       inst:         " FMT_WORD,
+                 top->io_pTrace_pBase_bInst);
 
-        LOG_BRIEF("[itrace] [gpr] [wr]   wr en:        %d",
-                  top->io_pTrace_pGPRWr_bWrEn);
-        LOG_BRIEF("[itrace] [gpr] [wr]   wr addr:      " FMT_WORD,
-                  top->io_pTrace_pGPRWr_bWrAddr);
-        LOG_BRIEF("[itrace] [gpr] [wr]   wr data:      " FMT_WORD,
-                  top->io_pTrace_pGPRWr_bWrData);
+        LOG_PURE("[itrace] [gpr] [wr]   wr en:        %d",
+                 top->io_pTrace_pGPRWr_bWrEn);
+        LOG_PURE("[itrace] [gpr] [wr]   wr addr:      " FMT_WORD,
+                 top->io_pTrace_pGPRWr_bWrAddr);
+        LOG_PURE("[itrace] [gpr] [wr]   wr data:      " FMT_WORD,
+                 top->io_pTrace_pGPRWr_bWrData);
 
-        LOG_BRIEF("[itrace] [mem]        rd en:        %d",
-                  top->io_pTrace_pMem_bRdEn);
-        LOG_BRIEF("[itrace] [mem]        rd addr a:    " FMT_WORD,
-                  top->io_pTrace_pMem_bRdAddrA);
-        LOG_BRIEF("[itrace] [mem]        rd addr b:    " FMT_WORD,
-                  top->io_pTrace_pMem_bRdAddrB);
-        LOG_BRIEF("[itrace] [mem]        wr en:        %d",
-                  top->io_pTrace_pMem_bWrEn);
-        LOG_BRIEF("[itrace] [mem]        wr addr:      " FMT_WORD,
-                  top->io_pTrace_pMem_bWrAddr);
-        LOG_BRIEF("[itrace] [mem]        wr data:      " FMT_WORD,
-                  top->io_pTrace_pMem_bWrData);
-        LOG_BRIEF("[itrace] [mem]        wr mask:      %d %d %d %d",
-                  top->io_pTrace_pMem_bWrMask_0,
-                  top->io_pTrace_pMem_bWrMask_1,
-                  top->io_pTrace_pMem_bWrMask_2,
-                  top->io_pTrace_pMem_bWrMask_3);
-        LOG_BRIEF("[itrace] [mem]        rd data a:    " FMT_WORD,
-                  top->io_pTrace_pMem_bRdDataA);
-        LOG_BRIEF("[itrace] [mem]        rd data b:    " FMT_WORD,
-                  top->io_pTrace_pMem_bRdDataB);
+        LOG_PURE("[itrace] [mem]        rd en:        %d",
+                 top->io_pTrace_pMem_bRdEn);
+        LOG_PURE("[itrace] [mem]        rd addr a:    " FMT_WORD,
+                 top->io_pTrace_pMem_bRdAddrA);
+        LOG_PURE("[itrace] [mem]        rd addr b:    " FMT_WORD,
+                 top->io_pTrace_pMem_bRdAddrB);
+        LOG_PURE("[itrace] [mem]        wr en:        %d",
+                 top->io_pTrace_pMem_bWrEn);
+        LOG_PURE("[itrace] [mem]        wr addr:      " FMT_WORD,
+                 top->io_pTrace_pMem_bWrAddr);
+        LOG_PURE("[itrace] [mem]        wr data:      " FMT_WORD,
+                 top->io_pTrace_pMem_bWrData);
+        LOG_PURE("[itrace] [mem]        wr mask:      %d %d %d %d",
+                 top->io_pTrace_pMem_bWrMask_0,
+                 top->io_pTrace_pMem_bWrMask_1,
+                 top->io_pTrace_pMem_bWrMask_2,
+                 top->io_pTrace_pMem_bWrMask_3);
+        LOG_PURE("[itrace] [mem]        rd data a:    " FMT_WORD,
+                 top->io_pTrace_pMem_bRdDataA);
+        LOG_PURE("[itrace] [mem]        rd data b:    " FMT_WORD,
+                 top->io_pTrace_pMem_bRdDataB);
 
         char *inst_name = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bInstName) {
@@ -130,7 +130,7 @@ void printfDebugITrace(char *type) {
             case 55: inst_name = (char *)"REMU  "; break;
             default: inst_name = (char *)"X";      break;
         }
-        LOG_BRIEF("[itrace] [idu] [ctr]  inst name:    %s ", inst_name);
+        LOG_PURE("[itrace] [idu] [ctr]  inst name:    %s ", inst_name);
 
         char *alu_type = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bALUType) {
@@ -170,7 +170,7 @@ void printfDebugITrace(char *type) {
             case 33: alu_type = (char *)"REMW  "; break;
             default: alu_type = (char *)"X     "; break;
         }
-        LOG_BRIEF("[itrace] [idu] [ctr]  alu type:     %s", alu_type);
+        LOG_PURE("[itrace] [idu] [ctr]  alu type:     %s", alu_type);
 
         char *alu_rs1 = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bALURS1) {
@@ -179,7 +179,7 @@ void printfDebugITrace(char *type) {
             case 2:  alu_rs1 = (char *)"GPR"; break;
             default: alu_rs1 = (char *)"X";   break;
         }
-        LOG_BRIEF("[itrace] [idu] [ctr]  alu rs1:      %s", alu_rs1);
+        LOG_PURE("[itrace] [idu] [ctr]  alu rs1:      %s", alu_rs1);
 
         char *alu_rs2 = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bALURS2) {
@@ -194,12 +194,12 @@ void printfDebugITrace(char *type) {
             case 8:  alu_rs2 = (char *)"4";     break;
             default: alu_rs2 = (char *)"X";     break;
         }
-        LOG_BRIEF("[itrace] [idu] [ctr]  alu rs2:      %s", alu_rs2);
+        LOG_PURE("[itrace] [idu] [ctr]  alu rs2:      %s", alu_rs2);
 
-        LOG_BRIEF("[itrace] [idu] [ctr]  jmp en:       %d",
-                  top->io_pTrace_pIDUCtr_bJmpEn);
-        LOG_BRIEF("[itrace] [idu] [ctr]  mem wr en:    %d",
-                  top->io_pTrace_pIDUCtr_bMemWrEn);
+        LOG_PURE("[itrace] [idu] [ctr]  jmp en:       %d",
+                 top->io_pTrace_pIDUCtr_bJmpEn);
+        LOG_PURE("[itrace] [idu] [ctr]  mem wr en:    %d",
+                 top->io_pTrace_pIDUCtr_bMemWrEn);
 
         char *mem_byt = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bMemByt) {
@@ -214,7 +214,7 @@ void printfDebugITrace(char *type) {
             case 8:  mem_byt = (char *)"8_S"; break;
             default: mem_byt = (char *)"X";   break;
         }
-        LOG_BRIEF("[itrace] [idu] [ctr]  mem byt:      %s", mem_byt);
+        LOG_PURE("[itrace] [idu] [ctr]  mem byt:      %s", mem_byt);
 
         char *gpr_wr_src = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bGPRWrSrc) {
@@ -225,33 +225,33 @@ void printfDebugITrace(char *type) {
             case 4:  gpr_wr_src = (char *)"CSR"; break;
             default: gpr_wr_src = (char *)"X";   break;
         }
-        LOG_BRIEF("[itrace] [idu] [ctr]  gpr wr src:   %s", gpr_wr_src);
+        LOG_PURE("[itrace] [idu] [ctr]  gpr wr src:   %s", gpr_wr_src);
 
-        LOG_BRIEF("[itrace] [idu] [ctr]  gpr wr en:    %d",
-                  top->io_pTrace_pIDUCtr_bGPRWrEn);
+        LOG_PURE("[itrace] [idu] [ctr]  gpr wr en:    %d",
+                 top->io_pTrace_pIDUCtr_bGPRWrEn);
 
-        LOG_BRIEF("[itrace] [idu] [data] gpr rd addr:  " FMT_WORD,
-                  top->io_pTrace_pIDUData_bGPRRdAddr);
-        LOG_BRIEF("[itrace] [idu] [data] alu rs1 data: " FMT_WORD,
-                  top->io_pTrace_pIDUData_bALURS1Data);
-        LOG_BRIEF("[itrace] [idu] [data] alu rs2 data: " FMT_WORD,
-                  top->io_pTrace_pIDUData_bALURS2Data);
-        LOG_BRIEF("[itrace] [idu] [data] jmp/wr data:  " FMT_WORD,
-                  top->io_pTrace_pIDUData_bJmpOrWrData);
+        LOG_PURE("[itrace] [idu] [data] gpr rd addr:  " FMT_WORD,
+                 top->io_pTrace_pIDUData_bGPRRdAddr);
+        LOG_PURE("[itrace] [idu] [data] alu rs1 data: " FMT_WORD,
+                 top->io_pTrace_pIDUData_bALURS1Data);
+        LOG_PURE("[itrace] [idu] [data] alu rs2 data: " FMT_WORD,
+                 top->io_pTrace_pIDUData_bALURS2Data);
+        LOG_PURE("[itrace] [idu] [data] jmp/wr data:  " FMT_WORD,
+                 top->io_pTrace_pIDUData_bJmpOrWrData);
 
-        LOG_BRIEF("[itrace] [exu] [out]  alu out:      " FMT_WORD,
-                  top->io_pTrace_pEXUOut_bALUOut);
+        LOG_PURE("[itrace] [exu] [out]  alu out:      " FMT_WORD,
+                 top->io_pTrace_pEXUOut_bALUOut);
 
-        LOG_BRIEF();
+        LOG_PURE();
     }
     else if (strcmp(type, "result") == 0) {
         itrace_head = itrace;
         while (*itrace_head != NULL && itrace_head != itrace_tail) {
             if (itrace_head == itrace_curr) {
-                LOG_BRIEF("[itrace] ----> %s", *itrace_head);
+                LOG_PURE("[itrace] ----> %s", *itrace_head);
             }
             else {
-                LOG_BRIEF("[itrace]       %s", *itrace_head);
+                LOG_PURE("[itrace]       %s", *itrace_head);
             }
             char *itrace_temp = *itrace_head;
             free(itrace_temp);
@@ -266,17 +266,17 @@ void printfDebugMTrace(char *type,
                        word_t data,
                        word_t len) {
     if (strcmp(type, "process") == 0) {
-        LOG_BRIEF("[mtrace] addr: " FMT_WORD " data: " FMT_WORD " %s", addr,
-                                                                       data,
-                                                                       dir);
+        LOG_PURE("[mtrace] addr: " FMT_WORD " data: " FMT_WORD " %s", addr,
+                                                                      data,
+                                                                      dir);
     }
     else if (strcmp(type, "result") == 0) {
         word_t addr_base = (addr != 0) ? addr : CONFIG_MBASE;
         for (word_t i = 0; i < len; i++) {
             addr = addr_base + i * 4;
-            data = readPhyMemData(addr, 4);
-            LOG_BRIEF("[mtrace] addr: " FMT_WORD " data: " FMT_WORD, addr,
-                                                                     data);
+            data = readMemoryPhyData(addr, 4);
+            LOG_PURE("[mtrace] addr: " FMT_WORD " data: " FMT_WORD, addr,
+                                                                    data);
         }
     }
 }

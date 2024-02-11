@@ -11,7 +11,7 @@ void initLog(const char *log_file) {
         ASSERT(fp, "[log] can not open '%s'", log_file);
         log_fp = fp;
     }
-    LOG_BRIEF_COLOR("[log] file: %s", log_file ? log_file : "stdout");
+    LOG_PURE_COLOR("[log] file: %s", log_file ? log_file : "stdout");
 }
 
 bool enaLog() {

@@ -55,7 +55,7 @@ static void freeSDBWatchPool(int no) {
         wp_temp->val = 0;
     }
     else {
-        LOG_BRIEF("[sdb] [watch] no breakpoint number %d", no);
+        LOG_PURE("[sdb] [watch] no breakpoint number %d", no);
     }
 }
 
@@ -106,7 +106,7 @@ void initSDBWatch() {
 
 void newSDBWatch(char *expr) {
     WP *wp_new = newSDBWatchPool(expr);
-    LOG_BRIEF("[sdb] [watch] hardware watchpoint %d: %s", wp_new->no, wp_new->expr);
+    LOG_PURE("[sdb] [watch] hardware watchpoint %d: %s", wp_new->no, wp_new->expr);
 }
 
 void printfSDBWatch() {
@@ -116,15 +116,15 @@ void printfSDBWatch() {
         char *line_arrow = NULL;
         char *line_next = NULL;
 
-        LOG_BRIEF("[sdb] [watch]");
-        LOG_BRIEF("Num%5sType%10sDisp Enb Address%10sWhat\n", " ", " ", " ");
+        LOG_PURE("[sdb] [watch]");
+        LOG_PURE("Num%5sType%10sDisp Enb Address%10sWhat\n", " ", " ", " ");
 
         WP *wp_temp = wp_head;
         while (wp_temp != NULL) {
             int no = wp_temp->no;
             char *expr = wp_temp->expr;
 
-            LOG_BRIEF("%-2d%6shw watchpoint keep y%20s%s\n", no, " ", " ", expr);
+            LOG_PURE("%-2d%6shw watchpoint keep y%20s%s\n", no, " ", " ", expr);
 
             char *line_no_t = (char *)malloc(sizeof(char) * WATCH_ARR_LENGTH);
             sprintf(line_no_t, "|  %02d  |", no);
@@ -158,13 +158,13 @@ void printfSDBWatch() {
             wp_temp = wp_temp->next;
         }
 
-        LOG_BRIEF();
-        LOG_BRIEF("%s", line);
-        LOG_BRIEF("%s", line_no);
-        LOG_BRIEF("%s", line_arrow);
-        LOG_BRIEF("%s", line_next);
-        LOG_BRIEF("%s", line);
-        LOG_BRIEF();
+        LOG_PURE();
+        LOG_PURE("%s", line);
+        LOG_PURE("%s", line_no);
+        LOG_PURE("%s", line_arrow);
+        LOG_PURE("%s", line_next);
+        LOG_PURE("%s", line);
+        LOG_PURE();
 
         free(line);
         free(line_no);
@@ -172,7 +172,7 @@ void printfSDBWatch() {
         free(line_next);
     }
     else {
-        LOG_BRIEF("[sdb] [watch] no watchpoints");
+        LOG_PURE("[sdb] [watch] no watchpoints");
     }
 }
 
@@ -196,11 +196,11 @@ int traceSDBWatch() {
         if (val_new != val_old) {
             count++;
             if (count > 1) {
-                LOG_BRIEF();
+                LOG_PURE();
             }
-            LOG_BRIEF("[sdb] [watch] hardware watchpoint %d: %s", no, expr_str);
-            LOG_BRIEF("[sdb] [watch] value Old = %u", val_old);
-            LOG_BRIEF("[sdb] [watch] value New = %u", val_new);
+            LOG_PURE("[sdb] [watch] hardware watchpoint %d: %s", no, expr_str);
+            LOG_PURE("[sdb] [watch] value Old = %u", val_old);
+            LOG_PURE("[sdb] [watch] value New = %u", val_new);
             wp_temp->val = val_new;
         }
         wp_temp = wp_temp->next;

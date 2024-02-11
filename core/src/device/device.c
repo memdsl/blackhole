@@ -1,9 +1,11 @@
 #include <SDL2/SDL.h>
 
-#include <util/timer.h>
+#include <device/io/map.h>
+
 #include <device/device.h>
 #include <device/keyboard.h>
 #include <device/vga.h>
+#include <util/timer.h>
 #include <state.h>
 
 #define TIMER_HZ 60
@@ -14,6 +16,10 @@ void clearDeviceEventQueue() {
 }
 
 void initDevice() {
+    initDeviceMap();
+
+    IFDEF(CONFIG_HAS_SERIAL, initDeviceSerial());
+    IFDEF(CONFIG_HAS_TIMER, initDeviceTimer());
     IFDEF(CONFIG_HAS_KEYBOARD, initDeviceKey());
     IFDEF(CONFIG_HAS_VGA, initDeviceVGA());
 }

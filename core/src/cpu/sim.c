@@ -22,7 +22,7 @@ extern "C" uint32_tt readInsData(uint32_tt addr, uint8_t len) {
     // addr = addr & ~0x3u;
 
     if (addr != 0x00000000) {
-        data = (uint32_tt)readPhyMemData(addr, len);
+        data = (uint32_tt)readMemoryPhyData(addr, len);
 #ifdef CONFIG_MTRACE_PROCESS
         printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
 #endif
@@ -37,7 +37,7 @@ extern "C" uint32_tt readMemData(uint32_tt addr, uint8_t len) {
     // addr = addr & 0xfffffffc;
     // addr = addr & ~0x3u;
 
-    uint32_tt data = (uint32_tt)readPhyMemData(addr, len);
+    uint32_tt data = (uint32_tt)readMemoryPhyData(addr, len);
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
 #endif
@@ -50,7 +50,7 @@ extern "C" void writeMemData(uint32_tt addr, uint32_tt data, uint8_t len) {
     // addr = addr & 0xfffffffc;
     // addr = addr & ~0x3u;
 
-    writePhyMemData(addr, len, data);
+    writeMemoryPhyData(addr, len, data);
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"wr mem", addr, data, 0);
 #endif

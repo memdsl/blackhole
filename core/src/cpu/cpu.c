@@ -100,23 +100,23 @@ static void execCPUTimesMultip(uint64_t num) {
 static void printfCPUStatistic() {
     IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
     #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%", "%'") PRIu64
-    LOG_BRIEF_COLOR("[statistic] time      = " NUMBERIC_FMT " us", cpu_timer);
-    LOG_BRIEF_COLOR("[statistic] freq      = %lf KHz", (1.0 / cpu_timer) * 1000);
-    LOG_BRIEF_COLOR("[statistic] inst  num = " NUMBERIC_FMT, cpu_inst_num);
-    LOG_BRIEF_COLOR("[statistic] cycle num = " NUMBERIC_FMT, sim_cycle_num);
+    LOG_PURE_COLOR("[statistic] time      = " NUMBERIC_FMT " us", cpu_timer);
+    LOG_PURE_COLOR("[statistic] freq      = %lf KHz", (1.0 / cpu_timer) * 1000);
+    LOG_PURE_COLOR("[statistic] inst  num = " NUMBERIC_FMT, cpu_inst_num);
+    LOG_PURE_COLOR("[statistic] cycle num = " NUMBERIC_FMT, sim_cycle_num);
     if (cpu_timer > 0) {
-        LOG_BRIEF_COLOR(
+        LOG_PURE_COLOR(
             "[statistic] sim freq  = " NUMBERIC_FMT " inst/s",
             cpu_inst_num * 1000000 / cpu_timer);
     }
     else {
-        LOG_BRIEF_COLOR("[statistic] sim freq  = 0 inst/s (time < 1us, can't " \
-                        "calculate sim freq)");
+        LOG_PURE_COLOR("[statistic] sim freq  = 0 inst/s (time < 1us, can't " \
+                       "calculate sim freq)");
     }
-    LOG_BRIEF_COLOR("[statistic] ipc       = %lf inst/c",
-                    (double)cpu_inst_num / sim_cycle_num);
-    LOG_BRIEF_COLOR("[statistic] cpi       = %lf c/inst",
-                    (double)sim_cycle_num / cpu_inst_num);
+    LOG_PURE_COLOR("[statistic] ipc       = %lf inst/c",
+                   (double)cpu_inst_num / sim_cycle_num);
+    LOG_PURE_COLOR("[statistic] cpi       = %lf c/inst",
+                   (double)sim_cycle_num / cpu_inst_num);
 }
 
 void execCPU(uint64_t num) {
@@ -141,27 +141,27 @@ void execCPU(uint64_t num) {
         case CPU_END: case CPU_ABORT: {
 #ifdef CONFIG_ITRACE_RESULT
 #ifndef CONFIG_ITRACE_PROCESS
-            LOG_BRIEF();
+            LOG_PURE();
 #endif
             printfDebugITrace((char *)"result");
 #endif
 #ifdef CONFIG_MTRACE_RESULT
-            LOG_BRIEF();
+            LOG_PURE();
             printfDebugMTrace((char *)"result", NULL, 0, 0, 16);
 #endif
 #ifdef CONFIG_FTRACE_RESULT
-            LOG_BRIEF();
+            LOG_PURE();
             printfDebugFTrace((char *)"result", NULL, NULL, 0, 0);
 #endif
-            LOG_BRIEF();
-            LOG_BRIEF_COLOR("[result] state: %s",
+            LOG_PURE();
+            LOG_PURE_COLOR("[result] state: %s",
                 (cpu_state.state == CPU_ABORT ?
                     ANSI_FMT("ABORT", ANSI_FG_RED) :
                     (cpu_state.halt_ret == 0 ?
                         ANSI_FMT("SUCCESS", ANSI_FG_GREEN) :
                         ANSI_FMT("FAILED", ANSI_FG_RED))));
-            LOG_BRIEF_COLOR("[result] pc:    " FMT_WORD, cpu_state.halt_pc);
-            LOG_BRIEF_COLOR();
+            LOG_PURE_COLOR("[result] pc:    " FMT_WORD, cpu_state.halt_pc);
+            LOG_PURE_COLOR();
         }
         case CPU_QUIT: { printfCPUStatistic(); }
     }

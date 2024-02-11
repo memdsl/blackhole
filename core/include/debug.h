@@ -5,17 +5,17 @@
 #include <stdio.h>
 #include <util/log.h>
 
-#define LOG(format, ...) \
-    _LOG(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
-         __FILE__, __LINE__, __func__, ## __VA_ARGS__)
-
-#define LOG_BRIEF(format, ...) \
+#define LOG_PURE(format, ...) \
     _LOG(format "\n", \
          ## __VA_ARGS__)
 
-#define LOG_BRIEF_COLOR(format, ...) \
+#define LOG_PURE_COLOR(format, ...) \
     _LOG(ANSI_FMT(format, ANSI_FG_BLUE) "\n", \
          ## __VA_ARGS__)
+
+#define LOG_FILE(format, ...) \
+    _LOG(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
+         __FILE__, __LINE__, __func__, ## __VA_ARGS__)
 
 #define ASSERT(cond, format, ...) \
     do { \

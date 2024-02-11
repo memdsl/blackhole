@@ -10,13 +10,13 @@
 uint8_t *convertGuestToHost(paddr_t paddr);
 paddr_t  convertHostToGuest(uint8_t *haddr);
 
-bool judgeAddrIsInPhyMem(paddr_t addr);
+bool judgeMemoryPhyAddr(paddr_t addr);
 
-word_t readPhyMemData(paddr_t addr, int len);
-void writePhyMemData(paddr_t addr, int len, word_t data);
+word_t readMemoryPhyData(paddr_t addr, int len);
+void writeMemoryPhyData(paddr_t addr, int len, word_t data);
 
-void genMemFile(const char *mem_file, int size);
-void initMem();
-void printfMemData(int size);
+void genMemoryFile(const char *mem_file, int size);
+void initMemory();
+void printfMemoryData(int size);
 
 #endif

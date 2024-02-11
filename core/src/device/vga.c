@@ -61,10 +61,10 @@ void initDeviceVGA() {
 
 void updateDeviceVGAScreen() {
 #ifdef CONFIG_VGA_SHOW_SCREEN
-    // printf("CONFIG_VGA_CTL_MMIO + 4: %d\n", readPhyMemData(CONFIG_VGA_CTL_MMIO + 4, 4));
-    // if (readPhyMemData(CONFIG_VGA_CTL_MMIO + 4, 4) != 0) {
-    //     updateDeviceVGAScreenStep();
-    //     writePhyMemData(CONFIG_VGA_CTL_MMIO + 4, 4, 0);
+    printf("%x: %d\n", CONFIG_VGA_CTL_MMIO + 4, readMemoryPhyData(CONFIG_VGA_CTL_MMIO + 4, 4));
+    // if (readMemoryPhyData(CONFIG_VGA_CTL_MMIO + 4, 4) != 0) {
+        updateDeviceVGAScreenStep();
+    //     writeMemoryPhyData(CONFIG_VGA_CTL_MMIO + 4, 4, 0);
     // }
 #endif
 }

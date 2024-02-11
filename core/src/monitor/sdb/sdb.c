@@ -72,8 +72,8 @@ static int cmd_i(char *args) {
     }
 
     if (flag) {
-        LOG_BRIEF("[sdb] [cmd] please use the format in the example: " \
-                  "[i r] or [i w]");
+        LOG_PURE("[sdb] [cmd] please use the format in the example: " \
+                 "[i r] or [i w]");
     }
     return 0;
 }
@@ -92,10 +92,10 @@ static int cmd_x(char *args) {
                 uint32_t n = strtoul(args_n, NULL, 10);
                 uint32_t addr = handleSDBExpr(args_expr, NULL, &success);
                 for (uint32_t i = 0; i < n; i++) {
-                    LOG_BRIEF(
+                    LOG_PURE(
                         "[sdb] [cmd] addr: 0x%016" PRIx32" = 0x%016" PRIx32"",
                         addr,
-                        readPhyMemData(addr, 4));
+                        readMemoryPhyData(addr, 4));
                     addr = addr + 4;
                 }
             }
@@ -109,7 +109,7 @@ static int cmd_x(char *args) {
     }
 
     if (flag) {
-        LOG_BRIEF("[sdb] [cmd] please use the format in the example: " \
+        LOG_PURE("[sdb] [cmd] please use the format in the example: " \
                  "[x test] or [x 10 0x80000000]");
     }
     return 0;
@@ -120,11 +120,11 @@ static int cmd_p(char *args) {
     if (args_expr != NULL) {
         bool success = false;
         word_t ret = handleSDBExpr(args_expr, NULL, &success);
-        LOG_BRIEF("[sdb] [cmd] $%d = %u", sdb_cmp_p_index, ret);
+        LOG_PURE("[sdb] [cmd] $%d = %u", sdb_cmp_p_index, ret);
         sdb_cmp_p_index++;
     }
     else {
-        LOG_BRIEF("[sdb] [cmd] please use the format in the example: [p 1+2*3]");
+        LOG_PURE("[sdb] [cmd] please use the format in the example: [p 1+2*3]");
     }
     return 0;
 }
@@ -140,8 +140,8 @@ static int cmd_w(char *args) {
         }
     }
     else {
-        LOG_BRIEF("[sdb] [cmd] please use the format in the example: " \
-                  "[w test] or [w 1+2*3]");
+        LOG_PURE("[sdb] [cmd] please use the format in the example: " \
+                 "[w test] or [w 1+2*3]");
     }
     return 0;
 }
@@ -153,7 +153,7 @@ static int cmd_d(char *args) {
         freeSDBWatch(no);
     }
     else {
-        LOG_BRIEF("[sdb] [cmd] please use the format in the example: [d 1]");
+        LOG_PURE("[sdb] [cmd] please use the format in the example: [d 1]");
     }
     return 0;
 }
@@ -182,19 +182,19 @@ static int cmd_h(char *args) {
 
     if (arg == NULL) {
         for (i = 0; i < NR_CMD; i ++) {
-            LOG_BRIEF("[sdb] [cmd] %s: %s", cmd_table[i].name,
-                                            cmd_table[i].description);
+            LOG_PURE("[sdb] [cmd] %s: %s", cmd_table[i].name,
+                                           cmd_table[i].description);
         }
     }
     else {
         for (i = 0; i < NR_CMD; i ++) {
             if (strcmp(arg, cmd_table[i].name) == 0) {
-                LOG_BRIEF("[sdb] [cmd] %s: %s", cmd_table[i].name,
-                                                cmd_table[i].description);
+                LOG_PURE("[sdb] [cmd] %s: %s", cmd_table[i].name,
+                                               cmd_table[i].description);
                 return 0;
             }
         }
-        LOG_BRIEF("[sdb] [cmd] Unknown command: %s", arg);
+        LOG_PURE("[sdb] [cmd] Unknown command: %s", arg);
     }
     return 0;
 }
@@ -224,7 +224,7 @@ void loopSDB() {
             args = NULL;
         }
 #ifdef CONFIG_SDB_CMD
-        LOG_BRIEF("[sdb] [cmd] command: %s, args: %s", cmd, args);
+        LOG_PURE("[sdb] [cmd] command: %s, args: %s", cmd, args);
 #endif
 
 #ifdef CONFIG_DEVICE
@@ -239,7 +239,7 @@ void loopSDB() {
             }
         }
 
-        if (i == NR_CMD) { LOG_BRIEF("[sdb] [cmd] Unknown command: %s", cmd); }
+        if (i == NR_CMD) { LOG_PURE("[sdb] [cmd] Unknown command: %s", cmd); }
     }
 
     exitCPUSim();
