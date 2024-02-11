@@ -23,6 +23,7 @@ extern uint64_t sim_snpc;
 extern uint64_t sim_dnpc;
 extern uint64_t sim_inst;
 extern uint64_t sim_cycle_num;
+extern bool sim_inst_end_flag;
 
 char cpu_logbuf[256];
 uint64_t cpu_inst_num = 0;
@@ -50,13 +51,12 @@ static void execCPUTraceAndDifftest() {
 }
 
 static void execCPUTimesSingle() {
-    bool *inst_end_flag = (bool *)malloc(sizeof(bool));
-
-    runCPUSimModule(inst_end_flag);
+    runCPUSimModule();
     cpu.pc = sim_dnpc;
 
-    if (inst_end_flag != NULL && *inst_end_flag) {
+    if (sim_inst_end_flag) {
         cpu_inst_num++;
+        sim_inst_end_flag = false;
     }
 
 #ifdef CONFIG_ITRACE_RESULT
@@ -124,7 +124,7 @@ void execCPU(uint64_t num) {
     switch (cpu_state.state) {
         case CPU_END: case CPU_ABORT:
             printf("Program execution has ended. To restart the program, " \
-                   "exit NPC and run again.\n");
+                   "exit CPU and run again.\n");
             return;
         default: cpu_state.state = CPU_RUNNING;
     }

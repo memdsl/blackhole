@@ -165,7 +165,7 @@ static struct {
 } cmd_table [] = {
     { "h", "Display information about all supported commands.", cmd_h },
     { "c", "Continue the execution of the program.", cmd_c },
-    { "q", "Exit NPC.", cmd_q },
+    { "q", "Exit CPU.", cmd_q },
     { "s", "Step one instruction exactly.", cmd_s },
     { "i", "Generic command for showing things about the program being debugged.", cmd_i },
     { "x", "Address.", cmd_x },
