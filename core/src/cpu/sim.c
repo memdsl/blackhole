@@ -2,6 +2,7 @@
 
 #include <common.h>
 #include <cpu/sim.h>
+#include <debug/difftest.h>
 #include <debug/trace.h>
 #include <device/keyboard.h>
 #include <device/vga.h>
@@ -18,6 +19,7 @@ bool sim_ebreak = false;
 extern "C" uint32_tt readInsData(uint32_tt addr, uint8_t len) {
     uint32_tt data = 0;
     // addr = addr & 0xfffffffc;
+    // addr = addr & ~0x3u;
 
     if (addr != 0x00000000) {
         data = (uint32_tt)readPhyMemData(addr, len);
@@ -31,25 +33,11 @@ extern "C" uint32_tt readInsData(uint32_tt addr, uint8_t len) {
 }
 
 extern "C" uint32_tt readMemData(uint32_tt addr, uint8_t len) {
-    uint32_tt data = 0;
+    // uint32_tt data = 0;
     // addr = addr & 0xfffffffc;
+    // addr = addr & ~0x3u;
 
-    if (addr == 0xa0000048) {
-        data = (uint32_tt)getTimerValue();
-    }
-    else if (addr == 0xa0000060) {
-        data = (uint32_tt)dequeueDiviceKey();
-    }
-    else if (addr == 0xa0000100) {
-        data = (uint32_tt)(getDeviceVGAScreenWidth() << 16 |
-                           getDeviceVGAScreenHeight());
-    }
-    else if (judgeAddrIsInPhyMem(addr)) {
-        data = (uint32_tt)readPhyMemData(addr, len);
-    }
-    else {
-        data = 0;
-    }
+    uint32_tt data = (uint32_tt)readPhyMemData(addr, len);
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
 #endif
@@ -60,13 +48,9 @@ extern "C" uint32_tt readMemData(uint32_tt addr, uint8_t len) {
 
 extern "C" void writeMemData(uint32_tt addr, uint32_tt data, uint8_t len) {
     // addr = addr & 0xfffffffc;
+    // addr = addr & ~0x3u;
 
-    if (addr == 0xa00003f8) {
-        putc((uint8_t)data, stderr);
-    }
-    else {
-        writePhyMemData(addr, len, data);
-    }
+    writePhyMemData(addr, len, data);
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"wr mem", addr, data, 0);
 #endif
@@ -132,8 +116,9 @@ uint64_t sim_snpc = 0;
 uint64_t sim_dnpc = 0;
 uint64_t sim_inst = 0;
 uint64_t sim_cycle_num = 1;
+bool     sim_inst_end_flag = false;
 
-void runCPUSimModule(bool *inst_end_flag) {
+void runCPUSimModule() {
     if (!sim_ebreak) {
         sim_pc   = top->io_pTrace_pBase_bPC;
         sim_snpc = sim_pc + 4;
@@ -149,7 +134,7 @@ void runCPUSimModule(bool *inst_end_flag) {
         }
 
 #if CFLAGS_CPU_TYPE_ME32LS
-        *inst_end_flag = true;
+        sim_inst_end_flag = true;
 #elif CFLAGS_CPU_TYPE_ME32LM
 #elif CFLAGS_CPU_TYPE_ME32LP
 #endif

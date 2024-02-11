@@ -3,7 +3,7 @@ menuconfig DEVICE
     bool "-Meteor Devices"
     default n
     help
-        Provide device support for NEMU.
+        Provide device support for Meteor.
 
     if DEVICE
         config HAS_PORT_IO
@@ -12,7 +12,7 @@ menuconfig DEVICE
             default n
 
         menuconfig HAS_SERIAL
-            bool "Enable serial"
+            bool "Enable Serial"
             default y
             if HAS_SERIAL
                 config SERIAL_PORT
@@ -23,32 +23,32 @@ menuconfig DEVICE
                     hex "MMIO address of the serial controller"
                     default 0xa00003f8
                 config SERIAL_INPUT_FIFO
-                bool "Enable input FIFO with /tmp/nemu.serial"
+                bool "Enable input FIFO with /tmp/meteor.serial"
                 default n
             endif
 
         menuconfig HAS_TIMER
-            bool "Enable timer"
+            bool "Enable Timer"
             default y
             if HAS_TIMER
-                config RTC_PORT
+                config TIMER_PORT
                     depends on HAS_PORT_IO
                     hex "Port address of the timer"
                     default 0x48
-            config RTC_MMIO
+            config TIMER_MMIO
                 hex "MMIO address of the timer"
                 default 0xa0000048
             endif
 
         menuconfig HAS_KEYBOARD
-            bool "Enable keyboard"
+            bool "Enable Keyboard"
             default y
             if HAS_KEYBOARD
-                config I8042_DATA_PORT
+                config KEYBOARD_PORT
                     depends on HAS_PORT_IO
                     hex "Port address of the keyboard controller"
                     default 0x60
-                config I8042_DATA_MMIO
+                config KEYBOARD_MMIO
                     hex "MMIO address of the keyboard controller"
                     default 0xa0000060
             endif
@@ -57,7 +57,7 @@ menuconfig DEVICE
         bool "Enable VGA"
         default y
         if HAS_VGA
-            config FB_ADDR
+            config VGA_FB_ADDR
                 hex "Physical address of the VGA frame buffer"
                 default 0xa1000000
             config VGA_CTL_PORT
@@ -82,13 +82,13 @@ menuconfig DEVICE
 
         if !TARGET_AM
             menuconfig HAS_AUDIO
-                bool "Enable audio"
+                bool "Enable Audio"
                 default y
                 if HAS_AUDIO
-                    config SB_ADDR
+                    config AUDIO_SB_ADDR
                         hex "Physical address of the audio stream buffer"
                         default 0xa1200000
-                    config SB_SIZE
+                    config AUDIO_SB_SIZE
                         hex "Size of the audio stream buffer"
                         default 0x10000
                     config AUDIO_CTL_PORT
@@ -101,7 +101,7 @@ menuconfig DEVICE
                 endif
 
             menuconfig HAS_DISK
-                bool "Enable disk"
+                bool "Enable Disk"
                 default y
                 if HAS_DISK
                     config DISK_CTL_PORT
@@ -117,7 +117,7 @@ menuconfig DEVICE
                 endif
 
             menuconfig HAS_SDCARD
-            bool "Enable sdcard"
+            bool "Enable SD Card"
             default n
             if HAS_SDCARD
                 config SDCARD_CTL_MMIO

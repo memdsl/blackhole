@@ -1,3 +1,4 @@
+#include <device/mmio.h>
 #include <isa/isa.h>
 #include <memory/host.h>
 #include <memory/memory.h>
@@ -29,10 +30,9 @@ word_t readPhyMemData(paddr_t addr, int len) {
     if (likely(judgeAddrIsInPhyMem(addr))) {
         return readMemoryHost(convertGuestToHost(addr), len);
     }
-    else {
-        printfOutOfBoundInfo(addr);
-        return 0;
-    }
+    IFDEF(CONFIG_DEVICE, return readDeviceMMIOData(addr, len));
+    printfOutOfBoundInfo(addr);
+    return 0;
 }
 
 void writePhyMemData(paddr_t addr, int len, word_t data) {
@@ -40,9 +40,8 @@ void writePhyMemData(paddr_t addr, int len, word_t data) {
         writeMemoryHost(convertGuestToHost(addr), len, data);
         return;
     }
-    else {
-        printfOutOfBoundInfo(addr);
-    }
+    IFDEF(CONFIG_DEVICE, writeDeviceMMIOData(addr, len, data); return);
+    printfOutOfBoundInfo(addr);
 }
 
 void genMemFile(const char *mem_file, int size) {

@@ -29,7 +29,7 @@ static SDL_Texture  *texture  = NULL;
 static void initDeviceVGAScreen() {
     SDL_Window *window = NULL;
     char title[128];
-    sprintf(title, "%s-NPC", str(CFLAGS_GUEST_ISA));
+    sprintf(title, "%s-CPU", str(CFLAGS_CPU_TYPE));
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(
         SCREEN_W * (MUXDEF(CONFIG_VGA_SIZE_400x300, 2, 1)),
@@ -61,6 +61,7 @@ void initDeviceVGA() {
 
 void updateDeviceVGAScreen() {
 #ifdef CONFIG_VGA_SHOW_SCREEN
+    // printf("CONFIG_VGA_CTL_MMIO + 4: %d\n", readPhyMemData(CONFIG_VGA_CTL_MMIO + 4, 4));
     // if (readPhyMemData(CONFIG_VGA_CTL_MMIO + 4, 4) != 0) {
     //     updateDeviceVGAScreenStep();
     //     writePhyMemData(CONFIG_VGA_CTL_MMIO + 4, 4, 0);
