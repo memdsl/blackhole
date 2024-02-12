@@ -15,11 +15,12 @@ extern "C" uint32_t readSimInstData(uint32_t addr, uint8_t len) {
     // addr = addr & 0xfffffffc;
 
     uint32_t data = (uint32_t)readMemoryPhyData(addr, len);
+    top->io_pTrace_pMem_bRdDataA = data;
+
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
 #endif
 
-    top->io_pTrace_pMem_bRdDataA = data;
     return data;
 }
 
@@ -27,11 +28,12 @@ extern "C" uint32_t readSimMemoryData(uint32_t addr, uint8_t len) {
     // addr = addr & 0xfffffffc;
 
     uint32_t data = (uint32_t)readMemoryPhyData(addr, len);
+    top->io_pTrace_pMem_bRdDataB = data;
+
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
 #endif
 
-    top->io_pTrace_pMem_bRdDataB = data;
     return data;
 }
 
@@ -39,6 +41,7 @@ extern "C" void writeSimMemoryData(uint32_t addr, uint32_t data, uint8_t len) {
     // addr = addr & 0xfffffffc;
 
     writeMemoryPhyData(addr, len, data);
+
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"wr mem", addr, data, 0);
 #endif
