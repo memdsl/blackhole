@@ -11,33 +11,22 @@
 #include <util/log.h>
 #include <util/timer.h>
 
-typedef unsigned int       uint32_tt;
-typedef unsigned long long uint64_tt;
-
-bool sim_ebreak = false;
-
-extern "C" uint32_tt readInsData(uint32_tt addr, uint8_t len) {
-    uint32_tt data = 0;
+extern "C" uint32_t readSimInstData(uint32_t addr, uint8_t len) {
     // addr = addr & 0xfffffffc;
-    // addr = addr & ~0x3u;
 
-    if (addr != 0x00000000) {
-        data = (uint32_tt)readMemoryPhyData(addr, len);
+    uint32_t data = (uint32_t)readMemoryPhyData(addr, len);
 #ifdef CONFIG_MTRACE_PROCESS
-        printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
+    printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
 #endif
-    }
 
     top->io_pTrace_pMem_bRdDataA = data;
     return data;
 }
 
-extern "C" uint32_tt readMemData(uint32_tt addr, uint8_t len) {
-    // uint32_tt data = 0;
+extern "C" uint32_t readSimMemoryData(uint32_t addr, uint8_t len) {
     // addr = addr & 0xfffffffc;
-    // addr = addr & ~0x3u;
 
-    uint32_tt data = (uint32_tt)readMemoryPhyData(addr, len);
+    uint32_t data = (uint32_t)readMemoryPhyData(addr, len);
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
 #endif
@@ -46,9 +35,8 @@ extern "C" uint32_tt readMemData(uint32_tt addr, uint8_t len) {
     return data;
 }
 
-extern "C" void writeMemData(uint32_tt addr, uint32_tt data, uint8_t len) {
+extern "C" void writeSimMemoryData(uint32_t addr, uint32_t data, uint8_t len) {
     // addr = addr & 0xfffffffc;
-    // addr = addr & ~0x3u;
 
     writeMemoryPhyData(addr, len, data);
 #ifdef CONFIG_MTRACE_PROCESS
@@ -117,6 +105,7 @@ uint64_t sim_dnpc = 0;
 uint64_t sim_inst = 0;
 uint64_t sim_cycle_num = 1;
 bool     sim_inst_end_flag = false;
+bool     sim_ebreak = false;
 
 void runCPUSimModule() {
     if (!sim_ebreak) {

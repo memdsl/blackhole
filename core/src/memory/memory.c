@@ -28,11 +28,13 @@ bool judgeMemoryPhyAddr(paddr_t addr) {
 }
 
 word_t readMemoryPhyData(paddr_t addr, int len) {
-    if (likely(judgeMemoryPhyAddr(addr))) {
-        return readMemoryHost(convertGuestToHost(addr), len);
+    if (addr != 0x00000000) {
+        if (likely(judgeMemoryPhyAddr(addr))) {
+            return readMemoryHost(convertGuestToHost(addr), len);
+        }
+        IFDEF(CONFIG_DEVICE, return readDeviceMMIOData(addr, len));
+        printfMemoryBound(addr);
     }
-    IFDEF(CONFIG_DEVICE, return readDeviceMMIOData(addr, len));
-    printfMemoryBound(addr);
     return 0;
 }
 
