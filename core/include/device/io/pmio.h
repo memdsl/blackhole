@@ -4,8 +4,8 @@
 #include <common.h>
 #include <device/io/map.h>
 
-#define DEVICE_MAP_NUM 16
-#define DEVICE_PMIO_SPACE_MAX 65535
+#define PMIO_NUM 16
+#define PMIO_SPACE_MAX 65535
 
 void addDevicePMIOMap(const char *name,
                       paddr_t addr,

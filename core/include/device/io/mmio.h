@@ -4,7 +4,7 @@
 #include <common.h>
 #include <device/io/map.h>
 
-#define DEVICE_MAP_NUM 16
+#define MMIO_NUM 16
 
 void addDeviceMMIOMap(const char *name,
                       paddr_t addr,

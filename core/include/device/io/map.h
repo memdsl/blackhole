@@ -8,7 +8,7 @@
 #define PAGE_SIZE  (1ul << PAGE_SHIFT)
 #define PAGE_MASK  (PAGE_SIZE - 1)
 
-#define DEVICE_SPACE_MAX (2 * 1024 * 1024)
+#define MAP_SPACE_MAX (2 * 1024 * 1024)
 
 typedef void(*callbackFunc)(uint32_t, int, bool);
 typedef struct {
@@ -26,7 +26,7 @@ static inline int findDeviceMapIDByAddr(DeviceMap *maps,
     for (i = 0; i < size; i ++) {
         DeviceMap *map = (maps + i);
         if (addr >= map->low && addr <= map->high) {
-            skipDebugDifftestRef();
+            // skipDebugDifftestRef();
             return i;
         }
     }

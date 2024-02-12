@@ -129,11 +129,11 @@ void execCPU(uint64_t num) {
         default: cpu_state.state = CPU_RUNNING;
     }
 
-    uint64_t timer_start = getTimerValue();
+    uint64_t timer_start = getTimerData();
 
     execCPUTimesMultip(num);
 
-    uint64_t timer_end = getTimerValue();
+    uint64_t timer_end = getTimerData();
     cpu_timer += timer_end - timer_start;
 
     switch (cpu_state.state) {

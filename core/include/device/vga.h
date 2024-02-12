@@ -3,8 +3,8 @@
 
 #include <common.h>
 
-uint32_t getDeviceVGAScreenWidth();
-uint32_t getDeviceVGAScreenHeight();
+#define SCREEN_W (MUXDEF(CONFIG_VGA_SIZE_800x600, 800, 400))
+#define SCREEN_H (MUXDEF(CONFIG_VGA_SIZE_800x600, 600, 300))
 
 void initDeviceVGA();
 void updateDeviceVGAScreen();

@@ -2,8 +2,8 @@
 #include <device/io/map.h>
 #include <memory/host.h>
 
-static uint8_t *device_space_all  = NULL;
-static uint8_t *device_space_curr = NULL;
+static uint8_t *map_space_all  = NULL;
+static uint8_t *map_space_curr = NULL;
 
 static void checkDeviceMapBound(DeviceMap *map, paddr_t addr) {
     if (map == NULL) {
@@ -36,16 +36,16 @@ static void invokeDeviceMapCallbackFunc(callbackFunc callback,
 }
 
 void initDeviceMap() {
-    device_space_all = (uint8_t *)malloc(DEVICE_SPACE_MAX);
-    assert(device_space_all);
-    device_space_curr = device_space_all;
+    map_space_all = (uint8_t *)malloc(MAP_SPACE_MAX);
+    assert(map_space_all);
+    map_space_curr = map_space_all;
 }
 
 uint8_t *newDeviceMapSpace(int size) {
-    uint8_t *device_space_temp = device_space_curr;
+    uint8_t *device_space_temp = map_space_curr;
     size = (size + (PAGE_SIZE - 1)) & ~PAGE_MASK;
-    device_space_curr += size;
-    assert(device_space_curr - device_space_all < DEVICE_SPACE_MAX);
+    map_space_curr += size;
+    assert(map_space_curr - map_space_all < MAP_SPACE_MAX);
     return device_space_temp;
 }
 

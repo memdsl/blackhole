@@ -24,8 +24,7 @@ enum {
     MAP(KEYS, KEY_NAME)
 };
 
-uint32_t dequeueDiviceKey();
-void initDeviceKey();
-void sendDeviceKey(uint8_t scancode, bool is_keydown);
+void initDeviceKeyboard();
+void sendDeviceKeyboard(uint8_t scancode, bool keydown_flag);
 
 #endif

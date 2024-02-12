@@ -1,12 +1,12 @@
 #include <SDL2/SDL.h>
-
 #include <device/io/map.h>
-
 #include <device/device.h>
+#include <device/serial.h>
+#include <device/timer.h>
 #include <device/keyboard.h>
 #include <device/vga.h>
-#include <util/timer.h>
 #include <state.h>
+#include <util/timer.h>
 
 #define TIMER_HZ 60
 
@@ -20,13 +20,13 @@ void initDevice() {
 
     IFDEF(CONFIG_HAS_SERIAL, initDeviceSerial());
     IFDEF(CONFIG_HAS_TIMER, initDeviceTimer());
-    IFDEF(CONFIG_HAS_KEYBOARD, initDeviceKey());
+    IFDEF(CONFIG_HAS_KEYBOARD, initDeviceKeyboard());
     IFDEF(CONFIG_HAS_VGA, initDeviceVGA());
 }
 
 void updateDeviceState() {
     static uint64_t last = 0;
-    uint64_t curr = getTimerValue();
+    uint64_t curr = getTimerData();
     if (curr - last < 1000000 / TIMER_HZ) {
         return;
     }
@@ -45,8 +45,8 @@ void updateDeviceState() {
             case SDL_KEYDOWN:
             case SDL_KEYUP: {
                 uint8_t k = event.key.keysym.scancode;
-                bool is_keydown = (event.key.type == SDL_KEYDOWN);
-                sendDeviceKey(k, is_keydown);
+                bool keydown_flag = (event.key.type == SDL_KEYDOWN);
+                sendDeviceKeyboard(k, keydown_flag);
                 break;
             }
 #endif
