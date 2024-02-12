@@ -20,8 +20,8 @@ void printfDebugFTrace(char *type,
 void freeDebugFTrace();
 
 void printfDebugDTrace(char *type,
+                       char *name,
                        char *dir,
-                       const char *name,
                        word_t addr,
                        word_t data);
 

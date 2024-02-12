@@ -1,5 +1,6 @@
-#include <isa/isa.h>
+#include <debug/trace.h>
 #include <device/io/map.h>
+#include <isa/isa.h>
 #include <memory/host.h>
 
 static uint8_t *map_space_all  = NULL;
@@ -54,7 +55,14 @@ word_t readDeviceMapData(paddr_t addr, int len, DeviceMap *map) {
     checkDeviceMapBound(map, addr);
     paddr_t offset = addr - map->low;
     invokeDeviceMapCallbackFunc(map->callback, offset, len, false);
-    word_t data = readMemoryHost(map->space + offset, len);
+    word_t data = readMemoryHost((paddr_t *)map->space + offset, len);
+#ifdef CONFIG_DTRACE_PROCESS
+    printfDebugDTrace((char *)"process",
+                      (char *)map->name,
+                      (char *)"rd",
+                      addr,
+                      data);
+#endif
     return data;
 }
 
@@ -62,6 +70,13 @@ void writeDeviceMapData(paddr_t addr, int len, DeviceMap *map, word_t data) {
     assert(len >= 1 && len <= 8);
     checkDeviceMapBound(map, addr);
     paddr_t offset = addr - map->low;
-    writeMemoryHost(map->space + offset, len, data);
+    writeMemoryHost((paddr_t *)map->space + offset, len, data);
     invokeDeviceMapCallbackFunc(map->callback, offset, len, true);
+#ifdef CONFIG_DTRACE_PROCESS
+    printfDebugDTrace((char *)"process",
+                      (char *)map->name,
+                      (char *)"wr",
+                      addr,
+                      data);
+#endif
 }

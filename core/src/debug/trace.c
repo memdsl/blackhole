@@ -456,15 +456,16 @@ void freeDebugFTrace() {
 }
 
 void printfDebugDTrace(char *type,
+                       char *name,
                        char *dir,
-                       const char *name,
                        word_t addr,
                        word_t data) {
     if (strcmp(type, "process") == 0) {
-        printf("[dtrace] addr: " FMT_WORD " data: " FMT_WORD " %s %s\n", addr,
-                                                                         data,
-                                                                         dir,
-                                                                         name);
+        LOG_PURE("[dtrace] addr: " FMT_WORD " data: " FMT_WORD " %s %s",
+            addr,
+            data,
+            dir,
+            name);
     }
     else if (strcmp(type, "result") == 0) {
     }
