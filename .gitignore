@@ -4,5 +4,8 @@ core/include/generated/
 .config
 .config.old
 
+# Tool
+build
+
 # Rust
 target
