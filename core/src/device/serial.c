@@ -10,7 +10,7 @@ static void handleDeviceSerial(uint32_t offset, int len, bool write_flag) {
     switch (offset) {
         case 0: {
             if (write_flag) {
-                putc(serial[0], stderr);
+                putc(serial[0], stdout);
             }
             else {
                 PANIC("[device] do not support read");
