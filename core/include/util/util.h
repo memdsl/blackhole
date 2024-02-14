@@ -1,7 +1,5 @@
-#ifndef __BIT_H__
-#define __BIT_H__
-
 #include <common.h>
+#include MUXDEF(CONFIG_TIMER_GETTIMEOFDAY, <sys/time.h>, <time.h>)
 
 #define PRINTF_BIN_PATTERN_INT2 "%c%c"
 #define PRINTF_BIN_PATTERN_INT3 "%c%c%c "
@@ -60,4 +58,5 @@
     PRINTF_BIN_INT5((i) >> 7),  PRINTF_BIN_INT5((i) >> 2),  \
     PRINTF_BIN_INT2(i)
 
-#endif
+char *strrpc(char *str, char *str_old, char *str_new);
+uint64_t getUtilTimerData();

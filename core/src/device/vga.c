@@ -17,8 +17,6 @@ static uint32_t getDeviceVGAScreenSize() {
            sizeof(uint32_t);
 }
 
-// static uint64_t  vga = NULL;
-// static uint32_t *vga_mem[SCREEN_W * SCREEN_H];
 static uint32_t *vga_ctl = NULL;
 static void *vga_mem = NULL;
 

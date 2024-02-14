@@ -9,7 +9,6 @@
 #include <memory/memory.h>
 #include <state.h>
 #include <util/log.h>
-#include <util/timer.h>
 
 extern "C" uint32_t readSimInstData(uint32_t addr, uint8_t len) {
     // addr = addr & 0xfffffffc;
@@ -108,6 +107,7 @@ uint64_t sim_dnpc = 0;
 uint64_t sim_inst = 0;
 uint64_t sim_cycle_num = 1;
 bool     sim_inst_end_flag = false;
+
 bool     sim_ebreak = false;
 
 void runCPUSimModule() {

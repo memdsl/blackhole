@@ -11,7 +11,7 @@
 #include <state.h>
 #include <util/disasm.h>
 #include <util/log.h>
-#include <util/timer.h>
+#include <util/util.h>
 
 #define MAX_INST_TO_PRINT 0
 
@@ -53,6 +53,9 @@ static void execCPUTraceAndDifftest() {
 static void execCPUTimesSingle() {
     runCPUSimModule();
     cpu.pc = sim_dnpc;
+    for (int i = 0; i < 32; i++) {
+        cpu.gpr[i] = getISAGPR(i);
+    }
 
     if (sim_inst_end_flag) {
         cpu_inst_num++;
@@ -129,11 +132,11 @@ void execCPU(uint64_t num) {
         default: cpu_state.state = CPU_RUNNING;
     }
 
-    uint64_t timer_start = getTimerData();
+    uint64_t timer_start = getUtilTimerData();
 
     execCPUTimesMultip(num);
 
-    uint64_t timer_end = getTimerData();
+    uint64_t timer_end = getUtilTimerData();
     cpu_timer += timer_end - timer_start;
 
     switch (cpu_state.state) {

@@ -2,14 +2,14 @@
 #include <device/io/pmio.h>
 #include <device/io/mmio.h>
 #include <device/timer.h>
-#include <util/timer.h>
+#include <util/util.h>
 
 static uint32_t *timer = NULL;
 
 static void handleDeviceTimer(uint32_t offset, int len, bool write_flag) {
     assert(offset == 0 || offset == 4);
     if (!write_flag && offset == 4) {
-        uint64_t us = getTimerData();
+        uint64_t us = getUtilTimerData();
         timer[0] = (uint32_t)us;
         timer[1] = us >> 32;
     }

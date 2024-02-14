@@ -160,14 +160,6 @@ void printfDebugITrace(char *type) {
             case 23: alu_type = (char *)"DIVU  "; break;
             case 24: alu_type = (char *)"REM   "; break;
             case 25: alu_type = (char *)"REMU  "; break;
-            case 26: alu_type = (char *)"SLLW  "; break;
-            case 27: alu_type = (char *)"SRLW  "; break;
-            case 28: alu_type = (char *)"SRLIW "; break;
-            case 29: alu_type = (char *)"SRAW  "; break;
-            case 30: alu_type = (char *)"SRAIW "; break;
-            case 31: alu_type = (char *)"DIVW  "; break;
-            case 32: alu_type = (char *)"DIVUW "; break;
-            case 33: alu_type = (char *)"REMW  "; break;
             default: alu_type = (char *)"X     "; break;
         }
         LOG_PURE("[itrace] [idu] [ctr]  alu type:     %s", alu_type);

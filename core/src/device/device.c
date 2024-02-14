@@ -6,7 +6,7 @@
 #include <device/keyboard.h>
 #include <device/vga.h>
 #include <state.h>
-#include <util/timer.h>
+#include <util/util.h>
 
 #define TIMER_HZ 60
 
@@ -26,7 +26,7 @@ void initDevice() {
 
 void updateDeviceState() {
     static uint64_t last = 0;
-    uint64_t curr = getTimerData();
+    uint64_t curr = getUtilTimerData();
     if (curr - last < 1000000 / TIMER_HZ) {
         return;
     }

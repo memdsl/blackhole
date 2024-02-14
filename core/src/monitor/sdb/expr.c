@@ -2,9 +2,8 @@
 
 #include <memory/memory.h>
 #include <monitor/sdb/expr.h>
-#include <util/str.h>
-
 #include <isa/gpr.h>
+#include <util/util.h>
 
 enum {
     TK_NOTYPE = 256,

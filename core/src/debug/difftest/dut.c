@@ -25,11 +25,11 @@ handleDifftestInitT handleDifftestInit = NULL;
 static bool difftest_skip_ref = false;
 static int difftest_skip_dut_num = 0;
 
-static void checkDebugDifftestRegs(CPUStruct *cpu_ref, vaddr_t pc) {
-    if (!checkISADifftestGPR(cpu_ref, pc)) {
+static void checkDebugDifftestReg(CPUStruct *cpu_ref, vaddr_t pc) {
+    if (!checkISADifftestReg(cpu_ref, pc)) {
         cpu_state.state = CPU_ABORT;
         cpu_state.halt_pc = pc;
-        printfISADifftest(cpu_ref, pc);
+        printfISADifftestReg(cpu_ref, pc);
     }
 }
 
@@ -91,7 +91,7 @@ void stepDebugDifftest(vaddr_t pc, vaddr_t npc) {
         handleDifftestRegcpy(&cpu_ref, DIFFTEST_TO_DUT);
         if (cpu_ref.pc == npc) {
             difftest_skip_dut_num = 0;
-            checkDebugDifftestRegs(&cpu_ref, npc);
+            checkDebugDifftestReg(&cpu_ref, npc);
             return;
         }
         difftest_skip_dut_num--;
@@ -111,7 +111,7 @@ void stepDebugDifftest(vaddr_t pc, vaddr_t npc) {
     handleDifftestExec(1);
     handleDifftestRegcpy(&cpu_ref, DIFFTEST_TO_DUT);
 
-    checkDebugDifftestRegs(&cpu_ref, pc);
+    checkDebugDifftestReg(&cpu_ref, pc);
 }
 #else
 void initDebugDifftest(char *ref_so_file, long img_size, int port) { }

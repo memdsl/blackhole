@@ -1,9 +1,6 @@
 #include <device/io/map.h>
 #include <device/io/mmio.h>
-// #include <device/keyboard.h>
-// #include <device/vga.h>
 #include <memory/memory.h>
-// #include <util/timer.h>
 
 static DeviceMap maps[MMIO_NUM] = {};
 static int map_index = 0;
