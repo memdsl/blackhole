@@ -124,7 +124,6 @@ static bool handleSDBExprBracket(word_t index_l, word_t index_r) {
     for (int i = index_l, j = 0; i <= index_r; i++) {
         Token token = tokens[i];
         int type = token.type;
-        // 表达式第一个元素必须是左括号
         if (i == index_l && type != '(') {
             return false;
         }
@@ -134,12 +133,10 @@ static bool handleSDBExprBracket(word_t index_l, word_t index_r) {
         }
         else if (type == ')') {
             j--;
-            // 表达式第一个括号必须是左括号
             if (j < 0) {
                 return false;
             }
             arr[j] = '0';
-            // 表达式第一个左括号必须正好与最后一个右括号匹配
             if (arr[0] == '0' && i != index_r) {
                 return false;
             }
@@ -169,7 +166,6 @@ static word_t handleSDBExprOp(word_t index_l, word_t index_r) {
             return i;
         }
 
-        // 主运算符必须是运算符、关系符或逻辑符
         if (type_curr == TK_NOTYPE ||
             type_curr == TK_NUM_HEX ||
             type_curr == TK_NUM_DEC ||
@@ -189,7 +185,6 @@ static word_t handleSDBExprOp(word_t index_l, word_t index_r) {
             }
         }
 
-        // 主运算符不会出现在括号里
         if (bracket_flag) {
             continue;
         }
@@ -200,7 +195,6 @@ static word_t handleSDBExprOp(word_t index_l, word_t index_r) {
                 op_index = i;
             }
             else {
-                // 主运算符优先级最低，同级别运算符以最后被结合的为准
                 if (prior <= prior_curr) {
                     type = type_curr;
                     prior = prior_curr;
@@ -252,7 +246,6 @@ static word_t handleSDBExprEval(word_t index_l, word_t index_r) {
     else {
         word_t op = handleSDBExprOp(index_l, index_r);
         word_t val1 = 0;
-        // 指针解引用只有右侧子表达式
         int token_type = tokens[op].type;
         if (token_type != TK_PTR_DEREF) {
             val1 = handleSDBExprEval(index_l, op - 1);

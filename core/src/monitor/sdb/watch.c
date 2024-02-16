@@ -19,7 +19,6 @@ static void freeSDBWatchPool(int no) {
     WP *wp_prev = wp_head;
     WP *wp_temp = wp_head;
 
-    // 获取释放链表
     while (wp_temp != NULL) {
         if (wp_temp->no == no) {
             if (wp_temp == wp_head) {
@@ -38,7 +37,6 @@ static void freeSDBWatchPool(int no) {
         wp_temp = wp_temp->next;
     }
 
-    // 将释放链表添加到空闲链表后面并重置链表中的相关数据
     if (wp_old != NULL) {
         if (wp_free != NULL) {
             wp_temp = wp_free;
@@ -62,7 +60,6 @@ static void freeSDBWatchPool(int no) {
 static WP *newSDBWatchPool(char *expr) {
     WP *wp_new = NULL;
 
-    // 获取空闲链表
     if (wp_free != NULL) {
         wp_new = wp_free;
         wp_free = wp_free->next;
@@ -74,7 +71,6 @@ static WP *newSDBWatchPool(char *expr) {
         assert(0);
     }
 
-    // 将空闲链表添加到监视链表后面
     if (wp_head != NULL) {
         WP *wp_temp = wp_head;
         while (wp_temp->next != NULL) {
