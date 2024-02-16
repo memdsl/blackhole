@@ -208,19 +208,19 @@ void printfDebugITrace(char *type) {
         }
         LOG_PURE("[itrace] [idu] [ctr]  mem byt:      %s", mem_byt);
 
-        char *gpr_wr_src = (char *)"";
-        switch (top->io_pTrace_pIDUCtr_bGPRWrSrc) {
-            case 0:  gpr_wr_src = (char *)"X";   break;
-            case 1:  gpr_wr_src = (char *)"ALU"; break;
-            case 2:  gpr_wr_src = (char *)"MEM"; break;
-            case 3:  gpr_wr_src = (char *)"PC";  break;
-            case 4:  gpr_wr_src = (char *)"CSR"; break;
-            default: gpr_wr_src = (char *)"X";   break;
+        char *reg_wr_src = (char *)"";
+        switch (top->io_pTrace_pIDUCtr_bRegWrSrc) {
+            case 0:  reg_wr_src = (char *)"X";   break;
+            case 1:  reg_wr_src = (char *)"ALU"; break;
+            case 2:  reg_wr_src = (char *)"MEM"; break;
+            case 3:  reg_wr_src = (char *)"PC";  break;
+            case 4:  reg_wr_src = (char *)"CSR"; break;
+            default: reg_wr_src = (char *)"X";   break;
         }
-        LOG_PURE("[itrace] [idu] [ctr]  gpr wr src:   %s", gpr_wr_src);
+        LOG_PURE("[itrace] [idu] [ctr]  reg wr src:   %s", reg_wr_src);
 
-        LOG_PURE("[itrace] [idu] [ctr]  gpr wr en:    %d",
-                 top->io_pTrace_pIDUCtr_bGPRWrEn);
+        LOG_PURE("[itrace] [idu] [ctr]  reg wr en:    %d",
+                 top->io_pTrace_pIDUCtr_bRegWrEn);
 
         LOG_PURE("[itrace] [idu] [data] gpr rd addr:  " FMT_WORD,
                  top->io_pTrace_pIDUData_bGPRRdAddr);
