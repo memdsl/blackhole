@@ -169,6 +169,8 @@ void printfDebugITrace(char *type) {
             case 0:  alu_rs1 = (char *)"X";   break;
             case 1:  alu_rs1 = (char *)"PC";  break;
             case 2:  alu_rs1 = (char *)"GPR"; break;
+            case 3:  alu_rs1 = (char *)"IMM"; break;
+            case 4:  alu_rs1 = (char *)"4";   break;
             default: alu_rs1 = (char *)"X";   break;
         }
         LOG_PURE("[itrace] [idu] [ctr]  alu rs1:      %s", alu_rs1);
@@ -177,13 +179,12 @@ void printfDebugITrace(char *type) {
         switch (top->io_pTrace_pIDUCtr_bALURS2) {
             case 0:  alu_rs2 = (char *)"X";     break;
             case 1:  alu_rs2 = (char *)"GPR";   break;
-            case 2:  alu_rs2 = (char *)"CSR";   break;
-            case 3:  alu_rs2 = (char *)"IMM_I"; break;
-            case 4:  alu_rs2 = (char *)"IMM_S"; break;
-            case 5:  alu_rs2 = (char *)"IMM_B"; break;
-            case 6:  alu_rs2 = (char *)"IMM_U"; break;
-            case 7:  alu_rs2 = (char *)"IMM_J"; break;
-            case 8:  alu_rs2 = (char *)"4";     break;
+            case 2:  alu_rs2 = (char *)"IMM_I"; break;
+            case 3:  alu_rs2 = (char *)"IMM_S"; break;
+            case 4:  alu_rs2 = (char *)"IMM_B"; break;
+            case 5:  alu_rs2 = (char *)"IMM_U"; break;
+            case 6:  alu_rs2 = (char *)"IMM_J"; break;
+            case 7:  alu_rs2 = (char *)"4";     break;
             default: alu_rs2 = (char *)"X";     break;
         }
         LOG_PURE("[itrace] [idu] [ctr]  alu rs2:      %s", alu_rs2);
