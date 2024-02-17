@@ -25,6 +25,8 @@ void printfDebugDTrace(char *type,
                        word_t addr,
                        word_t data);
 
+void printfDebugETrace(char *type, int dir);
+
 void initDebugTrace(char *elf_file);
 
 #endif

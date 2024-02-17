@@ -121,7 +121,7 @@ void runCPUSimModule() {
         sim_dnpc = top->io_pTrace_pBase_bPC;
         sim_cycle_num++;
 
-        if (top->io_pEnd_bFlag) {
+        if (top->io_pState_bEndFlag) {
             sim_ebreak = true;
         }
 
@@ -129,6 +129,12 @@ void runCPUSimModule() {
         sim_inst_end_flag = true;
 #elif CFLAGS_CPU_TYPE_ME32LM
 #elif CFLAGS_CPU_TYPE_ME32LP
+#endif
+
+#ifdef CONFIG_ETRACE
+#ifdef CONFIG_ETRACE_PROCESS
+        printfDebugETrace((char *)"process", top->io_pState_bCSRType);
+#endif
 #endif
 
 #ifdef CONFIG_FTRACE
@@ -152,7 +158,7 @@ void runCPUSimModule() {
 
     if (sim_ebreak) {
         sim_cycle_num--;
-        setCPUState(CPU_END, sim_pc, top->io_pEnd_bData);
+        setCPUState(CPU_END, sim_pc, top->io_pState_bEndData);
     }
 }
 

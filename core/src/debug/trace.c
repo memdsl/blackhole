@@ -72,95 +72,95 @@ void printfDebugITrace(char *type) {
 
         char *inst_name = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bInstName) {
-            case  0: inst_name = (char *)"X     "; break;
-            case  1: inst_name = (char *)"SLL   "; break;
-            case  2: inst_name = (char *)"SLLI  "; break;
-            case  3: inst_name = (char *)"SRL   "; break;
-            case  4: inst_name = (char *)"SRLI  "; break;
-            case  5: inst_name = (char *)"SRA   "; break;
-            case  6: inst_name = (char *)"SRAI  "; break;
-            case  7: inst_name = (char *)"ADD   "; break;
-            case  8: inst_name = (char *)"ADDI  "; break;
-            case  9: inst_name = (char *)"SUB   "; break;
-            case 10: inst_name = (char *)"LUI   "; break;
-            case 11: inst_name = (char *)"AUIPC "; break;
-            case 12: inst_name = (char *)"XOR   "; break;
-            case 13: inst_name = (char *)"XORI  "; break;
-            case 14: inst_name = (char *)"OR    "; break;
-            case 15: inst_name = (char *)"ORI   "; break;
-            case 16: inst_name = (char *)"AND   "; break;
-            case 17: inst_name = (char *)"ANDI  "; break;
-            case 18: inst_name = (char *)"SLT   "; break;
-            case 19: inst_name = (char *)"SLTI  "; break;
-            case 20: inst_name = (char *)"SLTU  "; break;
-            case 21: inst_name = (char *)"SLTIU "; break;
-            case 22: inst_name = (char *)"BEQ   "; break;
-            case 23: inst_name = (char *)"BNE   "; break;
-            case 24: inst_name = (char *)"BLT   "; break;
-            case 25: inst_name = (char *)"BGE   "; break;
-            case 26: inst_name = (char *)"BLTU  "; break;
-            case 27: inst_name = (char *)"BGEU  "; break;
-            case 28: inst_name = (char *)"JAL   "; break;
-            case 29: inst_name = (char *)"JALR  "; break;
-            case 30: inst_name = (char *)"FENCE "; break;
+            case  0: inst_name = (char *)"X";      break;
+            case  1: inst_name = (char *)"SLL";    break;
+            case  2: inst_name = (char *)"SLLI";   break;
+            case  3: inst_name = (char *)"SRL";    break;
+            case  4: inst_name = (char *)"SRLI";   break;
+            case  5: inst_name = (char *)"SRA";    break;
+            case  6: inst_name = (char *)"SRAI";   break;
+            case  7: inst_name = (char *)"ADD";    break;
+            case  8: inst_name = (char *)"ADDI";   break;
+            case  9: inst_name = (char *)"SUB";    break;
+            case 10: inst_name = (char *)"LUI";    break;
+            case 11: inst_name = (char *)"AUIPC";  break;
+            case 12: inst_name = (char *)"XOR";    break;
+            case 13: inst_name = (char *)"XORI";   break;
+            case 14: inst_name = (char *)"OR";     break;
+            case 15: inst_name = (char *)"ORI";    break;
+            case 16: inst_name = (char *)"AND";    break;
+            case 17: inst_name = (char *)"ANDI";   break;
+            case 18: inst_name = (char *)"SLT";    break;
+            case 19: inst_name = (char *)"SLTI";   break;
+            case 20: inst_name = (char *)"SLTU";   break;
+            case 21: inst_name = (char *)"SLTIU";  break;
+            case 22: inst_name = (char *)"BEQ";    break;
+            case 23: inst_name = (char *)"BNE";    break;
+            case 24: inst_name = (char *)"BLT";    break;
+            case 25: inst_name = (char *)"BGE";    break;
+            case 26: inst_name = (char *)"BLTU";   break;
+            case 27: inst_name = (char *)"BGEU";   break;
+            case 28: inst_name = (char *)"JAL";    break;
+            case 29: inst_name = (char *)"JALR";   break;
+            case 30: inst_name = (char *)"FENCE";  break;
             case 31: inst_name = (char *)"FENCEI"; break;
-            case 32: inst_name = (char *)"ECALL "; break;
+            case 32: inst_name = (char *)"ECALL";  break;
             case 33: inst_name = (char *)"EBREAK"; break;
-            case 34: inst_name = (char *)"CSRRW "; break;
-            case 35: inst_name = (char *)"CSRRS "; break;
-            case 36: inst_name = (char *)"CSRRC "; break;
+            case 34: inst_name = (char *)"CSRRW";  break;
+            case 35: inst_name = (char *)"CSRRS";  break;
+            case 36: inst_name = (char *)"CSRRC";  break;
             case 37: inst_name = (char *)"CSRRWI"; break;
             case 38: inst_name = (char *)"CSRRSI"; break;
             case 39: inst_name = (char *)"CSRRCI"; break;
-            case 40: inst_name = (char *)"LB    "; break;
-            case 41: inst_name = (char *)"LH    "; break;
-            case 42: inst_name = (char *)"LBU   "; break;
-            case 43: inst_name = (char *)"LHU   "; break;
-            case 44: inst_name = (char *)"LW    "; break;
-            case 45: inst_name = (char *)"SB    "; break;
-            case 46: inst_name = (char *)"SH    "; break;
-            case 47: inst_name = (char *)"SW    "; break;
-            case 48: inst_name = (char *)"MUL   "; break;
-            case 49: inst_name = (char *)"MULH  "; break;
+            case 40: inst_name = (char *)"LB";     break;
+            case 41: inst_name = (char *)"LH";     break;
+            case 42: inst_name = (char *)"LBU";    break;
+            case 43: inst_name = (char *)"LHU";    break;
+            case 44: inst_name = (char *)"LW";     break;
+            case 45: inst_name = (char *)"SB";     break;
+            case 46: inst_name = (char *)"SH";     break;
+            case 47: inst_name = (char *)"SW";     break;
+            case 48: inst_name = (char *)"MUL";    break;
+            case 49: inst_name = (char *)"MULH";   break;
             case 50: inst_name = (char *)"MULHSU"; break;
-            case 51: inst_name = (char *)"MULHU "; break;
-            case 52: inst_name = (char *)"DIV   "; break;
-            case 53: inst_name = (char *)"DIVU  "; break;
-            case 54: inst_name = (char *)"REM   "; break;
-            case 55: inst_name = (char *)"REMU  "; break;
+            case 51: inst_name = (char *)"MULHU";  break;
+            case 52: inst_name = (char *)"DIV";    break;
+            case 53: inst_name = (char *)"DIVU";   break;
+            case 54: inst_name = (char *)"REM";    break;
+            case 55: inst_name = (char *)"REMU";   break;
             default: inst_name = (char *)"X";      break;
         }
         LOG_PURE("[itrace] [idu] [ctr]  inst name:    %s ", inst_name);
 
         char *alu_type = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bALUType) {
-            case  0: alu_type = (char *)"X     "; break;
-            case  1: alu_type = (char *)"SLL   "; break;
-            case  2: alu_type = (char *)"SRL   "; break;
-            case  3: alu_type = (char *)"SRA   "; break;
-            case  4: alu_type = (char *)"ADD   "; break;
-            case  5: alu_type = (char *)"SUB   "; break;
-            case  6: alu_type = (char *)"XOR   "; break;
-            case  7: alu_type = (char *)"OR    "; break;
-            case  8: alu_type = (char *)"AND   "; break;
-            case  9: alu_type = (char *)"SLT   "; break;
-            case 10: alu_type = (char *)"SLTU  "; break;
-            case 11: alu_type = (char *)"BEQ   "; break;
-            case 12: alu_type = (char *)"BNE   "; break;
-            case 13: alu_type = (char *)"BLT   "; break;
-            case 14: alu_type = (char *)"BGE   "; break;
-            case 15: alu_type = (char *)"BLTU  "; break;
-            case 16: alu_type = (char *)"BGEU  "; break;
-            case 17: alu_type = (char *)"JALR  "; break;
-            case 18: alu_type = (char *)"MUL   "; break;
-            case 19: alu_type = (char *)"MULH  "; break;
+            case  0: alu_type = (char *)"X";      break;
+            case  1: alu_type = (char *)"SLL";    break;
+            case  2: alu_type = (char *)"SRL";    break;
+            case  3: alu_type = (char *)"SRA";    break;
+            case  4: alu_type = (char *)"ADD";    break;
+            case  5: alu_type = (char *)"SUB";    break;
+            case  6: alu_type = (char *)"XOR";    break;
+            case  7: alu_type = (char *)"OR";     break;
+            case  8: alu_type = (char *)"AND";    break;
+            case  9: alu_type = (char *)"SLT";    break;
+            case 10: alu_type = (char *)"SLTU";   break;
+            case 11: alu_type = (char *)"BEQ";    break;
+            case 12: alu_type = (char *)"BNE";    break;
+            case 13: alu_type = (char *)"BLT";    break;
+            case 14: alu_type = (char *)"BGE";    break;
+            case 15: alu_type = (char *)"BLTU";   break;
+            case 16: alu_type = (char *)"BGEU";   break;
+            case 17: alu_type = (char *)"JALR";   break;
+            case 18: alu_type = (char *)"MUL";    break;
+            case 19: alu_type = (char *)"MULH";   break;
             case 20: alu_type = (char *)"MULHSU"; break;
-            case 21: alu_type = (char *)"MULHU "; break;
-            case 22: alu_type = (char *)"DIV   "; break;
-            case 23: alu_type = (char *)"DIVU  "; break;
-            case 24: alu_type = (char *)"REM   "; break;
-            case 25: alu_type = (char *)"REMU  "; break;
-            default: alu_type = (char *)"X     "; break;
+            case 21: alu_type = (char *)"MULHU";  break;
+            case 22: alu_type = (char *)"DIV";    break;
+            case 23: alu_type = (char *)"DIVU";   break;
+            case 24: alu_type = (char *)"REM";    break;
+            case 25: alu_type = (char *)"REMU";   break;
+            default: alu_type = (char *)"X";      break;
         }
         LOG_PURE("[itrace] [idu] [ctr]  alu type:     %s", alu_type);
 
@@ -459,6 +459,24 @@ void printfDebugDTrace(char *type,
             data,
             dir,
             name);
+    }
+    else if (strcmp(type, "result") == 0) {
+    }
+}
+
+void printfDebugETrace(char *type, int dir) {
+    if (strcmp(type, "process") == 0) {
+        if (dir != 0) {
+            LOG_PURE("[etrace] %s", (dir == 1) ? "ecall" : "mret");
+            LOG_PURE("[etrace] mcause:  " FMT_WORD "\n" \
+                     "[etrace] mstatus: " FMT_WORD "\n" \
+                     "[etrace] mepc:    " FMT_WORD "\n" \
+                     "[etrace] mtvec:   " FMT_WORD "\n",
+                    top->io_pTrace_pCSRRd_bRdMSTAData,
+                    top->io_pTrace_pCSRRd_bRdMTVEData,
+                    top->io_pTrace_pCSRRd_bRdMEPCData,
+                    top->io_pTrace_pCSRRd_bRdMCAUData);
+        }
     }
     else if (strcmp(type, "result") == 0) {
     }

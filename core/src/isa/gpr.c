@@ -53,17 +53,17 @@ word_t getISAGPR(int id) {
 }
 
 word_t getISAGPRData(const char *gpr, bool *success) {
-    word_t val = 0;
+    word_t data = 0;
 
     for (int i = 0; i < ARRLEN(gpr_name_arr); i++) {
         if (strcmp(gpr_name_arr[i], gpr) == 0) {
-            val = getISAGPR(i);
+            data = getISAGPR(i);
             *success = true;
             break;
         }
     }
 
-    return val;
+    return data;
 }
 
 const char *getISAGPRName(int id) {
@@ -81,7 +81,7 @@ void printfISAGPRData() {
                                                             (char *)"";
         exist_str = (getISAGPR(i) != 0) ? (char *)ANSI_FMT("*", ANSI_FG_GREEN) :
                                           (char *)"";
-        LOG_PURE("[sdb] [gpr] i: %d%s val: %s%s = " FMT_WORD "%s",
+        LOG_PURE("[sdb] [gpr] i: %d%s data: %s%s = " FMT_WORD "%s",
                  i,
                  space_num,
                  space_gpr,
