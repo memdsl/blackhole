@@ -38,6 +38,8 @@ void printfDebugITrace(char *type) {
         LOG_PURE("[itrace] cycle num:                 %ld", sim_cycle_num);
         LOG_PURE("[itrace] [base]       pc:           " FMT_WORD,
                  top->io_pTrace_pBase_bPC);
+        LOG_PURE("[itrace] [base]       pc en:        %d",
+                 top->io_pTrace_pBase_bPCEn);
         LOG_PURE("[itrace] [base]       inst:         " FMT_WORD,
                  top->io_pTrace_pBase_bInst);
 
@@ -48,27 +50,25 @@ void printfDebugITrace(char *type) {
         LOG_PURE("[itrace] [gpr] [wr]   wr data:      " FMT_WORD,
                  top->io_pTrace_pGPRWr_bWrData);
 
-        LOG_PURE("[itrace] [mem]        rd en:        %d",
-                 top->io_pTrace_pMem_bRdEn);
-        LOG_PURE("[itrace] [mem]        rd addr a:    " FMT_WORD,
-                 top->io_pTrace_pMem_bRdAddrA);
-        LOG_PURE("[itrace] [mem]        rd addr b:    " FMT_WORD,
-                 top->io_pTrace_pMem_bRdAddrB);
-        LOG_PURE("[itrace] [mem]        wr en:        %d",
-                 top->io_pTrace_pMem_bWrEn);
-        LOG_PURE("[itrace] [mem]        wr addr:      " FMT_WORD,
-                 top->io_pTrace_pMem_bWrAddr);
-        LOG_PURE("[itrace] [mem]        wr data:      " FMT_WORD,
-                 top->io_pTrace_pMem_bWrData);
-        LOG_PURE("[itrace] [mem]        wr mask:      %d %d %d %d",
-                 top->io_pTrace_pMem_bWrMask_0,
-                 top->io_pTrace_pMem_bWrMask_1,
-                 top->io_pTrace_pMem_bWrMask_2,
-                 top->io_pTrace_pMem_bWrMask_3);
-        LOG_PURE("[itrace] [mem]        rd data a:    " FMT_WORD,
-                 top->io_pTrace_pMem_bRdDataA);
-        LOG_PURE("[itrace] [mem]        rd data b:    " FMT_WORD,
-                 top->io_pTrace_pMem_bRdDataB);
+        LOG_PURE("[itrace] [mem]        inst rd addr: " FMT_WORD,
+                 top->io_pTrace_pBase_bPC);
+        LOG_PURE("[itrace] [mem]        inst rd data: " FMT_WORD,
+                 top->io_pTrace_pMemInst_pRd_bData);
+        LOG_PURE("[itrace] [mem]        data rd addr: " FMT_WORD,
+                 top->io_pTrace_pMemData_pRd_bAddr);
+        LOG_PURE("[itrace] [mem]        data rd data: " FMT_WORD,
+                 top->io_pTrace_pMemData_pRd_bData);
+        LOG_PURE("[itrace] [mem]        data wr en:   %d",
+                 top->io_pTrace_pMemData_pWr_bEn);
+        LOG_PURE("[itrace] [mem]        data wr addr: " FMT_WORD,
+                 top->io_pTrace_pMemData_pWr_bAddr);
+        LOG_PURE("[itrace] [mem]        data wr data: " FMT_WORD,
+                 top->io_pTrace_pMemData_pWr_bData);
+        LOG_PURE("[itrace] [mem]        data wr mask: %d %d %d %d",
+                 top->io_pTrace_pMemData_pWr_bMask_0,
+                 top->io_pTrace_pMemData_pWr_bMask_1,
+                 top->io_pTrace_pMemData_pWr_bMask_2,
+                 top->io_pTrace_pMemData_pWr_bMask_3);
 
         char *inst_name = (char *)"";
         switch (top->io_pTrace_pIDUCtr_bInstName) {
