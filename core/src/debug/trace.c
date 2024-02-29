@@ -38,6 +38,8 @@ void printfDebugITrace(char *type) {
         LOG_PURE("[itrace] cycle num:                 %ld", sim_cycle_num);
         LOG_PURE("[itrace] [base]       pc:           " FMT_WORD,
                  top->io_pTrace_pBase_bPC);
+        LOG_PURE("[itrace] [base]       pc next:      " FMT_WORD,
+                 top->io_pTrace_pBase_bPCNext);
         LOG_PURE("[itrace] [base]       pc en:        %d",
                  top->io_pTrace_pBase_bPCEn);
         LOG_PURE("[itrace] [base]       inst:         " FMT_WORD,

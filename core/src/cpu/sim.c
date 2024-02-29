@@ -67,6 +67,17 @@ static void runCPUSimModuleCycle(bool flag) {
     }
 #endif
 
+    uint64_t mem_rd_addr = top->io_pTrace_pMemData_pRd_bAddr;
+    uint64_t mem_wr_addr = top->io_pTrace_pMemData_pWr_bAddr;
+    if ((mem_rd_addr & 0xfffffff8) == CONFIG_TIMER_MMIO    ||
+        (mem_rd_addr & 0xffffffff) == CONFIG_KEYBOARD_MMIO ||
+        (mem_rd_addr & 0xffffffff) == CONFIG_VGA_CTL_MMIO  ||
+        (mem_wr_addr & 0xffffffff) == CONFIG_SERIAL_MMIO   ||
+        (mem_wr_addr & 0xfffffff0) == CONFIG_VGA_CTL_MMIO   ||
+        (mem_wr_addr & 0xff000000) == CONFIG_VGA_FB_ADDR) {
+        IFDEF(CONFIG_DIFFTEST, skipDebugDifftestRef());
+    }
+
     top->clock = 1;
     runCPUSimStep();
 }

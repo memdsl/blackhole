@@ -23,16 +23,16 @@ void printfISADifftestReg(CPUStruct *cpu_ref, vaddr_t pc) {
                      strcmp(name, "s11") != 0) ? (char *)" " : (char *)"";
         error_str = (cpu_ref->gpr[i] != cpu.gpr[i]) ?
                         (char *)ANSI_FMT("*", ANSI_FG_RED) : (char *)"";
-        printf("[difftest] gpr i: %d%s dut data: %s%s = " FMT_WORD \
-               " ref data: %s%s = " FMT_WORD "%s\n",
-               i,
-               space_num,
-               space_gpr,
-               name,
-               cpu.gpr[i],
-               space_gpr,
-               name,
-               cpu_ref->gpr[i],
-               error_str);
+        LOG_PURE("[difftest] gpr i: %d%s dut data: %s%s = " FMT_WORD \
+                 " ref data: %s%s = " FMT_WORD "%s",
+                 i,
+                 space_num,
+                 space_gpr,
+                 name,
+                 cpu.gpr[i],
+                 space_gpr,
+                 name,
+                 cpu_ref->gpr[i],
+                 error_str);
     }
 }

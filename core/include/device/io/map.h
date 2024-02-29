@@ -26,7 +26,6 @@ static inline int findDeviceMapIDByAddr(DeviceMap *maps,
     for (i = 0; i < size; i ++) {
         DeviceMap *map = (maps + i);
         if (addr >= map->low && addr <= map->high) {
-            IFDEF(CONFIG_DIFFTEST, skipDebugDifftestRef());
             return i;
         }
     }
