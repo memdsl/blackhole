@@ -73,7 +73,7 @@ static void runCPUSimModuleCycle(bool flag) {
         (mem_rd_addr & 0xffffffff) == CONFIG_KEYBOARD_MMIO ||
         (mem_rd_addr & 0xffffffff) == CONFIG_VGA_CTL_MMIO  ||
         (mem_wr_addr & 0xffffffff) == CONFIG_SERIAL_MMIO   ||
-        (mem_wr_addr & 0xfffffff0) == CONFIG_VGA_CTL_MMIO   ||
+        (mem_wr_addr & 0xfffffff0) == CONFIG_VGA_CTL_MMIO  ||
         (mem_wr_addr & 0xff000000) == CONFIG_VGA_FB_ADDR) {
         IFDEF(CONFIG_DIFFTEST, skipDebugDifftestRef());
     }
@@ -130,10 +130,10 @@ void runCPUSimModule() {
             sim_ebreak = true;
         }
 
-#if CFLAGS_CPU_TYPE_ME32LS
+#if CFLAGS_CPU_TYPE_ML1
         sim_inst_end_flag = true;
-#elif CFLAGS_CPU_TYPE_ME32LM
-#elif CFLAGS_CPU_TYPE_ME32LP
+#elif CFLAGS_CPU_TYPE_ML2
+#elif CFLAGS_CPU_TYPE_ML3
 #endif
 
 #ifdef CONFIG_ETRACE

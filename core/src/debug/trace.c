@@ -470,14 +470,14 @@ void printfDebugETrace(char *type, int dir) {
     if (strcmp(type, "process") == 0) {
         if (dir != 0) {
             LOG_PURE("[etrace] %s", (dir == 1) ? "ecall" : "mret");
-            LOG_PURE("[etrace] mepc: "    FMT_WORD ", " \
+            LOG_PURE("[etrace] mstatus: " FMT_WORD ", " \
                               "mtvec: "   FMT_WORD ", " \
-                              "mcause: "  FMT_WORD ", " \
-                              "mstatus: " FMT_WORD "\n",
-                    top->io_pTrace_pCSRRd_bRdMEPCData,
+                              "mepc: "    FMT_WORD ", " \
+                              "mcause: "  FMT_WORD "\n",
+                    top->io_pTrace_pCSRRd_bRdMSTAData,
                     top->io_pTrace_pCSRRd_bRdMTVEData,
-                    top->io_pTrace_pCSRRd_bRdMCAUData,
-                    top->io_pTrace_pCSRRd_bRdMSTAData);
+                    top->io_pTrace_pCSRRd_bRdMEPCData,
+                    top->io_pTrace_pCSRRd_bRdMCAUData);
         }
     }
     else if (strcmp(type, "result") == 0) {

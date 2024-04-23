@@ -7,6 +7,7 @@
 #include <device/device.h>
 #include <isa/isa.h>
 #include <isa/gpr.h>
+#include <isa/csr.h>
 #include <monitor/sdb/watch.h>
 #include <state.h>
 #include <util/disasm.h>
@@ -24,6 +25,7 @@ extern uint64_t sim_dnpc;
 extern uint64_t sim_inst;
 extern uint64_t sim_cycle_num;
 extern bool sim_inst_end_flag;
+extern int csr_index_arr[];
 
 char cpu_logbuf[256];
 uint64_t cpu_inst_num = 0;
@@ -55,6 +57,9 @@ static void execCPUTimesSingle() {
     cpu.pc = sim_dnpc;
     for (int i = 0; i < 32; i++) {
         cpu.gpr[i] = getISAGPR(i);
+    }
+    for (int i = 0; i < 4; i++) {
+        cpu.csr[csr_index_arr[i]] = getISACSR(i);
     }
 
     if (sim_inst_end_flag) {
@@ -98,6 +103,9 @@ static void execCPUTimesMultip(uint64_t num) {
         }
         IFDEF(CONFIG_DEVICE, updateDeviceState());
     }
+
+#ifdef CONFIG_DIFFTEST
+#endif
 }
 
 static void printfCPUStatistic() {
@@ -146,6 +154,9 @@ void execCPU(uint64_t num) {
 #ifndef CONFIG_ITRACE_PROCESS
             LOG_PURE();
 #endif
+#ifdef CONFIG_DIFFTEST
+            LOG_PURE();
+#endif
             printfDebugITrace((char *)"result");
 #endif
 #ifdef CONFIG_MTRACE_RESULT
@@ -172,5 +183,9 @@ void execCPU(uint64_t num) {
 
 void printfCPUAssertFailMsg() {
     printfISAGPRData();
+#ifdef CONFIG_ITRACE_RESULT
+    printfDebugITrace((char *)"result");
+    LOG_PURE();
+#endif
     printfCPUStatistic();
 }

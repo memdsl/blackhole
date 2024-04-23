@@ -36,8 +36,15 @@ static debug_module_config_t difftest_dm_config = {
   .support_impebreak = true
 };
 
+#define CSR_ARR_LEN 4096
+#define CSR_MSTATUS 0x300
+#define CSR_MTVEC   0x305
+#define CSR_MEPC    0x341
+#define CSR_MCAUSE  0x342
+
 struct diff_context_t {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)];
+  word_t csr[CSR_ARR_LEN];
   word_t pc;
 };
 
@@ -48,6 +55,8 @@ static state_t *state = NULL;
 void sim_t::diff_init(int port) {
   p = get_core("0");
   state = p->get_state();
+  p->set_debug(true);
+  p->put_csr(CSR_MSTATUS, MUXDEF(CONFIG_ISA_riscv32, 0x1800, 0xa00001800));
 }
 
 void sim_t::diff_step(uint64_t n) {
@@ -56,18 +65,26 @@ void sim_t::diff_step(uint64_t n) {
 
 void sim_t::diff_get_regs(void* diff_context) {
   struct diff_context_t* ctx = (struct diff_context_t*)diff_context;
+  ctx->pc = state->pc;
   for (int i = 0; i < NR_GPR; i++) {
     ctx->gpr[i] = state->XPR[i];
   }
-  ctx->pc = state->pc;
+  ctx->csr[CSR_MSTATUS] = p->get_csr(CSR_MSTATUS);
+  ctx->csr[CSR_MTVEC]   = p->get_csr(CSR_MTVEC);
+  ctx->csr[CSR_MEPC]    = p->get_csr(CSR_MEPC);
+  ctx->csr[CSR_MCAUSE]  = p->get_csr(CSR_MCAUSE);
 }
 
 void sim_t::diff_set_regs(void* diff_context) {
   struct diff_context_t* ctx = (struct diff_context_t*)diff_context;
+  state->pc = ctx->pc;
   for (int i = 0; i < NR_GPR; i++) {
     state->XPR.write(i, (sword_t)ctx->gpr[i]);
   }
-  state->pc = ctx->pc;
+  // p->put_csr(CSR_MSTATUS, ctx->csr[CSR_MSTATUS]);
+  // p->put_csr(CSR_MTVEC,   ctx->csr[CSR_MTVEC]);
+  // p->put_csr(CSR_MEPC,    ctx->csr[CSR_MEPC]);
+  // p->put_csr(CSR_MCAUSE,  ctx->csr[CSR_MCAUSE]);
 }
 
 void sim_t::diff_memcpy(reg_t dest, void* src, size_t n) {
@@ -101,7 +118,7 @@ __EXPORT void difftest_exec(uint64_t n) {
 
 __EXPORT void difftest_init(int port) {
   difftest_htif_args.push_back("");
-  const char *isa = "RV" MUXDEF(CONFIG_RV64, "64", "32") MUXDEF(CONFIG_RVE, "E", "I") "MAFDC";
+  const char *isa = "RV" MUXDEF(CONFIG_ISA_riscv32, "32", "64") MUXDEF(CONFIG_RVE, "E", "I") "MAFDC";
   cfg_t cfg(/*default_initrd_bounds=*/std::make_pair((reg_t)0, (reg_t)0),
             /*default_bootargs=*/nullptr,
             /*default_isa=*/isa,

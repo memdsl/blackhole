@@ -1,8 +1,15 @@
 #include <cpu/sim.h>
+#include <isa/isa.h>
 #include <isa/csr.h>
 
 const char *csr_name_arr[] = {
     "mstatus", "mtvec  ", "mepc   ",  "mcause "
+};
+int csr_index_arr[] = {
+    CSR_MSTATUS,
+    CSR_MTVEC,
+    CSR_MEPC,
+    CSR_MCAUSE
 };
 
 static int checkISACSRIsValid(int id) {
