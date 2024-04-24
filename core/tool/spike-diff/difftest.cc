@@ -81,10 +81,6 @@ void sim_t::diff_set_regs(void* diff_context) {
   for (int i = 0; i < NR_GPR; i++) {
     state->XPR.write(i, (sword_t)ctx->gpr[i]);
   }
-  // p->put_csr(CSR_MSTATUS, ctx->csr[CSR_MSTATUS]);
-  // p->put_csr(CSR_MTVEC,   ctx->csr[CSR_MTVEC]);
-  // p->put_csr(CSR_MEPC,    ctx->csr[CSR_MEPC]);
-  // p->put_csr(CSR_MCAUSE,  ctx->csr[CSR_MCAUSE]);
 }
 
 void sim_t::diff_memcpy(reg_t dest, void* src, size_t n) {
