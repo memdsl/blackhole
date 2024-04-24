@@ -103,7 +103,7 @@ mainmenu "Meteor Configuration Menu"
         config MTRACE_PROCESS
             depends on MTRACE
             bool "Trace memory when the condition is process"
-            default n
+            default y
         config MTRACE_RESULT
             depends on MTRACE
             bool "Trace memory when the condition is result"
@@ -119,7 +119,7 @@ mainmenu "Meteor Configuration Menu"
         config FTRACE_PROCESS
             depends on FTRACE
             bool "Trace functions when the condition is process"
-            default n
+            default y
         config FTRACE_RESULT
             depends on FTRACE
             bool "Trace functions when the condition is result"
@@ -131,7 +131,7 @@ mainmenu "Meteor Configuration Menu"
         config DTRACE_PROCESS
             depends on DTRACE
             bool "Trace devices when the condition is process"
-            default n
+            default y
         config DTRACE_RESULT
             depends on DTRACE
             bool "Trace devices when the condition is result"
@@ -143,7 +143,7 @@ mainmenu "Meteor Configuration Menu"
         config ETRACE_PROCESS
             depends on ETRACE
             bool "Trace exception when the condition is process"
-            default n
+            default y
         config ETRACE_RESULT
             depends on ETRACE
             bool "Trace exception when the condition is result"
