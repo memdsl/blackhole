@@ -133,6 +133,12 @@ void runCPUSimModule() {
 #if CFLAGS_CPU_TYPE_ML1
         sim_inst_end_flag = true;
 #elif CFLAGS_CPU_TYPE_ML2
+        if (top->io_pTrace_pCTR_oStateCurr == 2) {
+            sim_inst_end_flag = true;
+        }
+        else {
+            sim_inst_end_flag = false;
+        }
 #elif CFLAGS_CPU_TYPE_ML3
 #endif
 

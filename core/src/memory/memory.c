@@ -39,12 +39,15 @@ word_t readMemoryPhyData(paddr_t addr, int len) {
 }
 
 void writeMemoryPhyData(paddr_t addr, int len, word_t data) {
-    if (likely(judgeMemoryPhyAddr(addr))) {
-        writeMemoryHost(convertGuestToHost(addr), len, data);
-        return;
+    if (addr != 0x00000000) {
+        if (likely(judgeMemoryPhyAddr(addr))) {
+            writeMemoryHost(convertGuestToHost(addr), len, data);
+            return;
+        }
+        IFDEF(CONFIG_DEVICE, writeDeviceMMIOData(addr, len, data); return);
+        printfMemoryBound(addr);
     }
-    IFDEF(CONFIG_DEVICE, writeDeviceMMIOData(addr, len, data); return);
-    printfMemoryBound(addr);
+    return;
 }
 
 void genMemoryFile(const char *mem_file, int size) {

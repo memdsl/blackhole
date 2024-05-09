@@ -19,6 +19,7 @@ static int checkISACSRIsValid(int id) {
 
 word_t getISACSR(int id) {
     id = checkISACSRIsValid(id);
+#if CFLAGS_CPU_TYPE_ML1
     switch (id) {
         case 0:  return top->io_pTrace_pCSRRd_bRdMSTAData;
         case 1:  return top->io_pTrace_pCSRRd_bRdMTVEData;
@@ -26,6 +27,9 @@ word_t getISACSR(int id) {
         case 3:  return top->io_pTrace_pCSRRd_bRdMCAUData;
         default: return 0;
     }
+#elif CFLAGS_CPU_TYPE_ML2
+     return 0;
+#endif
 }
 
 word_t getISACSRData(const char *csr, bool *success) {

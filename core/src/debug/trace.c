@@ -35,6 +35,7 @@ void recordDebugITrace(char *logbuf) {
 
 void printfDebugITrace(char *type) {
     if (strcmp(type, "process") == 0) {
+#if CFLAGS_CPU_TYPE_ML1
         LOG_PURE("[itrace] cycle num:                 %ld", sim_cycle_num);
         LOG_PURE("[itrace] [base]       pc:           " FMT_WORD,
                  top->io_pTrace_pBase_bPC);
@@ -236,8 +237,259 @@ void printfDebugITrace(char *type) {
 
         LOG_PURE("[itrace] [exu] [out]  alu out:      " FMT_WORD,
                  top->io_pTrace_pEXUOut_bALUOut);
-
         LOG_PURE();
+#elif CFLAGS_CPU_TYPE_ML2
+    LOG_PURE("[itrace]             cycle num:        %ld", sim_cycle_num);
+    LOG_PURE("[itrace] [ifu]       pc:               " FMT_WORD,
+             top->io_pTrace_pBase_bPC);
+    LOG_PURE("[itrace] [ifu]       inst:             " FMT_WORD,
+             top->io_pTrace_pBase_bInst);
+
+    char *inst_name = (char *)"";
+    switch (top->io_pTrace_pCTR_oInstName) {
+        case  0: inst_name = (char *)"X";      break;
+        case  1: inst_name = (char *)"SLL";    break;
+        case  2: inst_name = (char *)"SLLI";   break;
+        case  3: inst_name = (char *)"SRL";    break;
+        case  4: inst_name = (char *)"SRLI";   break;
+        case  5: inst_name = (char *)"SRA";    break;
+        case  6: inst_name = (char *)"SRAI";   break;
+        case  7: inst_name = (char *)"ADD";    break;
+        case  8: inst_name = (char *)"ADDI";   break;
+        case  9: inst_name = (char *)"SUB";    break;
+        case 10: inst_name = (char *)"LUI";    break;
+        case 11: inst_name = (char *)"AUIPC";  break;
+        case 12: inst_name = (char *)"XOR";    break;
+        case 13: inst_name = (char *)"XORI";   break;
+        case 14: inst_name = (char *)"OR";     break;
+        case 15: inst_name = (char *)"ORI";    break;
+        case 16: inst_name = (char *)"AND";    break;
+        case 17: inst_name = (char *)"ANDI";   break;
+        case 18: inst_name = (char *)"SLT";    break;
+        case 19: inst_name = (char *)"SLTI";   break;
+        case 20: inst_name = (char *)"SLTU";   break;
+        case 21: inst_name = (char *)"SLTIU";  break;
+        case 22: inst_name = (char *)"BEQ";    break;
+        case 23: inst_name = (char *)"BNE";    break;
+        case 24: inst_name = (char *)"BLT";    break;
+        case 25: inst_name = (char *)"BGE";    break;
+        case 26: inst_name = (char *)"BLTU";   break;
+        case 27: inst_name = (char *)"BGEU";   break;
+        case 28: inst_name = (char *)"JAL";    break;
+        case 29: inst_name = (char *)"JALR";   break;
+        case 30: inst_name = (char *)"FENCE";  break;
+        case 31: inst_name = (char *)"FENCEI"; break;
+        case 32: inst_name = (char *)"ECALL";  break;
+        case 33: inst_name = (char *)"EBREAK"; break;
+        case 34: inst_name = (char *)"CSRRW";  break;
+        case 35: inst_name = (char *)"CSRRS";  break;
+        case 36: inst_name = (char *)"CSRRC";  break;
+        case 37: inst_name = (char *)"CSRRWI"; break;
+        case 38: inst_name = (char *)"CSRRSI"; break;
+        case 39: inst_name = (char *)"CSRRCI"; break;
+        case 40: inst_name = (char *)"LB";     break;
+        case 41: inst_name = (char *)"LH";     break;
+        case 42: inst_name = (char *)"LBU";    break;
+        case 43: inst_name = (char *)"LHU";    break;
+        case 44: inst_name = (char *)"LW";     break;
+        case 45: inst_name = (char *)"SB";     break;
+        case 46: inst_name = (char *)"SH";     break;
+        case 47: inst_name = (char *)"SW";     break;
+        case 48: inst_name = (char *)"MUL";    break;
+        case 49: inst_name = (char *)"MULH";   break;
+        case 50: inst_name = (char *)"MULHSU"; break;
+        case 51: inst_name = (char *)"MULHU";  break;
+        case 52: inst_name = (char *)"DIV";    break;
+        case 53: inst_name = (char *)"DIVU";   break;
+        case 54: inst_name = (char *)"REM";    break;
+        case 55: inst_name = (char *)"REMU";   break;
+        default: inst_name = (char *)"X";      break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] inst name:        %s", inst_name);
+
+    char *state_curr = (char *)"";
+    switch (top->io_pTrace_pCTR_oStateCurr) {
+        case 0:  state_curr = (char *)"X";  break;
+        case 1:  state_curr = (char *)"IF"; break;
+        case 2:  state_curr = (char *)"ID"; break;
+        case 3:  state_curr = (char *)"EX"; break;
+        case 4:  state_curr = (char *)"LS"; break;
+        case 5:  state_curr = (char *)"WB"; break;
+        case 6:  state_curr = (char *)"ME"; break;
+        default: state_curr = (char *)"X"; break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] state curr:       %s", state_curr);
+
+    LOG_PURE("[itrace] [idu] [ctr] pc wr en:         %d",
+              top->io_pTrace_pCTR_oPCWrEn);
+
+    char *pc_wr_src = (char *)"";
+    switch (top->io_pTrace_pCTR_oPCWrSrc) {
+        case 0:  pc_wr_src = (char *)"X";    break;
+        case 1:  pc_wr_src = (char *)"NEXT"; break;
+        case 2:  pc_wr_src = (char *)"JUMP"; break;
+        default: pc_wr_src = (char *)"X";    break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] pc wr src:        %s", pc_wr_src);
+
+    LOG_PURE("[itrace] [idu] [ctr] pc next en:       %d",
+              top->io_pTrace_pCTR_oPCNextEn);
+    LOG_PURE("[itrace] [idu] [ctr] pc jump en:       %d",
+              top->io_pTrace_pCTR_oPCJumpEn);
+    LOG_PURE("[itrace] [idu] [ctr] mem rd en:        %d",
+              top->io_pTrace_pCTR_oMemRdEn);
+
+    char *mem_rd_src = (char *)"";
+    switch (top->io_pTrace_pCTR_oMemRdSrc) {
+        case 0:  mem_rd_src = (char *)"X";   break;
+        case 1:  mem_rd_src = (char *)"PC";  break;
+        case 2:  mem_rd_src = (char *)"ALU"; break;
+        default: mem_rd_src = (char *)"X";   break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] mem rd src:       %s", mem_rd_src);
+
+    LOG_PURE("[itrace] [idu] [ctr] mem wr en:        %d",
+              top->io_pTrace_pCTR_oMemWrEn);
+
+    char *mem_byt = (char *)"";
+    switch (top->io_pTrace_pCTR_oMemByt) {
+        case 0:  mem_byt = (char *)"X";   break;
+        case 1:  mem_byt = (char *)"1_U"; break;
+        case 2:  mem_byt = (char *)"2_U"; break;
+        case 3:  mem_byt = (char *)"4_U"; break;
+        case 4:  mem_byt = (char *)"8_U"; break;
+        case 5:  mem_byt = (char *)"1_S"; break;
+        case 6:  mem_byt = (char *)"2_S"; break;
+        case 7:  mem_byt = (char *)"4_S"; break;
+        case 8:  mem_byt = (char *)"8_S"; break;
+        default: mem_byt = (char *)"X";   break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] mem byt:          %s", mem_byt);
+
+    LOG_PURE("[itrace] [idu] [ctr] ir wr en:         %d",
+              top->io_pTrace_pCTR_oIRWrEn);
+    LOG_PURE("[itrace] [idu] [ctr] gpr wr en:        %d",
+              top->io_pTrace_pCTR_oGPRWrEn);
+
+    char *gpr_wr_src = (char *)"";
+    switch (top->io_pTrace_pCTR_oGPRWrSrc) {
+        case 0:  gpr_wr_src = (char *)"X";   break;
+        case 1:  gpr_wr_src = (char *)"ALU"; break;
+        case 2:  gpr_wr_src = (char *)"MEM"; break;
+        case 3:  gpr_wr_src = (char *)"PC";  break;
+        case 4:  gpr_wr_src = (char *)"CSR"; break;
+        default: gpr_wr_src = (char *)"X";   break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] gpr wr src:       %s", gpr_wr_src);
+
+    char *alu_type = (char *)"";
+    switch (top->io_pTrace_pCTR_oALUType) {
+        case  0: alu_type = (char *)"X";      break;
+        case  1: alu_type = (char *)"SLL";    break;
+        case  2: alu_type = (char *)"SRL";    break;
+        case  3: alu_type = (char *)"SRA";    break;
+        case  4: alu_type = (char *)"ADD";    break;
+        case  5: alu_type = (char *)"SUB";    break;
+        case  6: alu_type = (char *)"XOR";    break;
+        case  7: alu_type = (char *)"OR";     break;
+        case  8: alu_type = (char *)"AND";    break;
+        case  9: alu_type = (char *)"SLT";    break;
+        case 10: alu_type = (char *)"SLTU";   break;
+        case 11: alu_type = (char *)"BEQ";    break;
+        case 12: alu_type = (char *)"BNE";    break;
+        case 13: alu_type = (char *)"BLT";    break;
+        case 14: alu_type = (char *)"BGE";    break;
+        case 15: alu_type = (char *)"BLTU";   break;
+        case 16: alu_type = (char *)"BGEU";   break;
+        case 17: alu_type = (char *)"JALR";   break;
+        case 18: alu_type = (char *)"MUL";    break;
+        case 19: alu_type = (char *)"MULH";   break;
+        case 20: alu_type = (char *)"MULHSU"; break;
+        case 21: alu_type = (char *)"MULHU";  break;
+        case 22: alu_type = (char *)"DIV";    break;
+        case 23: alu_type = (char *)"DIVU";   break;
+        case 24: alu_type = (char *)"REM";    break;
+        case 25: alu_type = (char *)"REMU";   break;
+        default: alu_type = (char *)"X";     break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] alu type:         %s", alu_type);
+
+    char *alu_rs1 = (char *)"";
+    switch (top->io_pTrace_pCTR_oALURS1) {
+        case 0:  alu_rs1 = (char *)"X";   break;
+        case 1:  alu_rs1 = (char *)"PC";  break;
+        case 2:  alu_rs1 = (char *)"GPR"; break;
+        case 3:  alu_rs1 = (char *)"IMM"; break;
+        case 4:  alu_rs1 = (char *)"4";   break;
+        default: alu_rs1 = (char *)"X";   break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] alu rs1:          %s", alu_rs1);
+
+    char *alu_rs2 = (char *)"";
+    switch (top->io_pTrace_pCTR_oALURS2) {
+        case 0:  alu_rs2 = (char *)"X";     break;
+        case 1:  alu_rs2 = (char *)"GPR";   break;
+        case 2:  alu_rs2 = (char *)"IMM_I"; break;
+        case 3:  alu_rs2 = (char *)"IMM_S"; break;
+        case 4:  alu_rs2 = (char *)"IMM_B"; break;
+        case 5:  alu_rs2 = (char *)"IMM_U"; break;
+        case 6:  alu_rs2 = (char *)"IMM_J"; break;
+        case 7:  alu_rs2 = (char *)"4";     break;
+        default: alu_rs2 = (char *)"X";     break;
+    }
+    LOG_PURE("[itrace] [idu] [ctr] alu rs2:          %s", alu_rs2);
+
+    LOG_PURE("[itrace] [idu]       rs1 addr:         %d",
+              top->io_pTrace_pIDU_oRS1Addr);
+    LOG_PURE("[itrace] [idu]       rs2 addr:         %d",
+              top->io_pTrace_pIDU_oRS2Addr);
+    LOG_PURE("[itrace] [idu]       rd  addr:         %d",
+              top->io_pTrace_pIDU_oRDAddr);
+    LOG_PURE("[itrace] [idu]       rs1 data:         " FMT_WORD "",
+              top->io_pTrace_pIDU_oRS1Data);
+    LOG_PURE("[itrace] [idu]       rs2 data:         " FMT_WORD "",
+              top->io_pTrace_pIDU_oRS2Data);
+    LOG_PURE("[itrace] [idu]       end data:         " FMT_WORD "",
+              top->io_pTrace_pIDU_oEndData);
+    LOG_PURE("[itrace] [idu]       imm data:         " FMT_WORD "",
+              top->io_pTrace_pIDU_oImmData);
+
+    LOG_PURE("[itrace] [exu]       pc next:          " FMT_WORD "",
+              top->io_pTrace_pEXU_oPCNext);
+    LOG_PURE("[itrace] [exu]       pc jump:          " FMT_WORD "",
+              top->io_pTrace_pEXU_oPCJump);
+    LOG_PURE("[itrace] [exu]       alu zero:         %d",
+              top->io_pTrace_pEXU_oALUZero);
+    LOG_PURE("[itrace] [exu]       alu out:          " FMT_WORD "",
+              top->io_pTrace_pEXU_oALUOut);
+
+    LOG_PURE("[itrace] [lsu]       mem rd en:        %d",
+              top->io_pTrace_pLSU_oMemRdEn);
+    LOG_PURE("[itrace] [lsu]       mem rd addr inst: " FMT_WORD "",
+              top->io_pTrace_pLSU_oMemRdAddrInst);
+    LOG_PURE("[itrace] [lsu]       mem rd addr load: " FMT_WORD "",
+              top->io_pTrace_pLSU_oMemRdAddrLoad);
+    LOG_PURE("[itrace] [lsu]       mem rd data inst: " FMT_WORD "",
+              top->io_pTrace_pLSU_oMemRdDataInst);
+    LOG_PURE("[itrace] [lsu]       mem rd data load: " FMT_WORD "",
+              top->io_pTrace_pLSU_oMemRdDataLoad);
+    LOG_PURE("[itrace] [lsu]       mem wr en:        %d",
+              top->io_pTrace_pLSU_oMemWrEn);
+    LOG_PURE("[itrace] [lsu]       mem wr addr:      " FMT_WORD "",
+              top->io_pTrace_pLSU_oMemWrAddr);
+    LOG_PURE("[itrace] [lsu]       mem wr data:      " FMT_WORD "",
+              top->io_pTrace_pLSU_oMemWrData);
+    LOG_PURE("[itrace] [lsu]       mem wr len:       %d",
+              top->io_pTrace_pLSU_oMemWrLen);
+    LOG_PURE("[itrace] [lsu]       mem rd data:      " FMT_WORD "",
+              top->io_pTrace_pLSU_oMemRdData);
+
+    LOG_PURE("[itrace] [wbu]       gpr wr:           " FMT_WORD "",
+              top->io_pTrace_pWBU_oGPRWrData);
+    LOG_PURE();
+#elif CFLAGS_CPU_TYPE_ML3
+#endif
+
     }
     else if (strcmp(type, "result") == 0) {
         itrace_head = itrace;
@@ -470,6 +722,7 @@ void printfDebugETrace(char *type, int dir) {
     if (strcmp(type, "process") == 0) {
         if (dir != 0) {
             LOG_PURE("[etrace] %s", (dir == 1) ? "ecall" : "mret");
+#if CFLAGS_CPU_TYPE_ML1
             LOG_PURE("[etrace] mstatus: " FMT_WORD ", " \
                               "mtvec: "   FMT_WORD ", " \
                               "mepc: "    FMT_WORD ", " \
@@ -478,6 +731,7 @@ void printfDebugETrace(char *type, int dir) {
                     top->io_pTrace_pCSRRd_bRdMTVEData,
                     top->io_pTrace_pCSRRd_bRdMEPCData,
                     top->io_pTrace_pCSRRd_bRdMCAUData);
+#endif
         }
     }
     else if (strcmp(type, "result") == 0) {
