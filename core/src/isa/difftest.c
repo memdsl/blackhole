@@ -14,6 +14,7 @@ bool checkISADifftestReg(CPUStruct *cpu_ref, vaddr_t pc) {
             break;
         }
     }
+#ifdef CONFIG_DIFFTEST_CSR
     for (int i = 0; i < 4; i++) {
         int csr_index = csr_index_arr[i];
         if (cpu.csr[csr_index] != cpu_ref->csr[csr_index]) {
@@ -21,6 +22,7 @@ bool checkISADifftestReg(CPUStruct *cpu_ref, vaddr_t pc) {
             break;
         }
     }
+#endif
 
     if (error_flag) {
         printf("[difftest] error at pc: " FMT_WORD "\n", pc);
@@ -55,7 +57,7 @@ void printfISADifftestReg(CPUStruct *cpu_ref, vaddr_t pc) {
                  cpu_ref->gpr[i],
                  error_str);
     }
-
+#ifdef CONFIG_DIFFTEST_CSR
     for (int i = 0; i < 4; i++) {
         int csr_index = csr_index_arr[i];
         const char *csr_name = getISACSRName(i);
@@ -67,4 +69,5 @@ void printfISADifftestReg(CPUStruct *cpu_ref, vaddr_t pc) {
                  cpu_ref->csr[csr_index],
                  error_str);
     }
+#endif
 }

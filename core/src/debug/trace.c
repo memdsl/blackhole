@@ -336,8 +336,12 @@ void printfDebugITrace(char *type) {
               top->io_pTrace_pCTR_oPCNextEn);
     LOG_PURE("[itrace] [idu] [ctr] pc jump en:       %d",
               top->io_pTrace_pCTR_oPCJumpEn);
-    LOG_PURE("[itrace] [idu] [ctr] mem rd en:        %d",
-              top->io_pTrace_pCTR_oMemRdEn);
+    // LOG_PURE("[itrace] [idu] [ctr] mem rd en:        %d",
+    //           top->io_pTrace_pCTR_oMemRdEn);
+    LOG_PURE("[itrace] [idu] [ctr] mem rd inst en:   %d",
+              top->io_pTrace_pCTR_oMemRdInstEn);
+    LOG_PURE("[itrace] [idu] [ctr] mem rd load en:   %d",
+              top->io_pTrace_pCTR_oMemRdLoadEn);
 
     char *mem_rd_src = (char *)"";
     switch (top->io_pTrace_pCTR_oMemRdSrc) {
@@ -463,8 +467,6 @@ void printfDebugITrace(char *type) {
     LOG_PURE("[itrace] [exu]       alu out:          " FMT_WORD "",
               top->io_pTrace_pEXU_oALUOut);
 
-    LOG_PURE("[itrace] [lsu]       mem rd en:        %d",
-              top->io_pTrace_pLSU_oMemRdEn);
     LOG_PURE("[itrace] [lsu]       mem rd addr inst: " FMT_WORD "",
               top->io_pTrace_pLSU_oMemRdAddrInst);
     LOG_PURE("[itrace] [lsu]       mem rd addr load: " FMT_WORD "",
@@ -473,8 +475,6 @@ void printfDebugITrace(char *type) {
               top->io_pTrace_pLSU_oMemRdDataInst);
     LOG_PURE("[itrace] [lsu]       mem rd data load: " FMT_WORD "",
               top->io_pTrace_pLSU_oMemRdDataLoad);
-    LOG_PURE("[itrace] [lsu]       mem wr en:        %d",
-              top->io_pTrace_pLSU_oMemWrEn);
     LOG_PURE("[itrace] [lsu]       mem wr addr:      " FMT_WORD "",
               top->io_pTrace_pLSU_oMemWrAddr);
     LOG_PURE("[itrace] [lsu]       mem wr data:      " FMT_WORD "",

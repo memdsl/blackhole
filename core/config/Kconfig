@@ -155,6 +155,14 @@ mainmenu "Meteor Configuration Menu"
             help
                 Enable differential testing with a reference design.
                 Note that this will significantly reduce the performance of Meteor.
+        config DIFFTEST_GPR
+            depends on DIFFTEST
+            bool "Enable GPR diff"
+            default y
+        config DIFFTEST_CSR
+            depends on DIFFTEST
+            bool "Enable CSR diff"
+            default n
         choice
             prompt "Reference design"
             default DIFFTEST_REF_SPIKE if ISA_riscv64 || ISA_riscv32

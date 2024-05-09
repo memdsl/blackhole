@@ -67,6 +67,7 @@ static void runCPUSimModuleCycle(bool flag) {
     }
 #endif
 
+#ifdef CONFIG_DEVICE
     uint64_t mem_rd_addr = top->io_pTrace_pMemData_pRd_bAddr;
     uint64_t mem_wr_addr = top->io_pTrace_pMemData_pWr_bAddr;
     if ((mem_rd_addr & 0xfffffff8) == CONFIG_TIMER_MMIO    ||
@@ -77,6 +78,7 @@ static void runCPUSimModuleCycle(bool flag) {
         (mem_wr_addr & 0xff000000) == CONFIG_VGA_FB_ADDR) {
         IFDEF(CONFIG_DIFFTEST, skipDebugDifftestRef());
     }
+#endif
 
     top->clock = 1;
     runCPUSimStep();

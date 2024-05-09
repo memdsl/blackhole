@@ -55,12 +55,12 @@ static void execCPUTraceAndDifftest() {
 static void execCPUTimesSingle() {
     runCPUSimModule();
     cpu.pc = sim_dnpc;
-    // for (int i = 0; i < 32; i++) {
-    //     cpu.gpr[i] = getISAGPR(i);
-    // }
-    // for (int i = 0; i < 4; i++) {
-    //     cpu.csr[csr_index_arr[i]] = getISACSR(i);
-    // }
+    for (int i = 0; i < 32; i++) {
+        cpu.gpr[i] = getISAGPR(i);
+    }
+    for (int i = 0; i < 4; i++) {
+        cpu.csr[csr_index_arr[i]] = getISACSR(i);
+    }
 
     if (sim_inst_end_flag) {
         cpu_inst_num++;
