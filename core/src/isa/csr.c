@@ -28,7 +28,7 @@ word_t getISACSR(int id) {
         default: return 0;
     }
 #elif CFLAGS_CPU_TYPE_ML2
-     return 0;
+    return 0;
 #endif
 }
 

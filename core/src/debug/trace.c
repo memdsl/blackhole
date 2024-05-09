@@ -336,8 +336,6 @@ void printfDebugITrace(char *type) {
               top->io_pTrace_pCTR_oPCNextEn);
     LOG_PURE("[itrace] [idu] [ctr] pc jump en:       %d",
               top->io_pTrace_pCTR_oPCJumpEn);
-    // LOG_PURE("[itrace] [idu] [ctr] mem rd en:        %d",
-    //           top->io_pTrace_pCTR_oMemRdEn);
     LOG_PURE("[itrace] [idu] [ctr] mem rd inst en:   %d",
               top->io_pTrace_pCTR_oMemRdInstEn);
     LOG_PURE("[itrace] [idu] [ctr] mem rd load en:   %d",

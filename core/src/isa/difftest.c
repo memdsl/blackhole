@@ -70,4 +70,5 @@ void printfISADifftestReg(CPUStruct *cpu_ref, vaddr_t pc) {
                  error_str);
     }
 #endif
+    LOG_PURE();
 }

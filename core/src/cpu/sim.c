@@ -113,12 +113,11 @@ uint64_t sim_snpc = 0;
 uint64_t sim_dnpc = 0;
 uint64_t sim_inst = 0;
 uint64_t sim_cycle_num = 1;
-bool     sim_inst_end_flag = false;
-
-bool     sim_ebreak = false;
+bool     sim_end_pre_flag = false;
+bool     sim_end_all_flag = false;
 
 void runCPUSimModule() {
-    if (!sim_ebreak) {
+    if (!sim_end_all_flag) {
         sim_pc   = top->io_pTrace_pBase_bPC;
         sim_snpc = sim_pc + 4;
         sim_inst = top->io_pTrace_pBase_bInst;
@@ -128,21 +127,8 @@ void runCPUSimModule() {
         sim_dnpc = top->io_pTrace_pBase_bPC;
         sim_cycle_num++;
 
-        if (top->io_pState_bEndFlag) {
-            sim_ebreak = true;
-        }
-
-#if CFLAGS_CPU_TYPE_ML1
-        sim_inst_end_flag = true;
-#elif CFLAGS_CPU_TYPE_ML2
-        if (top->io_pTrace_pCTR_oStateCurr == 2) {
-            sim_inst_end_flag = true;
-        }
-        else {
-            sim_inst_end_flag = false;
-        }
-#elif CFLAGS_CPU_TYPE_ML3
-#endif
+        sim_end_pre_flag = top->io_pState_bEndPreFlag;
+        sim_end_all_flag = top->io_pState_bEndAllFlag;
 
 #ifdef CONFIG_ETRACE
 #ifdef CONFIG_ETRACE_PROCESS
@@ -169,9 +155,9 @@ void runCPUSimModule() {
 #endif
     }
 
-    if (sim_ebreak) {
+    if (sim_end_all_flag) {
         sim_cycle_num--;
-        setCPUState(CPU_END, sim_pc, top->io_pState_bEndData);
+        setCPUState(CPU_END, sim_pc, top->io_pState_bEndAllData);
     }
 }
 

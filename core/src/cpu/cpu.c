@@ -24,7 +24,7 @@ extern uint64_t sim_snpc;
 extern uint64_t sim_dnpc;
 extern uint64_t sim_inst;
 extern uint64_t sim_cycle_num;
-extern bool sim_inst_end_flag;
+extern bool sim_end_pre_flag;
 extern int csr_index_arr[];
 
 char cpu_logbuf[256];
@@ -49,7 +49,18 @@ static void execCPUTraceAndDifftest() {
     if (cpu_print_step) {
         IFDEF(CONFIG_ITRACE, puts(cpu_logbuf));
     }
-    IFDEF(CONFIG_DIFFTEST, stepDebugDifftest(sim_pc, sim_dnpc));
+
+#ifdef CONFIG_DIFFTEST
+    if (sim_end_pre_flag) {
+        stepDebugDifftest(sim_pc, sim_dnpc);
+    }
+#endif
+
+// #if CFLAGS_CPU_TYPE_ML1
+    // IFDEF(CONFIG_DIFFTEST, stepDebugDifftest(sim_pc, sim_dnpc));
+// #elif CFLAGS_CPU_TYPE_ML2
+
+// #endif
 }
 
 static void execCPUTimesSingle() {
@@ -62,9 +73,8 @@ static void execCPUTimesSingle() {
         cpu.csr[csr_index_arr[i]] = getISACSR(i);
     }
 
-    if (sim_inst_end_flag) {
+    if (sim_end_pre_flag) {
         cpu_inst_num++;
-        sim_inst_end_flag = false;
     }
 
 #ifdef CONFIG_ITRACE_RESULT
@@ -167,7 +177,6 @@ void execCPU(uint64_t num) {
             LOG_PURE();
             printfDebugFTrace((char *)"result", NULL, NULL, 0, 0);
 #endif
-            LOG_PURE();
             LOG_PURE_COLOR("[result] state: %s",
                 (cpu_state.state == CPU_ABORT ?
                     ANSI_FMT("ABORT", ANSI_FG_RED) :
