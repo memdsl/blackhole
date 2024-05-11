@@ -10,9 +10,12 @@
 #include <state.h>
 #include <util/log.h>
 
+uint32_t sim_rd_inst = 0;
+uint32_t sim_rd_data = 0;
+
 extern "C" uint32_t readSimInstData(uint32_t addr, uint8_t len) {
     uint32_t data = (uint32_t)readMemoryPhyData(addr, len);
-    top->io_pTrace_pMemInst_pRd_bData = data;
+    sim_rd_inst = data;
 
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
@@ -23,7 +26,7 @@ extern "C" uint32_t readSimInstData(uint32_t addr, uint8_t len) {
 
 extern "C" uint32_t readSimMemoryData(uint32_t addr, uint8_t len) {
     uint32_t data = (uint32_t)readMemoryPhyData(addr, len);
-    top->io_pTrace_pMemData_pRd_bData = data;
+    sim_rd_data = data;
 
 #ifdef CONFIG_MTRACE_PROCESS
     printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
@@ -84,6 +87,13 @@ static void runCPUSimModuleCycle(bool flag) {
     runCPUSimStep();
 }
 
+static void runCPUSimTestModuleCycle() {
+    top->clock = 0;
+    runCPUSimStep();
+    top->clock = 1;
+    runCPUSimStep();
+}
+
 void initCPUSim() {
     contextp = new VerilatedContext;
     contextp->debug(0);
@@ -118,14 +128,18 @@ bool     sim_end_all_flag = false;
 
 void runCPUSimModule() {
     if (!sim_end_all_flag) {
+#ifndef CFLAGS_CPU_TYPE_TEST
         sim_pc   = top->io_pTrace_pBase_bPC;
         sim_snpc = sim_pc + 4;
         sim_inst = top->io_pTrace_pBase_bInst;
+#endif
 
         runCPUSimModuleCycle(true);
 
+#ifndef CFLAGS_CPU_TYPE_TEST
         sim_dnpc = top->io_pTrace_pBase_bPC;
         sim_cycle_num++;
+#endif
 
         sim_end_pre_flag = top->io_pState_bEndPreFlag;
         sim_end_all_flag = top->io_pState_bEndAllFlag;
@@ -154,10 +168,20 @@ void runCPUSimModule() {
 #endif
 #endif
     }
-
-    if (sim_end_all_flag) {
+    else {
         sim_cycle_num--;
         setCPUState(CPU_END, sim_pc, top->io_pState_bEndAllData);
+    }
+}
+
+void runCPUSimTestModule() {
+    if (!sim_end_all_flag) {
+        runCPUSimTestModuleCycle();
+
+        sim_end_all_flag = top->io_pState_bEndAllFlag;
+    }
+    else {
+        setCPUState(CPU_END, 0, 0);
     }
 }
 

@@ -14,6 +14,7 @@ static int checkISAGPRIsValid(int id) {
 }
 
 word_t getISAGPR(int id) {
+#ifndef CFLAGS_CPU_TYPE_TEST
     id = checkISAGPRIsValid(id);
     switch (id) {
         case 0:  return top->io_pTrace_pGPRRd_bRdData0;
@@ -50,6 +51,7 @@ word_t getISAGPR(int id) {
         case 31: return top->io_pTrace_pGPRRd_bRdData31;
         default: return top->io_pTrace_pGPRRd_bRdData0;
     }
+#endif
 }
 
 word_t getISAGPRData(const char *gpr, bool *success) {

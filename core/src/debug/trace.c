@@ -12,6 +12,8 @@ char **itrace_curr = NULL;
 
 extern VTop *top;
 extern uint64_t sim_cycle_num;
+extern uint32_t sim_rd_inst;
+extern uint32_t sim_rd_data;
 
 void recordDebugITrace(char *logbuf) {
     if (itrace_head == NULL) {
@@ -56,11 +58,11 @@ void printfDebugITrace(char *type) {
         LOG_PURE("[itrace] [mem]        inst rd addr: " FMT_WORD,
                  top->io_pTrace_pBase_bPC);
         LOG_PURE("[itrace] [mem]        inst rd data: " FMT_WORD,
-                 top->io_pTrace_pMemInst_pRd_bData);
+                 sim_rd_inst);
         LOG_PURE("[itrace] [mem]        data rd addr: " FMT_WORD,
                  top->io_pTrace_pMemData_pRd_bAddr);
         LOG_PURE("[itrace] [mem]        data rd data: " FMT_WORD,
-                 top->io_pTrace_pMemData_pRd_bData);
+                 sim_rd_data);
         LOG_PURE("[itrace] [mem]        data wr en:   %d",
                  top->io_pTrace_pMemData_pWr_bEn);
         LOG_PURE("[itrace] [mem]        data wr addr: " FMT_WORD,

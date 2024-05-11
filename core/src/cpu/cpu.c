@@ -55,12 +55,6 @@ static void execCPUTraceAndDifftest() {
         stepDebugDifftest(sim_pc, sim_dnpc);
     }
 #endif
-
-// #if CFLAGS_CPU_TYPE_ML1
-    // IFDEF(CONFIG_DIFFTEST, stepDebugDifftest(sim_pc, sim_dnpc));
-// #elif CFLAGS_CPU_TYPE_ML2
-
-// #endif
 }
 
 static void execCPUTimesSingle() {
@@ -104,18 +98,26 @@ static void execCPUTimesSingle() {
 #endif
 }
 
+static void execCPUTimesSingleTest() {
+    runCPUSimTestModule();
+}
+
 static void execCPUTimesMultip(uint64_t num) {
     for (; num > 0; num--) {
+#if CFLAGS_CPU_TYPE_TEST
+        execCPUTimesSingleTest();
+        if (cpu_state.state != CPU_RUNNING) {
+            break;
+        }
+#else
         execCPUTimesSingle();
         execCPUTraceAndDifftest();
         if (cpu_state.state != CPU_RUNNING) {
             break;
         }
         IFDEF(CONFIG_DEVICE, updateDeviceState());
-    }
-
-#ifdef CONFIG_DIFFTEST
 #endif
+    }
 }
 
 static void printfCPUStatistic() {
