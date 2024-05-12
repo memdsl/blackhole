@@ -18,7 +18,7 @@ extern "C" uint32_t readSimInstData(uint32_t addr, uint8_t len) {
     sim_rd_inst = data;
 
 #ifdef CONFIG_MTRACE_PROCESS
-    printfDebugMTrace((char *)"process", (char *)"rd ins", addr, data, 0);
+    printfDebugMTrace((char *)"process", (char *)"rd inst", addr, data, 0);
 #endif
 
     return data;
@@ -29,7 +29,7 @@ extern "C" uint32_t readSimMemoryData(uint32_t addr, uint8_t len) {
     sim_rd_data = data;
 
 #ifdef CONFIG_MTRACE_PROCESS
-    printfDebugMTrace((char *)"process", (char *)"rd mem", addr, data, 0);
+    printfDebugMTrace((char *)"process", (char *)"rd data", addr, data, 0);
 #endif
 
     return data;
@@ -39,7 +39,7 @@ extern "C" void writeSimMemoryData(uint32_t addr, uint32_t data, uint8_t len) {
     writeMemoryPhyData(addr, len, data);
 
 #ifdef CONFIG_MTRACE_PROCESS
-    printfDebugMTrace((char *)"process", (char *)"wr mem", addr, data, 0);
+    printfDebugMTrace((char *)"process", (char *)"wr data", addr, data, 0);
 #endif
 }
 
