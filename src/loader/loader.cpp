@@ -35,5 +35,5 @@ void Loader::printLoaderWelcome() {
     fmt::print("[loader] time: ");
     fmt::print(fg(fmt::color::red), "{}\n", time.getTimeNowDateAndTime());
     fmt::print("[loader] info: Welcome to ");
-    fmt::print(fg(fmt::color::orange), "BLACKHOLE!!!\n");
+    fmt::print(fg(fmt::color::orange), "BLACKHOLE!\n");
 }
