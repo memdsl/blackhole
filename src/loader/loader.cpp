@@ -1,8 +1,7 @@
-#include <ctime>
 #include <fmt/color.h>
 
-#include <loader.h>
-#include <btime.h>
+#include <loader.hpp>
+#include <time.hpp>
 
 Loader::Loader() {
 }
