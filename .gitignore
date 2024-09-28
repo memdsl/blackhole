@@ -1,5 +1,4 @@
 build
 
-.config
-.config.old
-autoconf.h
+.config*
+autoconf*

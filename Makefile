@@ -32,7 +32,7 @@ $(BUILD_BIN): $(OBJS)
 .PHONY: config run clean
 
 config:
-	cd config && kconfig-mconf Kconfig && ../script/gen_header.sh
+	cd config && kconfig-mconf Kconfig && ../script/gen_autoconf.sh
 run: $(BUILD_BIN)
 	$(BUILD_BIN)
 clean:
