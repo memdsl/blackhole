@@ -1,275 +1,214 @@
-mainmenu "Meteor Configuration Menu"
-    menu "*Meteor Build Options"
+mainmenu "Blackhole Configuration Menu"
+    menu "*Blackhole Base"
         choice
-            prompt "Compiler"
-            default CC_GCC
-            config CC_GCC
-                bool "gcc"
-            config CC_GPP
+            prompt "Base Compiler"
+            default BASE_COMP_CXX
+            config BASE_COMP_CXX
                 bool "g++"
-            config CC_CLANG
-                depends on !TARGET_AM
-                bool "clang"
         endchoice
-        config CC
+        config BASE_COMP
             string
-            default "gcc" if CC_GCC
-            default "g++" if CC_GPP
-            default "clang" if CC_CLANG
+            default "g++" if BASE_COMP_CXX
             default "none"
         choice
-            prompt "Optimization Level"
-            default CC_O2
-            config CC_O0
+            prompt "Base Compiler Optimization Level"
+            default BASE_COMP_O2
+            config BASE_COMP_OPT0
                 bool "O0"
-            config CC_O1
+            config BASE_COMP_OPT1
                 bool "O1"
-            config CC_O2
+            config BASE_COMP_OPT2
                 bool "O2"
-            config CC_O3
+            config BASE_COMP_OPT3
                 bool "O3"
         endchoice
-        config CC_OPT
+        config BASE_COMP_OPT
             string
-            default "-O0" if CC_O0
-            default "-O1" if CC_O1
-            default "-O2" if CC_O2
-            default "-O3" if CC_O3
+            default "-O0" if BASE_COMP_OPT0
+            default "-O1" if BASE_COMP_OPT1
+            default "-O2" if BASE_COMP_OPT2
+            default "-O3" if BASE_COMP_OPT3
             default "none"
-        config CC_LTO
-            depends on !TARGET_AM
-            bool "Enable link-time optimization"
+        config BASE_COMP_DEBUG
+            bool "Base Compiler Debug"
             default n
-        config CC_DEBUG
-            bool "Enable debug information"
+        config BASE_COMP_ASAN
+            bool "Base Compiler Address Sanitizer"
             default n
-        config CC_ASAN
-            depends on MODE_SYSTEM
-            bool "Enable address sanitizer"
-            default n
+        choice
+            prompt "Base CPU ISA"
+            default BASE_CPU_ISA_RISCV32
+            config BASE_CPU_ISA_RISCV32
+                bool "riscv32"
+            config BASE_CPU_ISA_RISCV64
+                bool "riscv64"
+        endchoice
+            config BASE_CPU_ISA
+                string
+                default "riscv32" if BASE_CPU_ISA_RISCV32
+                default "riscv64" if BASE_CPU_ISA_RISCV64
+                default "none"
+            config BASE_CPU_ISA32
+                depends on BASE_CPU_ISA_RISCV32
+                bool
+                default y
+            config BASE_CPU_ISA64
+                depends on BASE_CPU_ISA_RISCV64
+                bool
+                default y
     endmenu
 
-    menu "*Meteor Debug"
-        config SDB
-            bool "Enable simple debugger"
+    menu "*Blackhole Debug"
+        config DEBUG_LTDB
+            bool "Debug LTDB"
             default n
-        config SDB_CMD
-            depends on SDB
-            bool "Enable print SDB command"
-            default n
-        config SDB_EXPR
-            depends on SDB
-            bool "Enable print SDB expression"
-            default n
-        config SDB_EXPR_TOKEN
-            depends on SDB
-            bool "Enable print SDB expression token"
-            default n
-        config SDB_EXPR_EVAL
-            depends on SDB
-            bool "Enable print SDB expression eval"
-            default n
-        config SDB_WATCH
-            depends on SDB
-            bool "Enable print SDB watchpoint"
-            default n
-        config TRACE
-            bool "Enable tracer"
+        config DEBUG_TRACE
+            bool "Debug Trace"
             default y
-        config TRACE_START
-            depends on TRACE
-            int "When tracing is enabled (unit: number of instructions)"
-            default 0
-        config TRACE_END
-            depends on TRACE
-            int "When tracing is disabled (unit: number of instructions)"
-            default 10000
-        config ITRACE
-            depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
-            bool "Enable instruction tracer"
+        config DEBUG_TRACE_INS
+            depends on DEBUG_TRACE
+            bool "Trace for instruction"
             default y
-        config ITRACE_PROCESS
-            depends on ITRACE
-            bool "Trace instructions when the condition is process"
+        config DEBUG_TRACE_INS_PROCESS
+            depends on DEBUG_TRACE_INS
+            bool "Trace instruction when the condition is process"
             default y
-        config ITRACE_RESULT
-            depends on ITRACE
-            bool "Trace instructions when the condition is result"
+        config DEBUG_TRACE_INS_RESULT
+            depends on DEBUG_TRACE_INS
+            bool "Trace instruction when the condition is result"
             default n
-        config MTRACE
-            depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
-            bool "Enable memory tracer"
+        config DEBUG_TRACE_MEM
+            depends on DEBUG_TRACE
+            bool "Trace for memory"
             default n
-        config MTRACE_PROCESS
-            depends on MTRACE
+        config DEBUG_TRACE_MEM_PROCESS
+            depends on DEBUG_TRACE_MEM
             bool "Trace memory when the condition is process"
             default y
-        config MTRACE_RESULT
-            depends on MTRACE
+        config DEBUG_TRACE_MEM_RESULT
+            depends on DEBUG_TRACE_MEM
             bool "Trace memory when the condition is result"
             default n
-        config FTRACE
-            depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
-            bool "Enable function tracer"
+        config DEBUG_TRACE_FCT
+            depends on DEBUG_TRACE
+            bool "Trace for function"
             default n
-        config FTRACE_ELF
-            depends on FTRACE
-            bool "Enable print ftrace ELF"
-            default n
-        config FTRACE_PROCESS
-            depends on FTRACE
-            bool "Trace functions when the condition is process"
+        config DEBUG_TRACE_FCT_PROCESS
+            depends on DEBUG_TRACE_FCT
+            bool "Trace function when the condition is process"
             default y
-        config FTRACE_RESULT
-            depends on FTRACE
-            bool "Trace functions when the condition is result"
+        config DEBUG_TRACE_FCT_RESULT
+            depends on DEBUG_TRACE_FCT
+            bool "Trace function when the condition is result"
             default n
-        config DTRACE
-            depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
-            bool "Enable device tracer"
+        config DEBUG_TRACE_DEV
+            depends on DEBUG_TRACE
+            bool "Trace for device"
             default n
-        config DTRACE_PROCESS
-            depends on DTRACE
-            bool "Trace devices when the condition is process"
+        config DEBUG_TRACE_DEV_PROCESS
+            depends on DEBUG_TRACE_DEV
+            bool "Trace device when the condition is process"
             default y
-        config DTRACE_RESULT
-            depends on DTRACE
-            bool "Trace devices when the condition is result"
+        config DEBUG_TRACE_DEV_RESULT
+            depends on DEBUG_TRACE_DEV
+            bool "Trace device when the condition is result"
             default n
-        config ETRACE
-            depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
-            bool "Enable exception tracer"
+        config DEBUG_TRACE_ECT
+            depends on DEBUG_TRACE
+            bool "Trace for exception"
             default n
-        config ETRACE_PROCESS
-            depends on ETRACE
+        config DEBUG_TRACE_ECT_PROCESS
+            depends on DEBUG_TRACE_ECT
             bool "Trace exception when the condition is process"
             default y
-        config ETRACE_RESULT
-            depends on ETRACE
+        config DEBUG_TRACE_ECT_RESULT
+            depends on DEBUG_TRACE_ECT
             bool "Trace exception when the condition is result"
             default n
-        config DIFFTEST
-            depends on TARGET_NATIVE_ELF
-            bool "Enable differential testing"
+        config DEBUG_DIFF
+            bool "Debug Diff"
             default n
-            help
-                Enable differential testing with a reference design.
-                Note that this will significantly reduce the performance of Meteor.
-        config DIFFTEST_GPR
-            depends on DIFFTEST
-            bool "Enable GPR diff"
-            default y
-        config DIFFTEST_CSR
-            depends on DIFFTEST
-            bool "Enable CSR diff"
-            default n
-        choice
-            prompt "Reference design"
-            default DIFFTEST_REF_SPIKE if ISA_riscv64 || ISA_riscv32
-            default DIFFTEST_REF_KVM if ISA_x86
-            default DIFFTEST_REF_QEMU
-            depends on DIFFTEST
-            config DIFFTEST_REF_QEMU
-                bool "QEMU, communicate with socket"
-            if ISA_riscv64 || ISA_riscv32
-                config DIFFTEST_REF_SPIKE
-                    bool "Spike"
-            endif
-            if ISA_x86
-                config DIFFTEST_REF_KVM
-                    bool "KVM"
-            endif
-        endchoice
-        config DIFFTEST_REF_PATH
-            string
-            default "tool/qemu-diff" if DIFFTEST_REF_QEMU
-            default "tool/kvm-diff" if DIFFTEST_REF_KVM
-            default "tool/spike-diff" if DIFFTEST_REF_SPIKE
-            default "none"
-        config DIFFTEST_REF_NAME
-            string
-            default "qemu" if DIFFTEST_REF_QEMU
-            default "kvm" if DIFFTEST_REF_KVM
-            default "spike" if DIFFTEST_REF_SPIKE
-            default "none"
         config DEBUG_WAVE
-            bool "Enable wave generate"
+            bool "Debug Wave"
             default n
+        config DEBUG_WAVE_CYCLE
+            depends on DEBUG_WAVE
+            int "Wave cycles"
+            default 10000
     endmenu
 
-    choice
-        prompt "-Meteor ISA"
-        default ISA_riscv32
-        config ISA_x86
-        bool "x86"
-        config ISA_mips32
-        bool "mips32"
-        config ISA_riscv32
-        bool "riscv32"
-        config ISA_riscv64
-        bool "riscv64"
-    endchoice
-    config ISA
-        string
-        default "x86" if ISA_x86
-        default "mips32" if ISA_mips32
-        default "riscv32" if ISA_riscv32
-        default "riscv64" if ISA_riscv64
-        default "none"
-    config ISA64
-        depends on ISA_riscv64
-        bool
-        default y
-
-    choice
-        prompt "-Meteor Execution engine"
-        default ENGINE_INTERPRETER
-        config ENGINE_INTERPRETER
-            bool "Interpreter"
-            help
-                Interpreter guest instructions one by one.
-    endchoice
-    config ENGINE
-        string
-        default "interpreter" if ENGINE_INTERPRETER
-        default "none"
-
-    choice
-        prompt "-Meteor Running mode"
-        default MODE_SYSTEM
-        config MODE_SYSTEM
-        bool "System mode"
-        help
-            Support full-system functionality, including privileged instructions, MMU and devices.
-    endchoice
-
-    choice
-        prompt "-Meteor Build target"
-        default TARGET_NATIVE_ELF
-        config TARGET_NATIVE_ELF
-            bool "Executable on Linux Native"
-        config TARGET_SHARE
-            bool "Shared object (used as REF for differential testing)"
-        config TARGET_AM
-            bool "Application on Abstract-Machine (DON'T CHOOSE)"
-    endchoice
-
-    # if MODE_SYSTEM
-    #     source "config/memory/Kconfig"
-    #     source "config/device/Kconfig"
-    # endif
-
-    menu "-Meteor Miscellaneous"
-        choice
-            depends on !TARGET_AM
-            prompt "Host timer"
-            default TIMER_GETTIMEOFDAY
-            config TIMER_GETTIMEOFDAY
-                bool "gettimeofday"
-            config TIMER_CLOCK_GETTIME
-                bool "clock_gettime"
-        endchoice
-        config RT_CHECK
-            bool "Enable runtime checking"
-            default y
+    menu "-Blackhole Memory"
+        config MEMORY_BASE
+            hex "Memory Base Address"
+            default 0x80000000
+        config MEMORY_SIZE
+            hex "Memory Size"
+            default 0x08000000
     endmenu
+
+    menuconfig DEVICE
+        bool "-Blackhole Device"
+        default n
+        if DEVICE
+            menuconfig DEVICE_SERIAL
+                bool "Device Serial"
+                default y
+                if DEVICE_SERIAL
+                    config DEVICE_SERIAL_MMIO
+                        hex "Serial address"
+                        default 0xa00003f8
+                endif
+
+            menuconfig DEVICE_TIMER
+                bool "Device Timer"
+                default y
+                if DEVICE_TIMER
+                    config DEVICE_TIMER_MMIO
+                        hex "Timer address"
+                        default 0xa0000048
+                endif
+
+            menuconfig DEVICE_KEYBOARD
+                bool "Device Keyboard"
+                default y
+                if DEVICE_KEYBOARD
+                    config DEVICE_KEYBOARD_MMIO
+                        hex "Keyboard address"
+                        default 0xa0000060
+                endif
+
+            menuconfig DEVICE_VGA
+                bool "Device VGA"
+                default y
+                if DEVICE_VGA
+                    config DEVICE_VGA_FB_ADDR
+                        hex "VGA framebuffer address"
+                        default 0xa1000000
+                    config DEVICE_VGA_CTL_MMIO
+                        hex "VGA controller address "
+                        default 0xa0000100
+                    choice
+                        prompt "VGA screen size"
+                        default DEVICE_VGA_SIZE_400x300
+                    config DEVICE_VGA_SIZE_400x300
+                        bool "400 x 300"
+                    config DEVICE_VGA_SIZE_800x600
+                        bool "800 x 600"
+                    endchoice
+                endif
+
+            menuconfig DEVICE_AUDIO
+                bool "Device Audio"
+                default y
+                if DEVICE_AUDIO
+                    config DEVICE_AUDIO_SB_ADDR
+                        hex "Audio streambuffer address"
+                        default 0xa1200000
+                    config DEVICE_AUDIO_SB_SIZE
+                        hex "Audio streambuffer size"
+                        default 0x00010000
+                    config DEVICE_AUDIO_CTL_MMIO
+                        hex "Audio controller address"
+                        default 0xa0000200
+                endif
+        endif
