@@ -11,7 +11,8 @@ BUILD_BIN = $(BUILD_DIR)/blackhole
 CXX    = g++
 CXX_LD = $(CXX)
 
-CXX_CFLAGS  = -Wall
+CXX_CFLAGS  = -Wall \
+              -MMD
 CXX_LDFLAGS = -lfmt
 
 INCS_DIR = $(shell find include -type d) \

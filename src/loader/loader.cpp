@@ -58,6 +58,9 @@ void Loader::printLoaderWelcome() {
     fmt::print("[loader] [cfgs] [debug] wave:              ");
     MUX(CONFIG_DEBUG_WAVE, fmt::print(fg(fmt::color::green), "ON\n"),
                            fmt::print(fg(fmt::color::red),   "OFF\n"));
+    fmt::print("[loader] [cfgs] [debug]   wave_cycle:      ");
+    MUX(CONFIG_DEBUG_WAVE, fmt::print(fg(fmt::color::green), "{}\n", CONFIG_DEBUG_WAVE_CYCLE),
+                           fmt::print(fg(fmt::color::red),   "OFF\n"));
 
     fmt::print("[loader] [time] ");
     fmt::print(fg(fmt::color::red), "{}\n", time.getTimeNowDateAndTime());
