@@ -59,8 +59,11 @@ mainmenu "Blackhole Configuration Menu"
     endmenu
 
     menu "*Blackhole Debug"
-        config DEBUG_LTDB
-            bool "Debug LTDB"
+        config DEBUG_LOG
+            bool "Debug Log"
+            default y
+        config DEBUG_LDB
+            bool "Debug LDB"
             default n
         config DEBUG_TRACE
             bool "Debug Trace"

@@ -15,13 +15,13 @@ awk '
 {
     split($0, parts, "=")
     if (parts[2] == "y") {
-        printf("#define CONFIG_%s 1\n", parts[1]) >> "'"$FILE_HEADER"'"
+        printf("#define %s 1\n", parts[1]) >> "'"$FILE_HEADER"'"
     } else if (parts[2] == "m") {
-        printf("#define CONFIG_%s_MODULE 1\n", parts[1]) >> "'"$FILE_HEADER"'"
+        printf("#define %s_MODULE 1\n", parts[1]) >> "'"$FILE_HEADER"'"
     } else if (parts[2] ~ /^"/) {
-        printf("#define CONFIG_%s %s\n", parts[1], parts[2]) >> "'"$FILE_HEADER"'"
+        printf("#define %s %s\n", parts[1], parts[2]) >> "'"$FILE_HEADER"'"
     } else {
-        printf("#define CONFIG_%s %s\n", parts[1], parts[2]) >> "'"$FILE_HEADER"'"
+        printf("#define %s %s\n", parts[1], parts[2]) >> "'"$FILE_HEADER"'"
     }
 }
 ' "$FILE_CONFIG"

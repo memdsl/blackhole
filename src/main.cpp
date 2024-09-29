@@ -1,5 +1,5 @@
-#include <loader.h>
-#include <status.h>
+#include <loader.hpp>
+#include <status.hpp>
 
 using namespace std;
 
@@ -8,6 +8,5 @@ int main(int argc, char *argv[]) {
     loader.initLoader(argc, argv);
 
     Status status;
-    status.getStatus();
-    return 0;
+    return status.getStatus();
 }
