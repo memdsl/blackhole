@@ -29,12 +29,12 @@ ARGS_BCH ?= ""
 ARGS_IMG ?= ""
 ARGS_LOG ?= ""
 ARGS_REF ?= ""
-ARGS_HEL ?=
+ARGS_OTH ?=
 ARGS      = --bch $(ARGS_BCH) \
             --img $(ARGS_IMG) \
             --log $(ARGS_LOG) \
             --ref $(ARGS_REF) \
-                  $(ARGS_HEL)
+                  $(ARGS_OTH)
 
 $(BUILD_DIR)/%.o: %.cpp
 	@echo + CXX $<
