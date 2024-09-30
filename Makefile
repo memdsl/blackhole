@@ -25,6 +25,17 @@ LIBS =
 
 -include $(OBJS:.o=.d)
 
+ARGS_BCH ?= ""
+ARGS_IMG ?= ""
+ARGS_LOG ?= ""
+ARGS_REF ?= ""
+ARGS_HEL ?=
+ARGS      = --bch $(ARGS_BCH) \
+            --img $(ARGS_IMG) \
+            --log $(ARGS_LOG) \
+            --ref $(ARGS_REF) \
+                  $(ARGS_HEL)
+
 $(BUILD_DIR)/%.o: %.cpp
 	@echo + CXX $<
 	@mkdir -p $(dir $@)
@@ -39,6 +50,6 @@ $(BUILD_BIN): $(OBJS)
 config:
 	cd config && kconfig-mconf Kconfig && ../script/gen_autoconf.sh
 run: $(BUILD_BIN)
-	$(BUILD_BIN)
+	$(BUILD_BIN) $(ARGS)
 clean:
 	rm -rf $(BUILD_DIR)

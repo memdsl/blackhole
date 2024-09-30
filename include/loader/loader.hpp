@@ -1,6 +1,10 @@
 #ifndef LOADER_H
 #define LOADER_H
 
+#include <iostream>
+
+using namespace std;
+
 class Loader {
 public:
     Loader();
@@ -9,9 +13,13 @@ public:
     void initLoader(int argc, char *argv[]);
 private:
     void handleLoaderImage();
-    void parseLoaderArgv(int argc, char *argv[]);
+    int parseLoaderArgs(int argc, char *argv[]);
     void printLoaderWelcome();
 private:
+    bool   bch;
+    string img_file;
+    string log_file;
+    string ref_file;
 };
 
 #endif
