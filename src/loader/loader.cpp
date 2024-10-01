@@ -1,20 +1,18 @@
-#include <fmt/color.h>
-#include <CLI11.hpp>
-
-#include <common.hpp>
 #include <loader.hpp>
 
 Loader::Loader() {
+    Log log;
 }
 
 Loader::~Loader() {
 }
 
 void Loader::initLoader(int argc, char *argv[]) {
-    this->parseLoaderArgs(argc, argv);
+    parseLoaderArgs(argc, argv);
 
+    log.initLog(log_file);
 
-    this->printLoaderWelcome();
+    printLoaderWelcome();
 }
 
 void Loader::handleLoaderImage() {
@@ -46,41 +44,47 @@ void Loader::printLoaderWelcome() {
     Time time;
 
     fmt::print("[loader] [cfgs] [debug] log:               ");
-    MUX(CONFIG_DEBUG_LOG, fmt::print(fg(fmt::color::green), "ON\n"),
-                          fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_LOG, log.printLog("success", "{}\n", "ON"),
+                              log.printLog("failed",  "{}\n", "OFF"));
+    fmt::print("[loader] [cfgs] [debug]  log_stdout:       ");
+    MUX_DEF(CONFIG_DEBUG_LOG_STDOUT, log.printLog("success", "{}\n", "ON"),
+                                     log.printLog("failed",  "{}\n", "OFF"));
+    fmt::print("[loader] [cfgs] [debug]  log_file:         ");
+    MUX_DEF(CONFIG_DEBUG_LOG_FILE, log.printLog("success", "{}\n", "ON"),
+                                   log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug] ldb:               ");
-    MUX(CONFIG_DEBUG_LDB, fmt::print(fg(fmt::color::green), "ON\n"),
-                          fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_LDB, log.printLog("success", "{}\n", "ON"),
+                              log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug] trace:             ");
-    MUX(CONFIG_DEBUG_TRACE, fmt::print(fg(fmt::color::green), "ON\n"),
-                            fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_TRACE, log.printLog("success", "{}\n", "ON"),
+                                log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug]   trace_ins:       ");
-    MUX(CONFIG_DEBUG_TRACE_INS, fmt::print(fg(fmt::color::green), "ON\n"),
-                                fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_TRACE_INS, log.printLog("success", "{}\n", "ON"),
+                                    log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug]     trace_ins_pro: ");
-    MUX(CONFIG_DEBUG_TRACE_INS_PROCESS, fmt::print(fg(fmt::color::green), "ON\n"),
-                                        fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_TRACE_INS_PROCESS, log.printLog("success", "{}\n", "ON"),
+                                            log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug]     trace_ins_res: ");
-    MUX(CONFIG_DEBUG_TRACE_INS_RESULT, fmt::print(fg(fmt::color::green), "ON\n"),
-                                       fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_TRACE_INS_RESULT, log.printLog("success", "{}\n", "ON"),
+                                           log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug]   trace_mem:       ");
-    MUX(CONFIG_DEBUG_TRACE_MEM, fmt::print(fg(fmt::color::green), "ON\n"),
-                                fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_TRACE_MEM, log.printLog("success", "{}\n", "ON"),
+                                    log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug]     trace_mem_pro: ");
-    MUX(CONFIG_DEBUG_TRACE_MEM_PROCESS, fmt::print(fg(fmt::color::green), "ON\n"),
-                                        fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_TRACE_MEM_PROCESS, log.printLog("success", "{}\n", "ON"),
+                                            log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug]     trace_mem_res: ");
-    MUX(CONFIG_DEBUG_TRACE_MEM_RESULT, fmt::print(fg(fmt::color::green), "ON\n"),
-                                       fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_TRACE_MEM_RESULT, log.printLog("success", "{}\n", "ON"),
+                                           log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug] diff:              ");
-    MUX(CONFIG_DEBUG_DIFF, fmt::print(fg(fmt::color::green), "ON\n"),
-                           fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_DIFF, log.printLog("success", "{}\n", "ON"),
+                               log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug] wave:              ");
-    MUX(CONFIG_DEBUG_WAVE, fmt::print(fg(fmt::color::green), "ON\n"),
-                           fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_WAVE, log.printLog("success", "{}\n", "ON"),
+                               log.printLog("failed",  "{}\n", "OFF"));
     fmt::print("[loader] [cfgs] [debug]   wave_cycle:      ");
-    MUX(CONFIG_DEBUG_WAVE, fmt::print(fg(fmt::color::green), "{}\n", CONFIG_DEBUG_WAVE_CYCLE),
-                           fmt::print(fg(fmt::color::red),   "OFF\n"));
+    MUX_DEF(CONFIG_DEBUG_WAVE, log.printLog("success", "{}\n", CONFIG_DEBUG_WAVE_CYCLE),
+                               log.printLog("failed",  "{}\n", "OFF"));
 
     fmt::print("[loader] [time] ");
     fmt::print(fg(fmt::color::red), "{}\n", time.getTimeNowDateAndTime());
