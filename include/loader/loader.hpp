@@ -1,9 +1,8 @@
 #ifndef LOADER_H
 #define LOADER_H
 
-#include <iostream>
-
-using namespace std;
+#include <common.hpp>
+#include <log.hpp>
 
 class Loader {
 public:
@@ -20,6 +19,7 @@ private:
     string img_file;
     string log_file;
     string ref_file;
+    Log    log;
 };
 
 #endif
