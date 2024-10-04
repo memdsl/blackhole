@@ -4,10 +4,10 @@ FILE_CONFIG="$BLACKHOLE_HOME/config/.config"
 FILE_HEADER="$BLACKHOLE_HOME/config/autoconf.h"
 FILE_MAKEFL="$BLACKHOLE_HOME/config/autoconf.m"
 
-echo "/* Automatically generated file; DO NOT EDIT. */" > "$FILE_HEADER"
-echo "/* Kconfig configuration */" >> "$FILE_HEADER"
-echo "/* Automatically generated file; DO NOT EDIT. */" > "$FILE_MAKEFL"
-echo "/* Kconfig configuration */" >> "$FILE_MAKEFL"
+echo "// Automatically generated file; DO NOT EDIT." > "$FILE_HEADER"
+echo "// Kconfig configuration" >> "$FILE_HEADER"
+echo "# Automatically generated file; DO NOT EDIT." > "$FILE_MAKEFL"
+echo "# Kconfig configuration" >> "$FILE_MAKEFL"
 
 awk '
 /^#/ { next }

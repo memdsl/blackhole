@@ -11,8 +11,12 @@ BUILD_BIN = $(BUILD_DIR)/blackhole
 CXX    = g++
 CXX_LD = $(CXX)
 
+-include $(OBJS:.o=.d)
+-include $(CONFIG_DIR)/autoconf.m
+
 CXX_CFLAGS  = -Wall \
-              -MMD
+              -MMD  \
+              $(if $(CONFIG_BASE_COMP_DEBUG),-g,)
 CXX_LDFLAGS = -lfmt
 
 INCS_DIR = $(shell find include -type d) \
@@ -22,8 +26,6 @@ INCS     = $(addprefix -I, $(INCS_DIR))
 SRCS = $(shell find src -name "*.cpp")
 OBJS = $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 LIBS =
-
--include $(OBJS:.o=.d)
 
 ARGS_BCH ?= ""
 ARGS_IMG ?= ""
@@ -36,7 +38,7 @@ ARGS      = --bch $(ARGS_BCH) \
             --ref $(ARGS_REF) \
                   $(ARGS_OTH)
 
-$(BUILD_DIR)/%.o: %.cpp
+$(BUILD_DIR)/%.o: %.cpp $(CONFIG_NEW)
 	@echo + CXX $<
 	@mkdir -p $(dir $@)
 	@$(CXX) $(CXX_CFLAGS) $(INCS) -c -o $@ $<
@@ -51,5 +53,7 @@ config:
 	cd config && kconfig-mconf Kconfig && ../script/gen_autoconf.sh
 run: $(BUILD_BIN)
 	$(BUILD_BIN) $(ARGS)
+gdb: $(BUILD_BIN)
+	gdb --args $(BUILD_BIN) $(ARGS)
 clean:
 	rm -rf $(BUILD_DIR)

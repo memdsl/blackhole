@@ -9,10 +9,13 @@ Log::~Log() {
 void Log::initLog(const string log_file) {
     if (!log_file.empty()) {
         FILE *log_file_p_tmp = fopen(log_file.c_str(), "w");
-        assert(log_file_p_tmp);
+        // assert(log_file_p_tmp);
+        printLogAssert(0, "hello {}\n", "world");
+        fmt::print("111\n");
         log_file_p = log_file_p_tmp;
     }
     printLog("success", "[loader] [init] [log] {}\n", "finished");
+    printLog("success", "[loader] [init] [log] {}\n", log_file);
 }
 
 template<typename args_0, typename... args_1_to_n>
@@ -46,4 +49,14 @@ void Log::printLog(const string type, const args_0 args_fmt,
     MUX_DEF(CONFIG_DEBUG_LOG_FILE, fmt::print(log_file_p,
                                               args_fmt,
                                               args_var...),);
+}
+
+template<typename args_0, typename... args_1_to_n>
+void Log::printLogAssert(const bool flag, const args_0 args_fmt,
+                         const args_1_to_n... args_var) {
+    if (!flag) {
+        printLog("failed", args_fmt, args_var...);
+    }
+
+    return;
 }
