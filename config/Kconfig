@@ -62,6 +62,14 @@ mainmenu "Blackhole Configuration Menu"
         config DEBUG_LOG
             bool "Debug Log"
             default y
+        config DEBUG_LOG_STDOUT
+            depends on DEBUG_LOG
+            bool "Output Log to STDOUT"
+            default y
+        config DEBUG_LOG_FILE
+            depends on DEBUG_LOG
+            bool "Output Log to FILE"
+            default y
         config DEBUG_LDB
             bool "Debug LDB"
             default n
