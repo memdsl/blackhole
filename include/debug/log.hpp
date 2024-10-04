@@ -15,7 +15,8 @@ public:
     template<typename args_0, typename... args_1_to_n>
     void printLogAssert(const bool flag, const args_0 args_fmt,
                         const args_1_to_n... args_var);
-    void printLogPanic();
+    template<typename args_0, typename... args_1_to_n>
+    void printLogPanic(const args_0 args_fmt, const args_1_to_n... args_var);
 private:
     FILE *log_file_p;
 };

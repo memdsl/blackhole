@@ -1,6 +1,7 @@
 #include <log.hpp>
 
 Log::Log() {
+    log_file_p = NULL;
 }
 
 Log::~Log() {
@@ -9,9 +10,7 @@ Log::~Log() {
 void Log::initLog(const string log_file) {
     if (!log_file.empty()) {
         FILE *log_file_p_tmp = fopen(log_file.c_str(), "w");
-        // assert(log_file_p_tmp);
-        printLogAssert(0, "hello {}\n", "world");
-        fmt::print("111\n");
+        printLogAssert(log_file_p_tmp, "[log] [error] can not open {}\n", log_file);
         log_file_p = log_file_p_tmp;
     }
     printLog("success", "[loader] [init] [log] {}\n", "finished");
@@ -37,18 +36,21 @@ void Log::printLog(const string type, const args_0 args_fmt,
         args_color = fmt::fg(fmt::color::red);
     }
 
-    MUX_CON(
-        args_color_flag,
+    if (args_color_flag) {
         MUX_DEF(CONFIG_DEBUG_LOG_STDOUT, fmt::print(args_color,
                                                     args_fmt,
-                                                    args_var...),),
+                                                    args_var...),);
+    }
+    else {
         MUX_DEF(CONFIG_DEBUG_LOG_STDOUT, fmt::print(args_fmt,
-                                                    args_var...),)
-    );
+                                                    args_var...),);
+    }
 
-    MUX_DEF(CONFIG_DEBUG_LOG_FILE, fmt::print(log_file_p,
-                                              args_fmt,
-                                              args_var...),);
+    if (log_file_p != NULL) {
+        MUX_DEF(CONFIG_DEBUG_LOG_FILE, fmt::print(log_file_p,
+                                                  args_fmt,
+                                                  args_var...),);
+    }
 }
 
 template<typename args_0, typename... args_1_to_n>
@@ -56,7 +58,11 @@ void Log::printLogAssert(const bool flag, const args_0 args_fmt,
                          const args_1_to_n... args_var) {
     if (!flag) {
         printLog("failed", args_fmt, args_var...);
+        abort();
     }
+}
 
-    return;
+template<typename args_0, typename... args_1_to_n>
+void Log::printLogPanic(const args_0 args_fmt, const args_1_to_n... args_var) {
+    printLogAssert(0, args_fmt, args_var...);
 }
