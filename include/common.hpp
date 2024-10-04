@@ -34,4 +34,6 @@ using namespace std;
         y;                 \
     }                      \
 
+#define MEM_PG_ALIGN __attribute((aligned(4096)))
+
 #endif

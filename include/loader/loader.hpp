@@ -3,6 +3,7 @@
 
 #include <common.hpp>
 #include <log.hpp>
+#include <memory.hpp>
 
 class Loader {
 public:
@@ -15,11 +16,12 @@ private:
     int parseLoaderArgs(int argc, char *argv[]);
     void printLoaderWelcome();
 private:
-    bool   bch;
-    string img_file;
-    string log_file;
-    string ref_file;
-    Log    log;
+    bool               g_bch;
+    string             g_img_file;
+    string             g_log_file;
+    string             g_ref_file;
+    shared_ptr<Log>    g_log_ptr;
+    shared_ptr<Memory> g_mem_ptr;
 };
 
 #endif
