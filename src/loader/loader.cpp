@@ -43,51 +43,64 @@ int Loader::parseLoaderArgs(int argc, char *argv[]) {
 void Loader::printLoaderWelcome() {
     Time time;
 
-    fmt::print("[loader] [cfgs] [debug] log:               ");
+    log.printLog("", "[loader] [cfgs] [debug] log:               ", "");
     MUX_DEF(CONFIG_DEBUG_LOG, log.printLog("success", "{}\n", "ON"),
                               log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]  log_stdout:       ");
+
+    log.printLog("", "[loader] [cfgs] [debug]   log_stdout:      ", "");
     MUX_DEF(CONFIG_DEBUG_LOG_STDOUT, log.printLog("success", "{}\n", "ON"),
                                      log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]  log_file:         ");
+
+    log.printLog("", "[loader] [cfgs] [debug]   log_file:        ", "");
     MUX_DEF(CONFIG_DEBUG_LOG_FILE, log.printLog("success", "{}\n", "ON"),
                                    log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug] ldb:               ");
+
+    log.printLog("", "[loader] [cfgs] [debug] ldb:               ", "");
     MUX_DEF(CONFIG_DEBUG_LDB, log.printLog("success", "{}\n", "ON"),
-                              log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug] trace:             ");
+                              log.printLog("failed",  "{}\n", "OFF"));\
+
+    log.printLog("", "[loader] [cfgs] [debug] trace:             ", "");
     MUX_DEF(CONFIG_DEBUG_TRACE, log.printLog("success", "{}\n", "ON"),
                                 log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]   trace_ins:       ");
+
+    log.printLog("", "[loader] [cfgs] [debug]   trace_ins:       ", "");
     MUX_DEF(CONFIG_DEBUG_TRACE_INS, log.printLog("success", "{}\n", "ON"),
                                     log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]     trace_ins_pro: ");
+
+    log.printLog("", "[loader] [cfgs] [debug]     trace_ins_pro: ", "");
     MUX_DEF(CONFIG_DEBUG_TRACE_INS_PROCESS, log.printLog("success", "{}\n", "ON"),
                                             log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]     trace_ins_res: ");
+
+    log.printLog("", "[loader] [cfgs] [debug]     trace_ins_res: ", "");
     MUX_DEF(CONFIG_DEBUG_TRACE_INS_RESULT, log.printLog("success", "{}\n", "ON"),
                                            log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]   trace_mem:       ");
+
+    log.printLog("", "[loader] [cfgs] [debug]   trace_mem:       ", "");
     MUX_DEF(CONFIG_DEBUG_TRACE_MEM, log.printLog("success", "{}\n", "ON"),
                                     log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]     trace_mem_pro: ");
+
+    log.printLog("", "[loader] [cfgs] [debug]     trace_mem_pro: ", "");
     MUX_DEF(CONFIG_DEBUG_TRACE_MEM_PROCESS, log.printLog("success", "{}\n", "ON"),
                                             log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]     trace_mem_res: ");
+
+    log.printLog("", "[loader] [cfgs] [debug]     trace_mem_res: ", "");
     MUX_DEF(CONFIG_DEBUG_TRACE_MEM_RESULT, log.printLog("success", "{}\n", "ON"),
                                            log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug] diff:              ");
+
+    log.printLog("", "[loader] [cfgs] [debug] diff:              ", "");
     MUX_DEF(CONFIG_DEBUG_DIFF, log.printLog("success", "{}\n", "ON"),
                                log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug] wave:              ");
+
+    log.printLog("", "[loader] [cfgs] [debug] wave:              ", "");
     MUX_DEF(CONFIG_DEBUG_WAVE, log.printLog("success", "{}\n", "ON"),
                                log.printLog("failed",  "{}\n", "OFF"));
-    fmt::print("[loader] [cfgs] [debug]   wave_cycle:      ");
+
+    log.printLog("", "[loader] [cfgs] [debug]   wave_cycle:      ", "");
     MUX_DEF(CONFIG_DEBUG_WAVE, log.printLog("success", "{}\n", CONFIG_DEBUG_WAVE_CYCLE),
                                log.printLog("failed",  "{}\n", "OFF"));
 
-    fmt::print("[loader] [time] ");
-    fmt::print(fg(fmt::color::red), "{}\n", time.getTimeNowDateAndTime());
-    fmt::print("[loader] [info] Welcome to ");
-    fmt::print(fg(fmt::color::orange), "BLACKHOLE!\n");
+    log.printLog("", "[loader] [time] ", "");
+    log.printLog("failed", "{}\n", time.getTimeNowDateAndTime().c_str());
+    log.printLog("", "[loader] [info] Welcome to ", "");
+    log.printLog("warning", "BLACKHOLE!\n", "");
 }

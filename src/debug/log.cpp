@@ -7,10 +7,11 @@ Log::~Log() {
 }
 
 void Log::initLog(const string log_file) {
-
-    // if (!log_file.empty()) {
-    //     FILE *log_file_p_temp = fopen(log_file.c_str(), "w");
-    // }
+    if (!log_file.empty()) {
+        FILE *log_file_p_tmp = fopen(log_file.c_str(), "w");
+        assert(log_file_p_tmp);
+        log_file_p = log_file_p_tmp;
+    }
     printLog("success", "[loader] [init] [log] {}\n", "finished");
 }
 
@@ -42,5 +43,7 @@ void Log::printLog(const string type, const args_0 args_fmt,
                                                     args_var...),)
     );
 
-    MUX_DEF(CONFIG_DEBUG_LOG_FILE, fmt::print(log_file_p, args_fmt, args_var),);
+    MUX_DEF(CONFIG_DEBUG_LOG_FILE, fmt::print(log_file_p,
+                                              args_fmt,
+                                              args_var...),);
 }

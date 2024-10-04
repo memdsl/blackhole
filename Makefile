@@ -27,7 +27,7 @@ LIBS =
 
 ARGS_BCH ?= ""
 ARGS_IMG ?= ""
-ARGS_LOG ?= ""
+ARGS_LOG ?= $(BUILD_DIR)/log.txt
 ARGS_REF ?= ""
 ARGS_OTH ?=
 ARGS      = --bch $(ARGS_BCH) \
