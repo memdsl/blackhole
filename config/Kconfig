@@ -43,19 +43,19 @@ mainmenu "Blackhole Configuration Menu"
             config BASE_CPU_ISA_RISCV64
                 bool "riscv64"
         endchoice
-            config BASE_CPU_ISA
-                string
-                default "riscv32" if BASE_CPU_ISA_RISCV32
-                default "riscv64" if BASE_CPU_ISA_RISCV64
-                default "none"
-            config BASE_CPU_ISA32
-                depends on BASE_CPU_ISA_RISCV32
-                bool
-                default y
-            config BASE_CPU_ISA64
-                depends on BASE_CPU_ISA_RISCV64
-                bool
-                default y
+        config BASE_CPU_ISA
+            string
+            default "riscv32" if BASE_CPU_ISA_RISCV32
+            default "riscv64" if BASE_CPU_ISA_RISCV64
+            default "none"
+        config BASE_CPU_ISA32
+            depends on BASE_CPU_ISA_RISCV32
+            bool
+            default y
+        config BASE_CPU_ISA64
+            depends on BASE_CPU_ISA_RISCV64
+            bool
+            default y
     endmenu
 
     menu "*Blackhole Debug"
