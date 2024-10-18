@@ -34,6 +34,12 @@ using namespace std;
         y;                 \
     }                      \
 
-#define MEM_PG_ALIGN __attribute((aligned(4096)))
+typedef MUX_DEF(CONFIG_BASE_CPU_ISA_RISCV32, uint32_t, uint64_t) u_data_t;
+typedef MUX_DEF(CONFIG_BASE_CPU_ISA_RISCV32,  int32_t,  int64_t) s_data_t;
+
+#if CONFIG_MEMORY_BASE + CONFIG_MEMORY_SIZE > 0x100000000ul
+    #define MEM_ADDR_WIDTH_64 1
+#endif
+typedef MUX_DEF(MEM_ADDR_WIDTH_64, uint64_t, uint32_t) u_addr_t;
 
 #endif
