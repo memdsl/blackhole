@@ -4,6 +4,10 @@
 #include <common.hpp>
 #include <log.hpp>
 
+#define MEM_PHY_LEFT  ((u_addr_t)CONFIG_MEMORY_BASE)
+#define MEM_PHY_RIGHT ((u_addr_t)CONFIG_MEMORY_BASE + CONFIG_MEMORY_SIZE - 1)
+#define MEM_PG_ALIGN  __attribute((aligned(4096)))
+
 class Memory {
 public:
     Memory(shared_ptr<Log> log_ptr);
