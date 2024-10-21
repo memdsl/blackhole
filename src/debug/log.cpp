@@ -66,3 +66,6 @@ template<typename args_0, typename... args_1_to_n>
 void Log::printLogPanic(const args_0 args_fmt, const args_1_to_n... args_var) {
     printLogAssert(0, args_fmt, args_var...);
 }
+
+// template void Log::printLog<const char*>(const std::string, const char*, const char*);
+template void Log::printLog<const char*, double>(const std::string, const char*, const double);
