@@ -7,7 +7,5 @@ int main(int argc, char *argv[]) {
     Loader loader;
     loader.initLoader(argc, argv);
 
-    // Status status;
-    // return status.getStatus();
     return 0;
 }
