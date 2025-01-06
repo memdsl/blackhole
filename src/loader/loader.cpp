@@ -2,7 +2,7 @@
 
 Loader::Loader() {
     g_log_ptr = make_shared<Log>();
-    g_mem_ptr = make_shared<Memory>(g_log_ptr);
+    g_mem_ptr = make_shared<Memory>();
 }
 
 Loader::~Loader() {
@@ -45,64 +45,64 @@ int Loader::parseLoaderArgs(int argc, char *argv[]) {
 void Loader::printLoaderWelcome() {
     Time time;
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug] log:               ", "");
-    MUX_DEF(CONFIG_DEBUG_LOG, g_log_ptr->printLog("success", "{}\n", "ON"),
-                              g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug] log:               ", "");
+    MUX_DEF(CONFIG_DEBUG_LOG, PRINT_LOG("success", "{}\n", "ON"),
+                              PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]   log_stdout:      ", "");
-    MUX_DEF(CONFIG_DEBUG_LOG_STDOUT, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                     g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]   log_stdout:      ", "");
+    MUX_DEF(CONFIG_DEBUG_LOG_STDOUT, PRINT_LOG("success", "{}\n", "ON"),
+                                     PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]   log_file:        ", "");
-    MUX_DEF(CONFIG_DEBUG_LOG_FILE, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                   g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]   log_file:        ", "");
+    MUX_DEF(CONFIG_DEBUG_LOG_FILE, PRINT_LOG("success", "{}\n", "ON"),
+                                   PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug] ldb:               ", "");
-    MUX_DEF(CONFIG_DEBUG_LDB, g_log_ptr->printLog("success", "{}\n", "ON"),
-                              g_log_ptr->printLog("failed",  "{}\n", "OFF"));\
+    PRINT_LOG("", "[loader] [cfgs] [debug] ldb:               ", "");
+    MUX_DEF(CONFIG_DEBUG_LDB, PRINT_LOG("success", "{}\n", "ON"),
+                              PRINT_LOG("failed",  "{}\n", "OFF"));\
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug] trace:             ", "");
-    MUX_DEF(CONFIG_DEBUG_TRACE, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug] trace:             ", "");
+    MUX_DEF(CONFIG_DEBUG_TRACE, PRINT_LOG("success", "{}\n", "ON"),
+                                PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]   trace_ins:       ", "");
-    MUX_DEF(CONFIG_DEBUG_TRACE_INS, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                    g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]   trace_ins:       ", "");
+    MUX_DEF(CONFIG_DEBUG_TRACE_INS, PRINT_LOG("success", "{}\n", "ON"),
+                                    PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]     trace_ins_pro: ", "");
-    MUX_DEF(CONFIG_DEBUG_TRACE_INS_PROCESS, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                            g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]     trace_ins_pro: ", "");
+    MUX_DEF(CONFIG_DEBUG_TRACE_INS_PROCESS, PRINT_LOG("success", "{}\n", "ON"),
+                                            PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]     trace_ins_res: ", "");
-    MUX_DEF(CONFIG_DEBUG_TRACE_INS_RESULT, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                           g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]     trace_ins_res: ", "");
+    MUX_DEF(CONFIG_DEBUG_TRACE_INS_RESULT, PRINT_LOG("success", "{}\n", "ON"),
+                                           PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]   trace_mem:       ", "");
-    MUX_DEF(CONFIG_DEBUG_TRACE_MEM, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                    g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]   trace_mem:       ", "");
+    MUX_DEF(CONFIG_DEBUG_TRACE_MEM, PRINT_LOG("success", "{}\n", "ON"),
+                                    PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]     trace_mem_pro: ", "");
-    MUX_DEF(CONFIG_DEBUG_TRACE_MEM_PROCESS, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                            g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]     trace_mem_pro: ", "");
+    MUX_DEF(CONFIG_DEBUG_TRACE_MEM_PROCESS, PRINT_LOG("success", "{}\n", "ON"),
+                                            PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]     trace_mem_res: ", "");
-    MUX_DEF(CONFIG_DEBUG_TRACE_MEM_RESULT, g_log_ptr->printLog("success", "{}\n", "ON"),
-                                           g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]     trace_mem_res: ", "");
+    MUX_DEF(CONFIG_DEBUG_TRACE_MEM_RESULT, PRINT_LOG("success", "{}\n", "ON"),
+                                           PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug] diff:              ", "");
-    MUX_DEF(CONFIG_DEBUG_DIFF, g_log_ptr->printLog("success", "{}\n", "ON"),
-                               g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug] diff:              ", "");
+    MUX_DEF(CONFIG_DEBUG_DIFF, PRINT_LOG("success", "{}\n", "ON"),
+                               PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug] wave:              ", "");
-    MUX_DEF(CONFIG_DEBUG_WAVE, g_log_ptr->printLog("success", "{}\n", "ON"),
-                               g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug] wave:              ", "");
+    MUX_DEF(CONFIG_DEBUG_WAVE, PRINT_LOG("success", "{}\n", "ON"),
+                               PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [cfgs] [debug]   wave_cycle:      ", "");
-    MUX_DEF(CONFIG_DEBUG_WAVE, g_log_ptr->printLog("success", "{}\n", CONFIG_DEBUG_WAVE_CYCLE),
-                               g_log_ptr->printLog("failed",  "{}\n", "OFF"));
+    PRINT_LOG("", "[loader] [cfgs] [debug]   wave_cycle:      ", "");
+    MUX_DEF(CONFIG_DEBUG_WAVE, PRINT_LOG("success", "{}\n", CONFIG_DEBUG_WAVE_CYCLE),
+                               PRINT_LOG("failed",  "{}\n", "OFF"));
 
-    g_log_ptr->printLog("", "[loader] [time] ", "");
-    g_log_ptr->printLog("failed", "{}\n", time.getTimeNowDateAndTime().c_str());
-    g_log_ptr->printLog("", "[loader] [info] Welcome to ", "");
-    g_log_ptr->printLog("warning", "BLACKHOLE!\n", "");
+    PRINT_LOG("", "[loader] [time] ", "");
+    PRINT_LOG("failed", "{}\n", time.getTimeNowDateAndTime().c_str());
+    PRINT_LOG("", "[loader] [info] Welcome to ", "");
+    PRINT_LOG("warning", "BLACKHOLE!\n", "");
 }
